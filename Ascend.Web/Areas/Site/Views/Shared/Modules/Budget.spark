@@ -1,0 +1,10 @@
+﻿<h2 class="ui-widget-header"><span class="ui-icon ui-icon-suitcase"></span> My Budget</h2>
+<div>
+    <span>
+    You have <strong>${currentUserBudget.Balance.ToString("n0")}</strong> points
+    to distribute<span if="null != currentUserBudget.Account.Budget && currentUserBudget.Account.Budget.NextRefresh.HasValue">,
+    and your budget will reset on <strong>${currentUserBudget.Account.Budget.NextRefresh.Value.ToShortDateString()}
+    </strong></span>.</span>
+    <br/>
+    <span>${Html.ActionLink("View Your Budget", MVC.Site.Budget.Index())}</span>
+</div>

@@ -1,0 +1,10 @@
+﻿<viewdata />
+
+<h2>Thanks for your order!</h2>
+
+<p>Your order has been placed. You should receive an email confirmation shortly. You may also view your order status at any time on the ${Html.ActionLink("My Activity", MVC.Site.Profile.Orders())} area.</p>
+
+<script type="text/javascript">
+  $(function () {
+  });
+</script>

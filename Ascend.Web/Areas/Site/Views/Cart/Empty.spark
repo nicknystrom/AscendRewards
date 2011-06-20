@@ -1,0 +1,4 @@
+﻿<viewdata what="string" />
+
+You ${what} is empty! There must be something in the
+${Html.ActionLink("Reward Catalog", MVC.Site.Catalog.Index())} that's interesting!

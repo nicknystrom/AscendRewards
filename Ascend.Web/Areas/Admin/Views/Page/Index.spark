@@ -1,0 +1,48 @@
+﻿<viewdata model="IEnumerable<Page>" create="PageCreateModel" />
+
+<style>
+    span.expired { color: #f00; }
+</style>
+
+<div id="create-page" class="create-dialog">
+    # Html.RenderPartial("PageCreateModel", create ?? new PageCreateModel()   );
+</div>
+
+<table class="index-table">
+    <thead>
+        <tr>
+            <th style="width: 100px;">Title</th>
+            <th style="width: 300px;">Content</th>
+            <th style="width: 80px;">Enabled</th>
+            <th style="width: 80px;">Archived</th>
+            <th style="width: 280px;">Availability</th>
+
+        </tr>
+    </thead>
+    <tbody>
+        <tr each="var p in Model">
+            <td>${Html.ActionLink(p.Title, MVC.Admin.Page.Edit(p.Document.Id))}</td>
+            <td>${H(p.Content.Body.ShortenTo(60))}</td>
+
+            <td><span class="ui-icon ui-icon-check" if="p.Enabled" /></td>
+            <td><span class="ui-icon ui-icon-check" if="p.Archived" /></td>
+            <td>
+                <span if="p.Availability.Mode == AvailabilityMode.AvailableToPublic">Public</span>
+                <span if="p.Availability.Mode == AvailabilityMode.AvailableToAllUsers">Registered Users</span>
+                <span if="p.Availability.Mode == AvailabilityMode.AvailableOnlyTo">Specific Users</span>
+                <span if="p.Availability.Mode == AvailabilityMode.AvailableToEveryoneBut">Registered Users with Exceptions</span>
+                <span if="p.Availability.From.HasValue"
+                      class="expired?{p.Availability.From.Value > DateTime.UtcNow}">, From ${p.Availability.From.Value.ToShortDateString()}</span>
+                <span if="p.Availability.To.HasValue"
+                      class="expired?{p.Availability.To.Value < DateTime.UtcNow}">, Until ${p.Availability.To.Value.ToShortDateString()}</span>
+            </td>
+
+        </tr>
+    </tbody>
+</table>
+
+<content name="actions">
+    <ul>
+        <li><a href="#create-page" class="create-button">New Page</a></li>
+    </ul>
+</content>

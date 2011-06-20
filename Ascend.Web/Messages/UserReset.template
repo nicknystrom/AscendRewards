@@ -1,0 +1,13 @@
+﻿Your password for {program} has been reset.
+
+<p>The password for your account, '{login}', has been reset to '{password}' (no quotes,
+case sensitive). You can login immediatley using the link below and your new password.</p>
+
+<p><a href="{url}">{url}</a></p>
+
+<p>If you continue to experience difficuty logging, please contact customer support immediatley.</p>
+
+<p>
+    Thanks!<br />
+    {program}
+</p>

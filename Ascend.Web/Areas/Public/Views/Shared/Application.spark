@@ -1,0 +1,86 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" >
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+
+    <link rel="apple-touch-icon" href="~/Content/Images/Icons/apple-touch-icon-57x57.png" />
+    <link rel="apple-touch-icon" sizes="72x72" href="~/Content/Images/Icons/apple-touch-icon-72x72.png" />
+    <link rel="apple-touch-icon" sizes="114x114" href="~/Content/Images/Icons/apple-touch-icon-114x114.png" />
+    <link rel="apple-touch-icon-precomposed" href="http://sandbox.ascendrewards.com/Content/Images/Icons/apple-touch-icon-precomposed.png" />
+
+    <link href="~/Content/Login.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/Themes/Aristo/jquery-ui-1.8rc3.custom.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="~/Content/Scripts/jquery-1.4.2.js"></script>
+    <script type="text/javascript" src="~/Content/Scripts/jquery-ui-1.8.2.js"></script>
+    <use content="head" />
+    <title>${application.ProgramName}</title>
+
+    <script type="text/javascript">
+        $(function() {
+            $('#footer a').click(function() {
+                var url = $(this).attr('href');
+                $('#info').load(url, null, function() {
+                    $('#info').css({
+						background: 'none',
+						overflow: 'auto'
+					});
+                });
+                return false;
+            });
+            $('#splash').hover(
+                function() { $('#splash > div').toggle(true); },
+                function() { $('#splash > div').toggle(false); });
+            $('#next').click(function() {
+                var x = Number($('#splash').attr('class').substr(7));
+                $('#splash').attr('class', 'splash-' + ((x+1) > ${splashCount} ? 1 : (x+1)));
+            });
+            $('#prev').click(function() {
+                var x = Number($('#splash').attr('class').substr(7));
+                $('#splash').attr('class', 'splash-' + (x > 1 ? x-1 : ${splashCount}));
+            });
+        });
+    </script>
+
+</head>
+<body>
+
+	<viewdata application="IApplicationConfiguration"
+              today="DateTime"
+              splashCount="int"
+              infoCount="int"
+              footer="IEnumerable<PublicMenuItemViewModel>" />
+	
+	<div id="page">
+
+        <div id="splash" class="splash-1">
+            <div id="next"></div>
+            <div id="prev"></div>
+        </div>
+		<div id="content">
+            <div id="form">
+			    <use content="view" />	
+            </div>
+            <div id="info" class="info-1">
+                
+            </div>
+		</div>
+		<div id="footer">
+            <ul if="null != footer">
+                # var first = true;
+                <li each="var x in footer">
+                    <span if="!first">&nbsp;|&nbsp;</span>
+                    <a href="${x.Url}">${x.Name}</a>
+                    # first = false;
+                </li>
+            </ul>
+        </div>
+        <div id="copyright">
+            &copy; ${today.Year} ${application.ProgramName}, All rights reserved.
+        </div>
+	
+	</div>
+
+	<use file="Views/Shared/_Analytics" />
+
+</body>
+</html>

@@ -1,0 +1,12 @@
+﻿You've received an award from {nominator}!
+
+<p>Dear {recipient},</p>
+
+<p>You've received an award from {nominator} through {program}.</p>
+
+<p><a href="{url}">{url}</a></p>
+
+<p>
+    Thanks!<br />
+    {program}
+</p>

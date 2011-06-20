@@ -1,0 +1,28 @@
+﻿<viewdata model="Address" />
+<table class="address">
+    <tr>
+        <td>${Html.TextBoxFor(x => x.Address1, new { class="street" })}</td>
+    </tr>
+    <tr>
+        <td>${Html.TextBoxFor(x => x.Address2, new { class="street" })}</td>
+    </tr>
+    <tr>
+        <td>${Html.TextBoxFor(x => x.Address3, new { class="street" })}</td>
+    </tr>
+    <tr>
+        <td colspan="2">
+            <table>
+                <tr>
+                    <td>${Html.LabelFor(x => x.City)}</td>
+                    <td>${Html.LabelFor(x => x.State)}</td>
+                    <td>${Html.LabelFor(x => x.PostalCode)}</td>
+                </tr>
+                <tr>
+                    <td>${Html.TextBoxFor(x => x.City, new { class="city" })}</td>
+                    <td>${Html.TextBoxFor(x => x.State, new { class="state" })}</td>
+                    <td>${Html.TextBoxFor(x => x.PostalCode, new { class="postal" })}</td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>

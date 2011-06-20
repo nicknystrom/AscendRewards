@@ -1,0 +1,102 @@
+<viewdata activeTenants="IEnumerable<Tenant>"
+          currentTenant="Tenant" />
+
+<div id="navigation" class="ui-widget">
+    
+    <div id="breadcrumb">
+        <a id="ascend" href="http://ascendrewards.com"></a>
+    
+        <select id="tenant" autocomplete="off">
+            <option each="var t in activeTenants" selected="selected?{currentTenant == t}" value="http://${t.Match.First()}/admin">${t.Name}</option>
+        </select>
+
+        <test if="!String.IsNullOrEmpty(title)">${Html.ActionLink(title, "Index", null, new { id = "controller" })}</test>
+        <test if="!String.IsNullOrEmpty(entity)">${Html.ActionLink(entity, null, null, new { id = "entity" })}</test>
+    </div>
+
+    <use content="breadcrumb" />
+
+    <div id="menu-tabs">
+        <ul>
+            <li><a href="#menu-tab-admin">
+                    <span class="ui-icon ui-icon-person"></span>
+                    Admin
+            </a></li>
+            <li><a href="#menu-tab-build">
+                    <span class="ui-icon ui-icon-wrench"></span>
+                    Build
+            </a></li>
+            <li><a href="#menu-tab-manage">
+                    <span class="ui-icon ui-icon-gear"></span>
+                    Manage
+            </a></li>
+        </ul>
+        <div id="menu-tab-admin" class="selected?{controller == 'Group' ||
+                                                  controller == 'User' ||
+                                                  controller == 'Messaging' ||
+                                                  controller == 'Catalog' ||
+                                                  controller == 'Product' ||
+                                                  controller == 'Import'}">
+            <span id="menu-user-search-icon" class="ui-icon ui-icon-search"></span>
+            <input id="menu-user-search" type="text" />
+            <button id="menu-user-search-go">Go</button>
+            <ul id="menu-user-list">
+                
+            </ul>
+            <ul class="menu-navigation">
+                <li class="selected?{controller == 'Group'}">            ${Html.ActionLink("Groups",     MVC.Admin.Group.Index())}</li>
+                <li class="selected?{controller == 'User'}">             ${Html.ActionLink("Users",      MVC.Admin.User.Index())}</li>
+                <li class="selected?{controller == 'Concierge'}">        ${Html.ActionLink("Concierge",  MVC.Admin.Concierge.Index())}</li>
+                <li class="selected?{controller == 'Messaging'}">        ${Html.ActionLink("Messaging",  MVC.Admin.Messaging.Index())}</li>
+                <li class="selected?{controller == 'Catalog'} top">      ${Html.ActionLink("Catalogs",   MVC.Admin.Catalog.Index())}</li>
+                <li class="selected?{controller == 'Product'} bottom">   ${Html.ActionLink("Products",   MVC.Admin.Product.Index())}</li>
+                <li class="selected?{controller == 'Import'} bottom">    ${Html.ActionLink("Imports",    MVC.Admin.Import.Index())}</li>
+            </ul>
+        </div>
+        <div id="menu-tab-build" class="selected?{controller == 'Theme' ||
+                                                  controller == 'Folder' ||
+                                                  controller == 'Menu' ||
+                                                  controller == 'Page' ||
+                                                  controller == 'Quiz' ||
+                                                  controller == 'Survey' ||
+                                                  controller == 'Award'}">
+            <ul class="menu-navigation">
+                <li class="selected?{controller == 'Theme'}">            ${Html.ActionLink("Themes",     MVC.Admin.Theme.Index())}</li>
+                <li class="selected?{controller == 'Folder'} top">       ${Html.ActionLink("Files",      MVC.Admin.File.Index())}</li>
+                <li class="selected?{controller == 'Menu'} top">         ${Html.ActionLink("Menu",       MVC.Admin.Menu.Index())}</li>
+                <li class="selected?{controller == 'Page'} ">            ${Html.ActionLink("Pages",      MVC.Admin.Page.Index())}</li>
+                <li class="selected?{controller == 'Game'} ">            ${Html.ActionLink("Games",      MVC.Admin.Game.Index())}</li>
+                <li class="selected?{controller == 'Quiz'} ">            ${Html.ActionLink("Quizzes",    MVC.Admin.Quiz.Index())}</li>
+                <li class="selected?{controller == 'Survey'} ">          ${Html.ActionLink("Surveys",    MVC.Admin.Survey.Index())}</li>
+                <li class="selected?{controller == 'Award'} bottom">     ${Html.ActionLink("Awards",     MVC.Admin.Award.Index())}</li>
+           
+            </ul>
+        </div>
+        <div id="menu-tab-manage" class="selected?{controller == 'Configuration' ||
+                                                   controller == 'Migration' ||
+                                                   controller == 'Error'}">
+            <ul class="menu-navigation">
+                <li class="selected?{controller == 'Configuration'} top">${Html.ActionLink("Configuration", MVC.Admin.Configuration.Index())}</li>
+                <li class="selected?{controller == 'Migration'}">        ${Html.ActionLink("Migration",     MVC.Admin.Migration.Index())}</li>
+                <li class="selected?{controller == 'Error'}">            ${Html.ActionLink("Exceptions",    MVC.Admin.Error.Index())}</li>
+                <li class="selected?{controller == 'Tenant'} bottom">    ${Html.ActionLink("Tenants",       MVC.Admin.Tenant.Index())}</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div id="who" class="ui-widget">
+<button id="collapse">Collapse</button>
+<!-- 
+    <a id="recurve" href="http://recurvesoftware.com"></a>
+    <ul>
+        <li>${adminUser}</li>
+        <li>[</li>
+        <li><a href="http://sugar.recurvesoftware.com/">CRM</a></li>
+        <li><a href="http://mail.recurvesoftware.com/">Mail</a></li>
+        <li><a href="http://docs.recurvesoftware.com/">Docs</a></li>
+        <li><a href="http://freshbooks.com/">Invoicing</a></li>
+        <li>]</li>
+    </ul>
+-->
+</div>

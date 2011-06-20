@@ -1,0 +1,49 @@
+﻿<viewdata model="Ascend.Web.Areas.Site.Controllers.AwardViewModel" />
+<form id="award" method="post" action="${Url.RouteUrl(MobileRoutes.Award)}">
+    <div class="toolbar">
+        <h1>Send Certificate</h1>
+        <a class="button cancel" href="#">Cancel</a>
+    </div>
+    <ul class="display">
+        <li>
+            <h2>${Model.Content.Title}</h2>
+            ${Model.Content.Html}
+        </li>
+    </ul>
+    <h2>Certificate</h2>
+    <ul>
+        <li each="var c in Model.Certificates">
+            <img src="${c.BackgroundUrl.ToAbsoluteUrl(Request)}?w=275&amp;h=200" />
+        </li>
+    </ul>
+    <h2>Recipient</h2>
+    <ul id="award-nominees" class="">
+        <li><input type="search" id="award-nominees-search" placeholder="Search" results="0" /></li>
+        <li each="var u in Model.Nominees"><a href="#${u.Id}" nominee="${u.Id}">${u.DisplayName}</a></li>
+        <test if="Model.Nominees.Count > 1000">
+        <li>
+            <select name="Recipient">
+                <optgroup each="var group in Model.Nominees.OrderBy(x => x.LastName).GroupBy(x => String.IsNullOrEmpty(x.LastName) ? '-' : x.LastName[0].ToString(), x => x)" label="${group.Key}">
+                    <option each="var u in group" value="${u.Id}">${u.DisplayName}</option>
+                </optgroup>        
+            </select>
+        </li>
+        </test>
+    </ul>
+    <test if="Model.Issuance != null && Model.Issuance.Type != IssuanceType.None">
+    <h2>Points</h2>
+    <ul>
+        <li>
+            <input type="number" placeholder="Points" id="award-points" name="Amount" value="${Model.Issuance.FixedIssuance ?? Model.Issuance.DefaultIssuance ?? Model.Issuance.MinIssuance ?? Model.Issuance.MaxIssuance ?? 0}" />
+        </li>
+    </ul>
+    </test>
+    <h2>Message</h2>
+    <ul>
+        <li><textarea name="Message"></textarea></li>
+    </ul>
+    </ul>
+    <input type="hidden" value="0" name="Certificate" />
+    <input type="hidden" value="" id="award-nominee" name="Recipient" />
+    <a href="#" class="submit whiteButton">Send</a>
+</form>

@@ -1,0 +1,9 @@
+﻿<viewdata model="ContentEditModel" />
+
+${Html.Scaffold(s => {
+    s.Open();
+    s.Field(x => x.Title);
+    s.Field(x => x.Format);
+    s.Field(x => x.Body);
+    s.Close();
+})}

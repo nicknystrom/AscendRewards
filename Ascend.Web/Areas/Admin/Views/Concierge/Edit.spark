@@ -1,0 +1,64 @@
+﻿<viewdata id="string" model="ConciergeEditModel" user="UserSummary" concierge="Concierge" />
+
+<style>
+
+textarea { height: 100px; }
+
+</style>
+
+# using (Html.BeginForm(MVC.Admin.Concierge.Edit(id)))
+# {
+
+<div id="admin-edit-tabs">
+    <ul>
+        <li><a href="#admin-concierge-general">General</a></li>
+    </ul>
+    <div id="admin-concierge-general">
+        <h3>Request</h3>
+        <table class="scaffold">
+            <tr>
+                <th>User</th>
+                <td>${Html.ActionLink(user.DisplayName, MVC.Admin.User.Edit(user.Id))}</td>
+            </tr>
+            <tr>
+                <th>Created</th>
+                <td>${concierge.Created.Date.ToString("d")}</td>
+            </tr>
+            <tr>
+                <th>Updated</th>
+                <td>$!{concierge.Updated.Date.ToString("d")}</td>
+            </tr>
+            <tr>
+                <th>Link</th>
+                <td><a href="${concierge.Link}">${concierge.Link}</a></td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>${concierge.Description}</td>
+            </tr>
+        </table>
+
+        <h3>Status</h3>
+        ${Html.Scaffold(s => {
+            s.Open();
+            s.Field(x => x.Stage);
+            s.Field(x => x.Notes);
+            s.Close();
+        })}
+    </div>
+</div>
+
+# }
+
+<content name="actions">
+    <input type="submit" value="Update Concierge Request" />
+    <ul>
+    </ul>
+</content>
+
+<script type="text/javascript">
+
+$(function() {
+});
+        
+</script>

@@ -1,0 +1,6 @@
+﻿<viewdata model="Phone" />
+<span if="null == Model">(none)</span>
+<else>
+<span if="!String.IsNullOrEmpty(Model.Number)">${Model.Number}</span>
+<span if="!String.IsNullOrEmpty(Model.Extension)">(ext. ${Model.Extension)})</span>
+</else>

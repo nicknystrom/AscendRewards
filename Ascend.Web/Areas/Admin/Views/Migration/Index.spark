@@ -1,0 +1,43 @@
+﻿<viewdata model="Ascend.Core.Version" available="int" />
+<set entity="available > 0 ? 'Migrations required' : 'Up-to-date'" />
+
+${Html.Scaffold(s => {
+    s.Open();
+    s.Display(x => x.Revision);
+    s.Display(x => x.History);
+    s.Close();
+})}
+
+<table if="null != Model.History && Model.History.Count > 0">
+    <tr>
+        <th>Applied</th>
+        <th>Revision</th>
+        <th>Created</th>
+        <th>Updated</th>
+        <th>Deleted</th>
+        <th>Unchanged</th>
+    </tr>
+    <tr each="var h in Model.History">
+        <td>${h.Applied.ToShortDateString()}</td>
+        <td>${h.ToRevision}</td>
+        <td>${h.Created}</td>
+        <td>${h.Updated}</td>
+        <td>${h.Deleted}</td>
+        <td>${h.Unchanged}</td>
+    </tr>
+</table>
+
+<form method="POST">
+
+
+<div if="available > 0">
+    <p>There are ${available} migrations available.</p>
+    <p>${Html.CheckBox("confirm")} I would like to begin migrating. </p>
+    <p><input type="submit" value="Migrate" /></p>
+</div>
+
+<div if="available == 0">
+    <p>This database is up-to-date.</p>
+</div>
+
+</form>

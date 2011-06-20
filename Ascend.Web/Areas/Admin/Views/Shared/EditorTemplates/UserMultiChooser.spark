@@ -1,0 +1,68 @@
+﻿<viewdata users="IEnumerable<UserSummary>" model="IEnumerable<string>" />
+
+# var ul = ViewData.TemplateInfo.GetFullHtmlFieldId("List");
+# var buttonDelete = ViewData.TemplateInfo.GetFullHtmlFieldId("Delete");
+# var textSearch = ViewData.TemplateInfo.GetFullHtmlFieldId("Search");
+# var textId = ViewData.TemplateInfo.GetFullHtmlFieldId("Id");
+# var buttonAdd = ViewData.TemplateInfo.GetFullHtmlFieldId("Add");
+
+# var n = 0;
+<ul id="${ul}">
+  <li each="var u in (Model ?? new string[0]).Select(a => users.First(x => x.Id == a)).OrderBy(x => x.FirstName + ' ' + x.LastName)">
+    <input type="checkbox" id="${ViewData.TemplateInfo.GetFullHtmlFieldId((++n).ToString())}" />
+    <input type="hidden" name="${ViewData.TemplateInfo.GetFullHtmlFieldName(null)}" value="${H(u.Id)}" />
+    <label for="${ViewData.TemplateInfo.GetFullHtmlFieldId(n.ToString())}">${u}</label>
+  </li>  
+</ul>
+
+<div class="fieldset-footer">
+  <input type="button" id="${buttonDelete}" value="Remove Selected" />
+  <input type="text" id="${textSearch}" autocomplete="off" />
+  <input type="hidden" id="${textId}" />
+  <input type="button" value="Add User" id="${buttonAdd}" />
+</div>
+  
+<script type="text/javascript">
+  $(function() {
+    
+    $('#${buttonDelete}').click(function() {
+      $('#${ul} :checked').parent().remove()
+    });
+    
+    $('#${buttonAdd}').click(function() {
+      if ($('#${ul} :input[value="' + $('#${textId}').val() + '"]').length > 0) {
+        alert('User is already assigned.');
+      }
+      else {
+        $('#${ul}').append(
+          $('<li><input type="checkbox" /> <input type="hidden" name="${ViewData.TemplateInfo.HtmlFieldPrefix}" value="' +
+          $('#${textId}').val() + '"></input></li>').append($('#${textSearch}').val())
+        );
+      }
+      $('#${textSearch}').val('').select();
+      $(this).removeClass('hover').attr('disabled', true);
+    });
+    
+    $('#${textSearch}')
+    .focus(function() {
+      this.select();
+    })
+  	.autocomplete(
+  		'${Url.Action(MVC.Admin.User.Search())}', {
+  		minChars: 3,
+  		timeOut: 200,
+  		validSelection: true,
+  		valueInput: $('#${textId}'),
+  		width: 300,
+  		onSelect: function(v, t) {
+  			$('#${textSearch}').removeClass('input-validation-error');
+        $('#${buttonAdd}').attr('disabled', false);
+  		},
+  		onInvalidate: function() {
+  			$('#${textSearch}').addClass('input-validation-error');
+        $('#${buttonAdd}').attr('disabled', true);
+  		}
+  	});
+    
+  });
+</script>

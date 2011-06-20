@@ -1,0 +1,157 @@
+﻿<viewdata id="string" model="MenuEditModel" />
+<set entity="Model.Name" />
+
+<style>
+  
+  .menu-items > li {
+    background-color: #f8f8f8;
+    padding: 4px 10px;
+    border: 1px solid #ccc;
+    -moz-border-radius: 6px;    
+    -webkit-border-radius: 6px;
+    margin-bottom: 4px;
+  }
+  
+  .menu-items {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  
+  div#content .ui-icon {
+    cursor: pointer;
+    margin-top: 4px;
+    float: left;
+  }
+  
+  .menu-details {
+    display: none;
+  }
+  
+  .level-0 { margin-left:  0px; }
+  .level-1 { margin-left: 20px; }
+  .level-2 { margin-left: 40px; }
+  .level-3 { margin-left: 60px; }
+  .level-4 { margin-left: 80px; }
+  
+</style>
+
+<div id="menu-template" style="display: none;">
+  <li class="level-0">
+    <input type="hidden" name="Indent" value="0" />
+    <span class="ui-icon ui-icon-triangle-1-e"></span>
+    Name: <input type="text" class="menu-name" name="Name" />
+    <input type="button" class="item-delete" value="Remove" />
+    <input type="button" class="item-out" value="&lt;" />
+    <input type="button" class="item-in" value=">" />
+
+    <div class="menu-details">
+       Type:
+       <select class="item-type" name="Type">
+         <option each="var a in Enum.GetNames(typeof(MenuItemType))">${a}</option>
+       </select>
+      <br/>
+      Location:
+      <input type="text" class="item-location" name="Location" />
+    </div>
+  </li>
+</div>
+
+# using (Html.BeginForm(MVC.Admin.Menu.Edit(id)))
+# {
+
+${Html.Scaffold(s => {
+    s.Open();
+    s.Field(x => x.Name);
+    s.Close();
+})}
+    
+<ul id="root" class="menu-items">
+    <li each="var i in Model.Items" class="level-${i.Indent}">
+    <input type="hidden" name="Indent" value="${i.Indent}" autocomplete="off" />
+    <span class="ui-icon ui-icon-triangle-1-e"></span>
+    Name: <input type="text" class="menu-name" name="Name" value="${H(i.Name)}" />
+    <input type="button" class="item-delete" value="Remove" />
+    <input type="button" class="item-out" value="&lt;" />
+    <input type="button" class="item-in" value=">" />
+    <div class="menu-details">
+        Type:
+        <select class="item-type" name="Type">
+        <option each="var a in Enum.GetNames(typeof(MenuItemType))" selected="true?{i.Type.ToString() == a}">${a}</option>
+        </select>
+        <br/>
+        Location:
+        <input type="text" class="item-location" name="Location" value="${H(i.Location)}" />
+    </div>
+    </li>
+      
+</ul>
+
+# }
+
+<content name="actions">
+    <input type="submit" value="Update Menu" />
+    <ul>
+        <li>
+            <input type="text" id="menu-new-name" />
+            <input type="button" id="menu-new-create" value="Create" />
+        </li>
+    </ul>
+</content>
+
+<script type="text/javascript">
+
+$(function() {
+    
+  $('form').submit(function() {
+    $('#root > li').each(function(i, x) {
+      $(x).find('input[name], select').each(function(j, y) {
+        $(y).attr('name', 'Items[' + i + '].' + $(y).attr('name'));
+      });
+    });
+  });
+    
+  $('#menu-new-create').click(function() {
+    var i = $('#menu-template > *:first').clone();
+    i.find('.menu-name').val($('#menu-new-name').val());
+    $('#root').append(i);
+  });
+  
+  $('#root .item-delete').live('click', function() {
+    $(this).closest('li').remove();
+  });
+  
+  $('#root > li > .ui-icon').live('click', function() {
+    $(this).siblings('.menu-details').toggle();
+    $(this).toggleClass('ui-icon-triangle-1-e');
+    $(this).toggleClass('ui-icon-triangle-1-s');
+  });
+  
+  $('#root input.item-out').live('click', function() {
+    var li = $(this).closest('li');
+    var ind = li.find('input[name="Indent"]');
+    var x = Number(ind.val())
+    if (x > 0) {
+      x--;
+      ind.val(x);
+      li.attr('class', 'level-' + x);
+    }
+  });
+  $('#root input.item-in').live('click', function() {
+    var li = $(this).closest('li');
+    var ind = li.find('input[name="Indent"]');
+    var x = Number(ind.val())
+    if (x < 4) {
+      x++;
+      ind.val(x);
+      li.attr('class', 'level-' + x);
+    }
+  });
+
+  $('#root').sortable({
+    
+  });
+    
+});
+        
+</script>

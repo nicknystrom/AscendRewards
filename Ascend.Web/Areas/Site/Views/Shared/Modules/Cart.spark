@@ -1,0 +1,7 @@
+﻿<viewdata cart="ShoppingCart" />
+<h2 class="ui-widget-header"><span class="ui-icon ui-icon-cart"></span> Shopping Cart</h2>
+<div>
+    <span><strong>${cart.Sum(x => x.Value.Quantity)}</strong> product(s) totaling <strong>${cart.Total} points</strong>.</span>
+    <br />
+    <span>${Html.ActionLink("View Your Cart", MVC.Site.Cart.Index())}</span>
+</div>

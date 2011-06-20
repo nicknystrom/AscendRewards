@@ -1,0 +1,21 @@
+﻿<viewdata model="RandomizerModel" />
+
+<set entity="'Randomizer'" />
+
+<form method="post">
+
+${Html.Scaffold(s => {
+    s.Open();
+    s.Field(x => x.From);
+    s.Field(x => x.To);
+    s.Field(x => x.Users);
+    s.Field(x => x.EmailDomain);
+    s.Close();
+})}
+
+<input type="submit" value="Randomize!" />
+
+<p>It creates a mess of data, and there's no real way to undo it, so make
+sure this is really what you want to do.</p>
+
+</form>

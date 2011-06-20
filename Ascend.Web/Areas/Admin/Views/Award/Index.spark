@@ -1,0 +1,48 @@
+﻿<viewdata model="IEnumerable<Award>" create="AwardCreateModel" />
+
+<style>
+    span.expired { color: #f00; }
+</style>
+
+<div id="create-award" class="create-dialog">
+    # Html.RenderPartial("AwardCreateModel", create ?? new AwardCreateModel()   );
+</div>
+
+<table class="index-table">
+    <thead>
+        <tr>
+            <th style="width: 75px;">Title</th>
+            <th style="width: 100px;">Issuance</th>
+            <th style="width: 80px;">Enabled</th>
+            <th style="width: 80px;">Archived</th>
+            <th style="width: 280px;">Availability</th>
+
+        </tr>
+    </thead>
+    <tbody>
+        <tr each="var a in Model">
+            <td>${Html.ActionLink(a.Title, MVC.Admin.Award.Edit(a.Document.Id))}</td>
+            <td><span if="null != a.Issuance">${a.Issuance.Type}</span></td>
+
+            <td><span class="ui-icon ui-icon-check" if="a.Enabled" /></td>
+            <td><span class="ui-icon ui-icon-check" if="a.Archived" /></td>
+            <td>
+                <span if="a.Availability.Mode == AvailabilityMode.AvailableToPublic">Public</span>
+                <span if="a.Availability.Mode == AvailabilityMode.AvailableToAllUsers">Registered Users</span>
+                <span if="a.Availability.Mode == AvailabilityMode.AvailableOnlyTo">Specific Users</span>
+                <span if="a.Availability.Mode == AvailabilityMode.AvailableToEveryoneBut">Registered Users with Exceptions</span>
+                <span if="a.Availability.From.HasValue"
+                      class="expired?{a.Availability.From.Value > DateTime.UtcNow}">, From ${a.Availability.From.Value.ToShortDateString()}</span>
+                <span if="a.Availability.To.HasValue"
+                      class="expired?{a.Availability.To.Value < DateTime.UtcNow}">, Until ${a.Availability.To.Value.ToShortDateString()}</span>
+            </td>
+
+        </tr>
+    </tbody>
+</table>
+
+<content name="actions">
+    <ul>
+        <li><a href="#create-award" class="create-button">New Award</a></li>
+    </ul>
+</content>

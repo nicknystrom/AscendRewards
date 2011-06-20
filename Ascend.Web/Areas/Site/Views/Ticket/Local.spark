@@ -1,0 +1,21 @@
+﻿<viewdata model="Event[]" />
+
+<style>
+
+</style>
+
+<use file="Catalog/_Nav" />
+
+<h1>Event Tickets</h1>
+
+<use file="_Search" />
+
+<use file="DisplayTemplates/Events" />
+
+<script type="text/javascript">
+  
+    $(function () {
+        
+    });
+
+</script>

@@ -1,0 +1,13 @@
+﻿<viewdata model="AwardCreateModel" />
+
+# using (Html.BeginForm(MVC.Admin.Award.Index()))
+# {
+
+    ${Html.Scaffold(s => {
+            s.Open();
+            s.Field(a => a.Title);
+            s.Submit("Create Award");
+            s.Close();
+    })}
+    
+# }

@@ -1,0 +1,201 @@
+﻿<viewdata model="CatalogProduct" edit="bool?" />
+
+<content name="head">
+    <link type="text/css" rel="Stylesheet" href="/Content/Images/Fancybox/jquery.fancybox-1.3.3.css" />
+    <script type="text/javascript" src="/Content/Scripts/jquery.fancybox-1.3.3.pack.js"></script>
+</content>
+
+<use file="Catalog/_Nav" />
+
+<use file="Catalog/Categories" category="Model.Category" />
+
+<style>
+
+    div#more-products
+    {
+        height: 200px;
+    }
+    
+    div#products 
+    {
+        height: 180px;
+    }
+    
+    .product
+    {
+        width: 122px;
+        height: 182px;
+    }
+    
+    .product > a > span.brand,
+    .product > a > span.name,
+    .product > a > span.points
+    {
+        width: 120px;
+    }
+
+    div#listing
+    {
+        position: absolute;
+        width: 550px;
+        height: 200px;
+    }
+    
+    ul#products
+    {
+        margin: 0;
+    }
+    
+</style>
+
+<div id="product">
+
+<a id="product-image-link"
+   href="${Html.GetProductImageUrl(Model.Id, 0, null, null)}">
+    <img id="product-image"
+         width="250px"
+         height="250px"
+         src="${Html.GetProductImageUrl(Model.Id, 0, 250, 250)}"
+    />
+</a>
+<div id="product-info">
+    <span id="product-brand" if="!String.IsNullOrEmpty(Model.Brand)">${Model.Brand}</span>
+    <span id="product-name">${Model.Name}</span>
+    <span id="product-model" if="!String.IsNullOrEmpty(Model.Model)">${Model.Model}</span>
+    <span id="product-points">${Model.Price.ToString("n0")} points</span>
+    <span if="Model.Options.Count > 1">
+        <select id="product-options">
+            <option each="var o in Model.Options" value="${H(o.Name)}">${o.Name} (<span if="null != o.Price">${o.Price} points</span>)</option>
+        </select>
+    </span>
+    <input type="hidden" 
+           id="product-options"
+           value="${H(Model.Options.First().Name)}"
+           if="null != Model.Options && Model.Options.Count == 1" 
+    />
+    <ul id="product-tabs">
+        <li class="selected" id="product-description-tab">Overview</li>
+        <li id="product-details-tab" if="Model.Features != null && Model.Features.Length > 0">Details</li>
+    </ul>
+    <div id="product-description">
+        ${Model.Description}
+    </div>
+    <div id="product-details" if="Model.Features != null && Model.Features.Length > 0">
+        <ul>
+            <li each="var f in Model.Features">${f}</li>
+        </ul>
+    </div>
+    <div id="product-actions">
+        <input type="button" id="product-add-cart" value="Add to Cart" />
+        <input type="button" id="product-add-wishlist" value="Add to Wishlist" />
+    </div>
+</div>
+  
+</div>
+
+<div id="more-products" if="null != Model.Category">
+
+    <div id="product-template" style="display: none;">
+        <div class="product">
+            <a>
+                <img />
+                <span class="name"></span>
+                <span class="points"></span>
+            </a>
+        </div>
+    </div>
+
+    More products from the ${Model.Category.Name} category:<br/>
+
+    <div id="more-products-previous">&#0171;</div>
+    <div id="more-products-next">&#0187;</div>
+    <div id="products">
+
+    </div>
+    
+</div>
+
+<script type="text/javascript" src="/Content/products.js"></script>
+<script type="text/javascript">
+
+    <test if="null != Model.Category">
+    var panel = {
+      products:       ${JsonConvert.SerializeObject(Model.Category.Products.Take(16))},
+      template:       '#product-template > div',
+      itemSize:       [122, 182],
+      itemSpacing:             4,
+      imageSize:      [114, 114],
+      gridSize:       [  4,   1],
+      urlProduct:    '${Url.Action(MVC.Site.Catalog.Product("(id)"))}',
+      urlThumb:      '${Html.GetProductImageUrl("(id)", 0, 888888, 999999)}',
+      thumbnails:    ${JsonConvert.SerializeObject(Model.Category.Products.Select(x => Html.GetProductImageUrl(x.Id, 0, 170, 170)))}
+    };
+    </test>
+
+    $(function () {
+
+        $('#product-image-link').fancybox({ type: 'image' });
+
+        $('#product-description-tab').click(function () {
+            $('#product-description-tab').toggleClass('selected', true);
+            $('#product-details-tab').toggleClass('selected', false);
+            $('#product-description').show();
+            $('#product-details').hide();
+        });
+        $('#product-details-tab').click(function () {
+            $('#product-description-tab').toggleClass('selected', false);
+            $('#product-details-tab').toggleClass('selected', true);
+            $('#product-description').hide();
+            $('#product-details').show();
+        });
+
+        $('#product-add-wishlist').click(function () {
+            var optionTemplate =  '${Url.Action(MVC.Site.Cart.Update("wishlist", Model.Id, "optionName", null))}';
+            var simpleTemplate = '${Url.Action(MVC.Site.Cart.Update("wishlist", Model.Id, null, null))}';
+            $.ajax({
+                url: $('#product-options').val() == undefined
+                        ? simpleTemplate
+                        : optionTemplate.replace('optionName', $('#product-options').val()),
+                type: 'POST',
+                data: {
+                    quantity: 1
+                },
+                success: function (data) {
+                    $('#product-image').effect(
+                        'transfer',
+                        { to: '#wishlist', className: 'ui-effects-transfer' },
+                        750
+                    );
+                    $('#wishlist').html(data);
+               }
+            });
+            return false;
+        });
+
+        $('#product-add-cart').click(function () {
+            var data = {
+                    productId: '${Model.Id}',
+                    quantity: 1
+            };
+            if ($('#product-options').val() != undefined) {
+                data.optionName = $('#product-options').val();
+            }
+            $.ajax({
+                url: '${Url.Action(MVC.Site.Cart.Index())}',
+                type: 'POST',
+                data: data,
+                success: function (data) {
+                    window.location = '${Url.Action(MVC.Site.Cart.Index())}';
+                }
+            });
+            return false;
+        });
+
+        <test if="null != Model.Category">
+        $('#products').products(panel);
+        $('#more-products-previous').click(function() { $('#products').products('page', -1); return false; });    
+        $('#more-products-next')    .click(function() { $('#products').products('page',  1); return false; });    
+        </test>
+
+    });
+</script>

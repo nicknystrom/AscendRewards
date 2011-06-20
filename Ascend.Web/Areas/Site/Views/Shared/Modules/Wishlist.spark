@@ -1,0 +1,50 @@
+﻿<viewdata wishlist="ShoppingCart" wishlistItem="string" />
+
+# var wi = (wishlist != null && wishlist.Count > 0)
+#   ? (null == wishlistItem
+#        ? wishlist.ElementAt(new Random().Next(0, wishlist.Count)).Value
+#        : wishlist[wishlistItem])
+#   : (ShoppingCartItem)null;
+
+<h2 class="ui-widget-header"><span class="ui-icon ui-icon-tag"></span> Wish List</h2>
+<div if="null != wi">
+    <span id="wishlist-name">${wi.ProductName}</span>
+    <span id="wishlist-item">${wi.OptionName}</span>
+    <span>
+        <a href="#" id="wishlist-previous">&#0171;</a>
+        <a href="${Url.Action(MVC.Site.Catalog.Product(wi.ProductId))}">
+        <img id="wishlist-image" src="${Html.GetProductImageUrl(wi.ProductId, 0, 150, 150)}" width="150px" height="150px" />
+        </a>
+        <a href="#" id="wishlist-next">&#0187;</a>
+    </span>
+    <span>Points needed to purchase this item</span>
+    <span id="wishlist-points">${wi.UnitPrice.ToString("n0")}</span>
+    <span>${Html.ActionLink("View Your Wish List", MVC.Site.Cart.Wishlist())}</span>
+</div>
+<div if="null == wi">
+    Your wishlist is empty!
+</div>
+
+<script type="text/javascript">
+
+    var wishlist = ${JsonConvert.SerializeObject(wishlist.Select(x => x.Value))};
+    var current = 0;
+
+    function displayWishlistItem(n) {
+        var wi = wishlist[n%wishlist.length];
+        $('#wishlist-name').text(wi.ProductName);
+        $('#wishlist-item').text(wi.ItemName);
+        $('#wishlist-image').attr(
+            'src', 
+            '${Html.GetProductImageUrl('productId', 0, 150, 150)}'
+                .replace('productId', wi.ProductId));
+        $('#wishlist-points').text(wi.UnitPrice);
+        return false;
+    }
+
+    $(function () {
+        $('#wishlist-next').click(function() { return displayWishlistItem(++current); });
+        $('#wishlist-previous').click(function() { return displayWishlistItem(--current); });
+    });
+    
+</script>

@@ -1,0 +1,33 @@
+﻿<viewdata users="Ascend.Core.Services.Caching.IUserSummaryCache" model="string" />
+
+# var textSearch = ViewData.TemplateInfo.GetFullHtmlFieldId("Search");
+# var textId = ViewData.TemplateInfo.GetFullHtmlFieldId("");
+
+<input type="text" id="${textSearch}" autocomplete="off" value="${String.IsNullOrEmpty(Model) ? '(none)' : users[Model].DisplayName}" />
+<input type="hidden"
+       id="${textId}"
+       name="${ViewData.TemplateInfo.GetFullHtmlFieldName(String.Empty)}"
+       value="${Model}"       
+/>
+  
+<script type="text/javascript">
+  $(function() {
+    $('#${textSearch}')
+        .focus(function() { this.select(); })
+        .autocomplete(
+      		'${Url.Action(MVC.Admin.User.Search())}',
+            {
+          		minChars: 3,
+          		timeOut: 200,
+          		validSelection: true,
+          		valueInput: $('#${textId}'),
+          		width: 300,
+          		onSelect: function(v, t) {
+          			$('#${textSearch}').removeClass('input-validation-error');
+                },
+          		onInvalidate: function() {
+          			$('#${textSearch}').addClass('input-validation-error');
+                }
+          	});
+  });
+</script>

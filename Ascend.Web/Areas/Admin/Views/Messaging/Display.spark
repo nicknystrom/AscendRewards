@@ -1,0 +1,46 @@
+﻿<viewdata model="Email" />
+<set entity="Model.Recipient.Name" />
+<style>
+
+</style>
+
+${Html.Scaffold(s => {
+    s.Open();
+    s.Display(x => x.Sender);
+    s.Display(x => x.Recipient);
+    s.Display(x => x.Subject);
+    s.Display(x => x.Body);
+    s.Close();
+})}
+
+<br/>
+<p>Send Attempts:</p>
+
+<table>
+    <tr>
+        <th>Server</th>
+        <th>Date</th>
+        <th>Success</th>
+        <th>Error</th>
+    </tr>
+    <tr each="var a in Model.Attempts">
+        <td>${a.Server}</td>
+        <td>${a.Date}</td>
+        <td>${a.Success}</td>
+        <td>${a.Error}</td>
+    </tr>
+</table>
+
+<form id="resend" action="${Url.Action(MVC.Admin.Messaging.Resend(Model.Document.Id))}" method="post">
+    <input id="resend" type="submit" value="Resend this Message" />
+</form>
+
+<script type="text/javascript">
+
+$(function() {
+    $('#resend').submit(function() {
+        return confirm('Are you sure you want to resend this message?');
+    });
+});
+        
+</script>

@@ -1,0 +1,31 @@
+﻿<viewdata />
+
+<div class="ticket-search">
+    <form action="foo" method="get">
+        Search events by
+        <select id="ticket-search-type">
+            <option value="${Url.Action(MVC.Site.Ticket.Local(null))}">Zip</option>
+            <option value="${Url.Action(MVC.Site.Ticket.Venues(null))}">Venue</option>
+            <option value="${Url.Action(MVC.Site.Ticket.Performers(null))}">Performer</option>
+        </select>
+        <input type="search" name="q" value="" />
+        <input type="submit" value="Search" />
+    </form>
+</div>
+
+<script type="text/javascript">
+    $(function () {
+        $('.ticket-search :text').click(function () {
+            $(this).select();
+        });
+        $('.ticket-search form').submit(function () {
+            $(this).attr('action', $('#ticket-search-type').val());
+            var txt = $(this).find(':text');
+            if (txt.val().length == 0) {
+                txt.toggleClass('input-validation-error', true);
+                return false;
+            }
+            return true;
+        });
+    });
+</script>

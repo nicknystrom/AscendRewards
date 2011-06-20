@@ -1,0 +1,110 @@
+﻿<viewdata model="MyActivityViewModel" />
+
+<style>
+  
+  div.activity-summary {
+    padding: 10px; 
+    width: 480px;
+    -moz-border-radius: 6px;    
+    -webkit-border-radius: 6px;
+  }
+  
+  div.activity-summary table {
+    width: 100%;
+  }
+  
+  div#activity-header {
+    border-bottom: 1px dotted #777;
+    padding-bottom: 5px;
+  }
+  
+  div#activity-footer {
+    margin: 5px 0 0 0;
+    border-top: 1px dotted #777;
+    padding-top: 5px;
+  }
+  
+  span.activity-program-amount {
+    float: right;
+    width: 100px;
+    padding-right: 20px;
+  }
+  
+  div.activity-program {
+    margin: 5px 0 0 0;
+    cursor: pointer;
+  }
+  
+  table.activity-program {
+    display: none;
+    margin: 10px 0 5px 10px;
+    width: 480px;
+  }
+  
+  table.activity-program td.date  {
+    width: 90px;
+  }
+  table.activity-program td.number  {
+    width: 75px;
+  }
+  
+</style>
+
+<use file="Profile/_Tabs" />
+
+<div class="tab-content">
+  
+    <h3>Points Summary for ${currentUser.DisplayName}</h3>
+      
+    <div class="activity-summary">
+    <table>
+        <tr>
+            <td>Points Earned</td>
+            <td class="number">${currentUserLedger.TotalCredits.ToString("n0")}</td>
+        </tr>
+        <tr>
+            <td>Less Points</td>
+            <td class="number">${currentUserLedger.TotalDebits.ToString("n0")}</td>
+        </tr>
+        <tr class="balance-total">
+            <td>Point Balance</td>
+            <td class="number">${currentUserLedger.Balance.ToString("n0")}</td>
+        </tr>
+    </table>
+    </div>
+  
+    <h3>Points Earned to Date by Program</h3>
+
+    <div id="activity-header">
+        <span class="number activity-program-amount">Points</span>
+        <span class="">Program</span>
+    </div>
+    <for each="var program in Model.Programs">
+        <div class="activity-program">
+            <span class="number activity-program-amount">${program.Total.ToString("n0")}</span>
+            <span><img src="${Links.Content.Images.Plus_png}" /> ${program.Name}</span>
+        </div>
+        <table class="activity-program">
+          <tr each="var x in program.Transactions">
+            <td class="date">${x.Date.ToShortDateString()}</td>
+            <td>${x.Description}</td>
+            <td class="number">${x.Amount.ToString("n0")}</td>
+          </tr>
+        </table>
+    </for>
+    <div id="activity-footer">
+        <span class="number activity-program-amount">${Model.Total.ToString("n0")}</span>
+        <span>Total</span>
+    </div>
+
+</div>
+
+<script type="text/javascript">
+
+    $(function() {
+        $('div.activity-program').click(function() {
+            $(this).next('table').toggle();
+        });
+    });
+
+</script>

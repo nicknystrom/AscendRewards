@@ -1,0 +1,27 @@
+﻿<viewdata model="IEnumerable<Concierge>" users="Ascend.Core.Services.Caching.IUserSummaryCache"/>
+
+<table class="index-table">
+    <thead>
+        <tr>
+            <th>User</th>
+            <th>Stage</th>
+            <th>Created</th>
+            <th>Updated</th>
+            <th>Age</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr each="var x in Model">
+            <td>${users[x.User]}</td>
+            <td>${Html.ActionLink(x.Stage.ToString(), MVC.Admin.Concierge.Edit(x.Document.Id))}</td>    
+            <td>${x.Created.Date.ToString("d")}</td>    
+            <td>$!{x.Updated.Date.ToString("d")}</td>    
+            <td>${(int)Math.Ceiling((DateTime.Now - (x.Updated ?? x.Created).Date).TotalDays)}</td>    
+        </tr>
+    </tbody>
+</table>
+
+<content name="actions">
+    <ul>
+    </ul>
+</content>

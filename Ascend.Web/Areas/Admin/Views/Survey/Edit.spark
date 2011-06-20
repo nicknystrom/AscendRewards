@@ -1,0 +1,244 @@
+﻿<viewdata id="string" model="SurveyEditModel" />
+<set entity="Model.Title" />
+
+<style>
+
+  ul#questions,
+  ul.answers {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  ul#questions > li
+  {
+    background-color: #f8f8f8;
+    border: 1px solid #ccc;
+    padding: 0;
+    margin-bottom: 6px;
+    -moz-border-radius: 6px;    
+    -webkit-border-radius: 6px;
+  }
+  
+  ul.answers {
+    padding-left: 35px;
+  }
+  
+  ul.answers > li {
+    margin-bottom: 2px;
+  }  
+
+  ul.answers > li input[type="text"] {
+    width: 300px;
+  }
+  
+  .handle {
+    float: left;
+    background-color: #ccc;
+    width: 10px;
+    height: 26px;
+    cursor: move;
+    margin-left: -13px;
+  }
+  
+  input.question-title {
+    width: 400px;
+  }
+
+  input.question-points {
+    width: 75px;
+  }
+
+  ul#questions .question-header {
+    margin-bottom: 8px;
+    padding: 8px 12px;
+    background-color: #ccc;
+  }  
+  
+  ul#questions .question-footer {
+    margin: 8px;
+  }
+  
+</style>
+
+# using (Html.BeginForm(MVC.Admin.Survey.Edit(id)))
+# {
+
+<div id="admin-edit-tabs">
+    <ul>
+        <li><a href="#admin-survey-program">Program</a></li>
+        <li><a href="#admin-survey-availability">Availability (${Model.Availability})</a></li>
+        <li><a href="#admin-survey-budget">Budget</a></li>
+        <li><a href="#admin-survey-general">General</a></li>
+        <li><a href="#admin-survey-questions">Questions</a></li>
+    </ul>
+    <div id="admin-survey-program">
+        ${Html.EditorFor(x => x.Content)}
+    </div>
+    <div id="admin-survey-availability">
+      ${Html.EditorFor(x => x.Availability)}
+    </div>
+    <div id="admin-survey-budget">
+      ${Html.EditorFor(x => x.Issuance)}
+    </div>
+    <div id="admin-survey-general">
+        ${Html.Scaffold(s => {
+            s.Open();
+            s.Field(x => x.MaxTimes);
+            s.Field(x => x.Points);
+            s.Close();
+        })}
+    </div>
+    <div id="admin-survey-questions">
+      <div id="question-template" style="display: none">
+        <li>
+          <div class="question-header">
+            Title: <input type="text" class="question-title" value="0. New question" />
+            Freeform: <input type="checkbox" value="true" class="question-freeform" />
+            <input type="button" class="question-delete" value="Remove" />
+          </div>
+          <ul class="answers">
+            <li each="var x in new [] { 'a. True', 'b. False', 'c. Strongly Disagree', 'd. Disagree', 'e. Somewhat Agree', 'f. Agree', 'g. Strongly Agree', 'h. Not Applicable' }">
+              <div class="handle"> </div>
+              <input type="text" value="${x}" />
+              <input type="button" class="answer-delete" value="X" />
+            </li>          
+          </ul>
+          <div class="question-footer">
+            <input type="button" class="answer-new" value="New Answer" />
+          </div>
+        </li>    
+      </div>
+      <div id="answer-template" style="display: none">
+        <li>
+          <div class="handle"> </div>
+          <input type="text" value="a. New Answer" />
+          <input type="button" class="answer-delete" value="X" />
+        </li>
+      </div>
+      <ul id="questions">
+        <li each="var q in (Model.Questions ?? new SurveyQuestion[0])">
+          <div class="question-header">
+            Title: <input type="text" class="question-title" value="${H(q.Title)}" />
+            Freeform: <input type="checkbox" class="question-freeform" value="true" checked="true?{q.Freeform}" />
+            <input type="button" class="question-delete" value="Remove" />
+          </div>
+        
+          <ul class="answers">
+            <test if="q.Answers != null">
+            <li each="var a in q.Answers">
+              <div class="handle"> </div>
+              <input type="text" value="${H(a.Title)}" />
+              <input type="button" class="answer-delete" value="X" />
+            </li>
+            </test>
+          </ul>
+          <div class="question-footer">
+            <input type="button" class="answer-new" value="New Answer" />
+          </div>
+        </li>
+      </ul>
+
+      <input type="button" id="question-new" value="New Question" />
+  
+    </div>
+</div>
+
+# }
+
+<content name="actions">
+    <input type="submit" value="Update Survey" />
+    <ul>
+    </ul>
+</content>
+
+<script type="text/javascript">
+ 
+function renumberQuestions() {
+  renumberNumeric($('#questions input.question-title'));
+}
+
+var alphaHeadings = ['a.', 'b.', 'c.', 'd.', 'e.', 'f.', 'g.', 'h.', 'i.'];
+
+function renumberAnswers(ul) {
+  renumberAlpha(ul.find('input[type="text"]'));
+}
+
+function renumberNumeric(items) {
+  items.each(function(i, x) {
+    x = $(x);
+    if (x.val().length > 0 && !isNaN(x.val()[0])) {
+      x.val((i+1) + x.val().substr(1) );
+    }
+  });
+} 
+
+function renumberAlpha(items) {
+  items.each(function(i, x) {
+    x = $(x);
+    if (x.val().length > 1 && /[a-z]\./.test(x.val())) {
+      x.val(alphaHeadings[i] + x.val().substr(2));
+    }
+  });
+} 
+
+$(function() {
+    
+  $('form').submit(function() {
+    $('#questions > li').each(function(i, x) {
+      var pre =  'Questions[' + i + '].';
+      $(this).find('.question-header > input[type="text"]').attr('name', pre + 'Title');
+      $(this).find('.question-header > input[type="checkbox"]').attr('name', pre + 'Freeform');
+      $(this).find('input.question-points').attr('name', pre + 'Points');
+      $(this).find('ul.answers > li').each(function(j, y) {
+        $(this).find('input[type="text"]').attr('name', pre + 'Answers[' + j + '].Title');
+      });   
+    });
+  });
+
+  $('#question-new').click(function() {
+    $('#question-template > li:first').clone().appendTo('#questions')
+    .find('.answers')
+    .sortable({
+      cursor: 'move',
+        update: function(event, ui) {
+          renumberAnswers($(ui.item).closest('ul'));
+        }
+    });
+    renumberQuestions();
+  });
+  
+  $('#questions .question-delete').live('click', function() {
+    $(this).closest('li').remove();
+    renumberQuestions();
+  });    
+  
+  $('#questions .answer-delete').live('click', function() {
+    var ul = $(this).closest('ul');
+    $(this).closest('li').remove();
+    renumberAnswers(ul);
+  });
+
+  $('input[type="button"].answer-new').live('click', function() {
+    $(this).closest('li').find('ul.answers').append(
+      $('#answer-template > li:first').clone()
+    );
+    renumberAnswers($(this).closest('li').find('ul.answers'));
+  });
+  
+  $('#questions').sortable({
+    cursor: 'move',
+    update: function(event, ui) {
+      renumberQuestions();
+    }
+  });    
+  
+  $('#questions .answers').sortable({
+    cursor: 'move',
+    update: function(event, ui) {
+      renumberAnswers($(ui.item).closest('ul'));
+    }
+  });
+});
+  
+</script>

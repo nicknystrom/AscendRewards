@@ -1,0 +1,91 @@
+﻿<viewdata model="IList<UserSummary>" />
+
+<style>
+
+    
+</style>
+
+<div id="budget-summary">
+You have <strong>${currentUserBudget.Balance.ToString("n0")}</strong> points remaining to distribute<span if="null != currentUserBudget.Account.Budget && currentUserBudget.Account.Budget.NextRefresh.HasValue">, and your budget will reset on <strong>${currentUserBudget.Account.Budget.NextRefresh.Value.ToShortDateString()}</strong></span>.</span>
+</div>
+
+<div if="Model.Count > 0">
+To distribute points, first select a user below. This list includes all of your direct reports, and any user in a group
+which you manage.
+</div>
+
+<div if="Model.Count == 0">
+    No one in the system currently reports to you, so you cannot distribute your budget using this screen. Instead try sending
+    a spotlight award with some points attached.
+</div>
+
+<ul id="budget-users">
+    <li each="var u in Model">
+        <a href="${Url.Action(MVC.Site.Budget.Distribute(u.Id))}">${u.DisplayName}</a>
+        <div class="distribute"></div>
+    </li>
+</ul>
+
+<script type="text/javascript">
+$(function() {
+
+    var balance = ${currentUserBudget.Balance};
+
+    $('#budget-users li a').click(function() {
+        var url = $(this).attr('href');
+        var x = $(this).next('.distribute');
+        if (x.css('display') == 'none') {
+            x.load(url, function() {
+                $('#budget-users > li > div.distribute:visible').slideUp(function() { $(this).empty(); });
+                $(this).slideDown();   
+            });
+        }
+        else {
+            x.slideUp();
+        }
+        return false;
+    });
+
+    $('#budget-users .distribute input[name="Amount"]').live('keyup', function() {
+        var amt = Number($(this).val());
+        $(this).toggleClass(
+            'input-validation-error', 
+            isNaN(amt) || amt > balance
+        );
+    });
+
+    $('#budget-users .distribute .budget-wishlist-difference').live('click', function() {
+        var amt = Number($(this).attr('amount'));
+        if (!isNaN(amt) && amt > 0) {
+            if (amt > balance) {
+                amt = balance;
+            }
+            $(this).closest('li').find('input[name="Amount"]').val(amt);
+        }
+    });
+    
+    $('#budget-users .distribute input[type="button"]').live('click', function() {
+        var url = $(this).closest('li').find('a:first').attr('href');
+        var amt = Number($(this).closest('table').find('input[name="Amount"]').val());
+        if (isNaN(amt))
+        {
+            alert('Please enter an amount to award this user.');
+            return;
+        }
+        if (amt > balance)
+        {
+            alert('Enter a maximum of ${currentUserBudget.Balance.ToString("n0")} points to award this user.');
+            return;
+        }
+        $.post(
+            url,
+            {
+                Amount: amt,
+                Message: $(this).closest('table').find('textarea').val()
+            },
+            function() { window.location.reload(); }
+        );
+    });
+
+});
+</script>

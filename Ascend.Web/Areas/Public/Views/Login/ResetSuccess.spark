@@ -1,0 +1,12 @@
+﻿<viewdata model="PasswordResetViewModel" />
+
+<div id="form-links">
+    <ul>
+        <li>${Html.ActionLink("Login", MVC.Public.Login.Index())}</li>
+    </ul>
+</div>
+
+You should be receiving an email shortly with instructions for logging into the site. If you
+don't receive this email in the next few minutes, double check that it hasn't been marked as spam,
+try to reset your password again, and if that doesn't work, simply contact customer service
+to resolve the issue. Thanks!

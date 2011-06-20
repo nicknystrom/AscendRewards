@@ -1,0 +1,21 @@
+﻿<viewdata />
+
+<a href="${Url.Action(MVC.Dash.Report.ProgramLiability())}?tqx=out:csv">CSV</a>
+
+
+<div id="wishlist"></div>
+
+<script type="text/javascript">
+
+    $(function ()
+    {
+        var t = new google.visualization.Query('${Url.Action(MVC.Dash.Report.ProgramLiability())}');
+        t.send(function (response)
+        {
+            var d = response.getDataTable();
+            var table = new google.visualization.Table(document.getElementById('wishlist'));
+            table.draw(d);
+        });
+    });
+
+</script>

@@ -1,0 +1,64 @@
+﻿<viewdata model="QuizReviewModel" />
+
+<style>
+
+.questions, .answers { list-style: none; }
+.error { color: #f00; }
+
+.questions {
+    margin: 0;
+    padding: 0;
+}
+
+.questions > li {
+    list-style: none;
+}
+
+.answer {
+    padding: 6px;
+    margin: 6px 0 12px 12px;
+    width: 60%;
+}
+
+.correct {
+    background-color: #afa;
+    border: 1px solid #6f6;
+}
+
+.incorrect {
+    background-color: #faa;
+    border: 1px solid #f66;
+}
+
+</style>
+
+<h1>Results for ${Model.Quiz.Title}</h1>
+
+<p>You took this quiz on ${Model.Result.Taken.ToShortDateString()}.</p>
+
+<p if="!Model.Passed">
+    You did not pass the quiz. You answered ${Model.Correct} questions correctly, but
+    needed ${Model.Needed} correct answers to pass.
+</p>
+
+<p if="Model.Passed">
+    Congratulations! You passed with ${Model.Correct} correct answers!
+</p>
+
+<p if="Model.Points > 0">
+    You earned ${Model.Points} points!
+</p>
+
+<ul class="questions" if="Model.Review">
+    # var i = -1;
+    <li each="var q in Model.Result.Answers">
+        # i++;
+        ${q.Question}
+        <div class="answer correct?{q.Correct} incorrect?{!q.Correct}">${q.Answer}</div>
+    </li>
+</ul>
+
+<script type="text/javascript">
+    $(function () {
+    });
+</script>

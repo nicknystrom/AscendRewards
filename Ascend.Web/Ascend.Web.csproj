@@ -1,0 +1,760 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{EA92C3E7-259E-435F-B876-EB2747A85A2B}</ProjectGuid>
+    <ProjectTypeGuids>{E53F8FEA-EAE0-44A6-8774-FFD645390401};{349C5851-65DF-11DA-9384-00065B846F21};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Ascend.Web</RootNamespace>
+    <AssemblyName>Ascend.Web</AssemblyName>
+    <MvcBuildViews>false</MvcBuildViews>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Abstractions" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Routing" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="Autofac, Version=2.4.4.705, Culture=neutral, PublicKeyToken=17863af14b0044da">
+      <HintPath>..\lib\Autofac.dll</HintPath>
+    </Reference>
+    <Reference Include="Autofac.Integration.Mvc, Version=2.4.4.705, Culture=neutral, PublicKeyToken=17863af14b0044da">
+      <HintPath>..\lib\Autofac.Integration.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="Ionic.Utils.Zip, Version=1.3.0.0, Culture=neutral, PublicKeyToken=c551e179877da246">
+      <HintPath>..\lib\Ionic.Utils.Zip.dll</HintPath>
+    </Reference>
+    <Reference Include="itextsharp, Version=5.0.5.0, Culture=neutral, PublicKeyToken=8354ae6d2174ddca">
+      <HintPath>..\lib\itextsharp.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=4.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\lib\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\lib\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="Spark, Version=1.5.0.0, Culture=neutral, PublicKeyToken=7f8549eed921a12c">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\lib\Spark.dll</HintPath>
+    </Reference>
+    <Reference Include="Spark.Web.Mvc, Version=1.5.0.0, Culture=neutral, PublicKeyToken=7f8549eed921a12c">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\lib\Spark.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Core" />
+    <Reference Include="System.Web.WebPages, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\lib\System.Web.WebPages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\lib\System.Web.WebPages.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\lib\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\lib\System.Web.WebPages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="log4net, Version=1.2.10.0, Culture=neutral, PublicKeyToken=1b44e1d426115821">
+      <HintPath>..\lib\log4net.dll</HintPath>
+    </Reference>
+    <Reference Include="RedBranch.Hammock, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\lib\RedBranch.Hammock.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Configuration.Install" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Admin.AccountController.generated.cs">
+      <DependentUpon>T4MVC.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Admin.AwardController.generated.cs">
+      <DependentUpon>T4MVC.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Admin.CatalogController.generated.cs">
+      <DependentUpon>T4MVC.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Admin.ConciergeController.generated.cs">
+      <DependentUpon>T4MVC.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Admin.ConfigurationController.generated.cs">
+      <DependentUpon>T4MVC.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Admin.ErrorController.generated.cs">
+      <DependentUpon>T4MVC.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Admin.FileController.generated.cs">
+      <DependentUpon>T4MVC.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Admin.GameController.generated.cs">
+      <DependentUpon>T4MVC.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Admin.GroupController.generated.cs">
+      <DependentUpon>T4MVC.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Admin.HomeController.generated.cs">
+      <DependentUpon>T4MVC.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Admin.ImportController.generated.cs">
+      <DependentUpon>T4MVC.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Admin.LedgerController.generated.cs">
+      <DependentUpon>T4MVC.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Admin.MenuController.generated.cs">
+      <DependentUpon>T4MVC.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Admin.MessagingController.generated.cs">
+      <DependentUpon>T4MVC.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Admin.MigrationController.generated.cs">
+      <DependentUpon>T4MVC.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Admin.PageController.generated.cs">
+      <DependentUpon>T4MVC.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Admin.ProductController.generated.cs">
+      <DependentUpon>T4MVC.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Admin.QuizController.generated.cs">
+      <DependentUpon>T4MVC.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Admin.SharedController.generated.cs">
+      <DependentUpon>T4MVC.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Admin.SurveyController.generated.cs">
+      <DependentUpon>T4MVC.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Admin.TenantController.generated.cs">
+      <DependentUpon>T4MVC.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Admin.ThemeController.generated.cs">
+      <DependentUpon>T4MVC.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Admin.UserController.generated.cs">
+      <DependentUpon>T4MVC.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Admin.ValidationController.generated.cs">
+      <DependentUpon>T4MVC.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\Admin\AdminRoutes.cs" />
+    <Compile Include="Areas\Admin\Controllers\AwardController.cs" />
+    <Compile Include="Areas\Admin\Controllers\CatalogController.cs" />
+    <Compile Include="Areas\Admin\Controllers\ConfigurationController.cs" />
+    <Compile Include="Areas\Admin\Controllers\AdminController.cs" />
+    <Compile Include="Areas\Admin\Controllers\AccountController.cs" />
+    <Compile Include="Areas\Admin\Controllers\ConciergeController.cs" />
+    <Compile Include="Areas\Admin\Controllers\FileController.cs" />
+    <Compile Include="Areas\Admin\Controllers\GameController.cs" />
+    <Compile Include="Areas\Admin\Controllers\MigrationController.cs" />
+    <Compile Include="Areas\Admin\Controllers\ErrorController.cs" />
+    <Compile Include="Areas\Admin\Controllers\GroupController.cs" />
+    <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
+    <Compile Include="Areas\Admin\Controllers\ImportController.cs" />
+    <Compile Include="Areas\Admin\Controllers\LedgerController.cs" />
+    <Compile Include="Areas\Admin\Controllers\MenuController.cs" />
+    <Compile Include="Areas\Admin\Controllers\MessagingController.cs" />
+    <Compile Include="Areas\Admin\Controllers\PageController.cs" />
+    <Compile Include="Areas\Admin\Controllers\ProductController.cs" />
+    <Compile Include="Areas\Admin\Controllers\QuizController.cs" />
+    <Compile Include="Areas\Admin\Controllers\SurveyController.cs" />
+    <Compile Include="Areas\Admin\Controllers\TenantController.cs" />
+    <Compile Include="Areas\Admin\Controllers\ThemeController.cs" />
+    <Compile Include="Areas\Admin\Controllers\UserController.cs" />
+    <Compile Include="Areas\Admin\Controllers\ValidationController.cs" />
+    <Compile Include="Areas\Dash\Controllers\DashController.cs" />
+    <Compile Include="Areas\Dash\Controllers\GoogleVisualization.cs" />
+    <Compile Include="Areas\Dash\Controllers\HomeController.cs" />
+    <Compile Include="Areas\Dash\Controllers\ReportController.cs" />
+    <Compile Include="Areas\Dash\Controllers\UserController.cs" />
+    <Compile Include="Areas\Dash\Controllers\WidgetController.cs" />
+    <Compile Include="Areas\Dash\Controllers\ReportHelpers.cs" />
+    <Compile Include="Areas\Dash\DashRoutes.cs" />
+    <Compile Include="Areas\Mobile\Controllers\HomeController.cs" />
+    <Compile Include="Areas\Mobile\Controllers\LoginController.cs" />
+    <Compile Include="Areas\Mobile\Controllers\MobileController.cs" />
+    <Compile Include="Areas\Mobile\MobileRoutes.cs" />
+    <Compile Include="Areas\Public\Controllers\AwardController.cs" />
+    <Compile Include="Areas\Public\Controllers\FileController.cs" />
+    <Compile Include="Areas\Public\Controllers\ImageController.cs" />
+    <Compile Include="Areas\Public\Controllers\PublicController.cs" />
+    <Compile Include="Areas\Public\PublicRoutes.cs" />
+    <Compile Include="Areas\Public\Controllers\LoginController.cs" />
+    <Compile Include="Areas\Public\Controllers\ThemeController.cs" />
+    <Compile Include="Areas\Site\Controllers\AwardController.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Areas\Site\Controllers\BudgetController.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Areas\Site\Controllers\CartController.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Areas\Site\Controllers\CatalogController.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Areas\Site\Controllers\GameController.cs" />
+    <Compile Include="Areas\Site\Controllers\ProgramController.cs" />
+    <Compile Include="Areas\Site\Controllers\TicketController.cs" />
+    <Compile Include="Areas\Site\Controllers\HomeController.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Areas\Site\Controllers\OrderController.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Areas\Site\Controllers\PageController.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Areas\Site\Controllers\ProfileController.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Areas\Site\Controllers\QuizController.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Areas\Site\Controllers\ResourceController.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Areas\Site\Controllers\SiteController.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Areas\Site\Controllers\SurveyController.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Areas\Site\SiteRoutes.cs" />
+    <Compile Include="Controllers\BaseController.cs" />
+    <Compile Include="Dash.HomeController.generated.cs">
+      <DependentUpon>T4MVC.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Dash.ReportController.generated.cs">
+      <DependentUpon>T4MVC.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Dash.SharedController.generated.cs">
+      <DependentUpon>T4MVC.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Dash.UserController.generated.cs">
+      <DependentUpon>T4MVC.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Dash.WidgetController.generated.cs">
+      <DependentUpon>T4MVC.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Mobile.HomeController.generated.cs">
+      <DependentUpon>T4MVC.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Mobile.LoginController.generated.cs">
+      <DependentUpon>T4MVC.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Mobile.MobileController.generated.cs">
+      <DependentUpon>T4MVC.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Mobile.SharedController.generated.cs">
+      <DependentUpon>T4MVC.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Public.AwardController.generated.cs">
+      <DependentUpon>T4MVC.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Public.FileController.generated.cs">
+      <DependentUpon>T4MVC.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Public.ImageController.generated.cs">
+      <DependentUpon>T4MVC.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Public.LoginController.generated.cs">
+      <DependentUpon>T4MVC.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Public.SharedController.generated.cs">
+      <DependentUpon>T4MVC.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Public.ThemeController.generated.cs">
+      <DependentUpon>T4MVC.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Scaffolding.cs" />
+    <Compile Include="Services\Log4NetService.cs" />
+    <Compile Include="Services\TenantService.cs" />
+    <Compile Include="Services\UserMessaging.cs" />
+    <Compile Include="SharedController.generated.cs">
+      <DependentUpon>T4MVC.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Site.AwardController.generated.cs">
+      <DependentUpon>T4MVC.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Site.BudgetController.generated.cs">
+      <DependentUpon>T4MVC.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Site.CartController.generated.cs">
+      <DependentUpon>T4MVC.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Site.CatalogController.generated.cs">
+      <DependentUpon>T4MVC.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Site.GameController.generated.cs">
+      <DependentUpon>T4MVC.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Site.HomeController.generated.cs">
+      <DependentUpon>T4MVC.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Site.OrderController.generated.cs">
+      <DependentUpon>T4MVC.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Site.PageController.generated.cs">
+      <DependentUpon>T4MVC.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Site.ProfileController.generated.cs">
+      <DependentUpon>T4MVC.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Site.QuizController.generated.cs">
+      <DependentUpon>T4MVC.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Site.SharedController.generated.cs">
+      <DependentUpon>T4MVC.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Site.SiteController.generated.cs">
+      <DependentUpon>T4MVC.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Site.SurveyController.generated.cs">
+      <DependentUpon>T4MVC.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Site.TicketController.generated.cs">
+      <DependentUpon>T4MVC.tt</DependentUpon>
+    </Compile>
+    <Compile Include="T4MVC.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>T4MVC.tt</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Areas\Admin\Views\File\Files.spark" />
+    <None Include="Areas\Admin\Views\File\Index.spark" />
+    <None Include="Areas\Admin\Views\File\Upload.spark" />
+    <None Include="Areas\Mobile\Views\Home\Budget.spark" />
+    <None Include="Areas\Mobile\Views\Home\Award.spark" />
+    <None Include="Areas\Mobile\Views\Home\Distribute.spark" />
+    <None Include="Areas\Mobile\Views\Home\Product.spark" />
+    <None Include="Areas\Mobile\Views\Home\Index.spark" />
+    <Content Include="Areas\Public\Views\Theme\Login.css" />
+    <Content Include="Areas\Public\Views\Theme\Site.css" />
+    <Content Include="Config.js" />
+    <Content Include="Content\Admin.css" />
+    <Content Include="Content\Admin.js" />
+    <Content Include="Content\Games\Match3\jquery.match3.js" />
+    <None Include="Areas\Admin\Views\Concierge\Edit.spark" />
+    <None Include="Areas\Admin\Views\Concierge\Index.spark" />
+    <None Include="Areas\Dash\Views\Report\ProgramLiability.spark" />
+    <None Include="Areas\Dash\Views\Report\PointLiability.spark" />
+    <None Include="Areas\Dash\Views\Report\UsersReport.spark" />
+    <None Include="Areas\Dash\Views\Report\Wishlist.spark" />
+    <None Include="Areas\Mobile\Views\Home\Wishlist.spark" />
+    <None Include="Areas\Mobile\Views\Login\Index.spark" />
+    <None Include="Areas\Mobile\Views\Shared\Application.spark" />
+    <None Include="Areas\Public\Views\Login\Maintenance.spark" />
+    <None Include="Areas\Site\Views\Catalog\Concierge.spark" />
+    <None Include="Areas\Site\Views\Catalog\Travel.spark" />
+    <None Include="Areas\Site\Views\Game\Match3.spark" />
+    <Content Include="Content\Games\Match3\sprites.png" />
+    <Content Include="Content\Images\Admin\ascend.png" />
+    <Content Include="Content\Images\Admin\recurve.png" />
+    <Content Include="Content\Images\arrow-next.png" />
+    <Content Include="Content\Images\arrow-prev.png" />
+    <Content Include="Content\Images\Fancybox\blank.gif" />
+    <Content Include="Content\Images\Fancybox\fancybox-x.png" />
+    <Content Include="Content\Images\Fancybox\fancybox-y.png" />
+    <Content Include="Content\Images\Fancybox\fancybox.png" />
+    <Content Include="Content\Images\Fancybox\fancy_close.png" />
+    <Content Include="Content\Images\Fancybox\fancy_loading.png" />
+    <Content Include="Content\Images\Fancybox\fancy_nav_left.png" />
+    <Content Include="Content\Images\Fancybox\fancy_nav_right.png" />
+    <Content Include="Content\Images\Fancybox\fancy_shadow_e.png" />
+    <Content Include="Content\Images\Fancybox\fancy_shadow_n.png" />
+    <Content Include="Content\Images\Fancybox\fancy_shadow_ne.png" />
+    <Content Include="Content\Images\Fancybox\fancy_shadow_nw.png" />
+    <Content Include="Content\Images\Fancybox\fancy_shadow_s.png" />
+    <Content Include="Content\Images\Fancybox\fancy_shadow_se.png" />
+    <Content Include="Content\Images\Fancybox\fancy_shadow_sw.png" />
+    <Content Include="Content\Images\Fancybox\fancy_shadow_w.png" />
+    <Content Include="Content\Images\Fancybox\fancy_title_left.png" />
+    <Content Include="Content\Images\Fancybox\fancy_title_main.png" />
+    <Content Include="Content\Images\Fancybox\fancy_title_over.png" />
+    <Content Include="Content\Images\Fancybox\fancy_title_right.png" />
+    <Content Include="Content\Images\Fancybox\jquery.fancybox-1.3.3.css" />
+    <Content Include="Content\Images\Icons\apple-touch-icon-114x114.png" />
+    <Content Include="Content\Images\Icons\apple-touch-icon-57x57.png" />
+    <Content Include="Content\Images\Icons\apple-touch-icon-72x72.png" />
+    <Content Include="Content\Images\Icons\apple-touch-icon-precomposed.png" />
+    <Content Include="Content\Images\Icons\favicon.ico" />
+    <Content Include="Content\Images\no-image.png" />
+    <Content Include="Content\Images\Plus.png" />
+    <Content Include="Content\Images\autocomplete.gif" />
+    <Content Include="Content\Images\FileType\Archive.png" />
+    <Content Include="Content\Images\FileType\Document.png" />
+    <Content Include="Content\Images\FileType\HTML.png" />
+    <Content Include="Content\Images\FileType\Image.png" />
+    <Content Include="Content\Images\FileType\PDF.png" />
+    <Content Include="Content\Images\FileType\Spreadsheet.png" />
+    <Content Include="Content\Images\FileType\Unknown.png" />
+    <Content Include="Content\Images\FileType\Video.png" />
+    <Content Include="Content\Images\Recurve.png" />
+    <Content Include="Content\Mobile\jqtouch.css" />
+    <Content Include="Content\Mobile\jqtouch.js" />
+    <Content Include="Content\Mobile\jqtouch.transitions.js" />
+    <Content Include="Content\Mobile\Themes\apple\img\activeButton.png" />
+    <Content Include="Content\Mobile\Themes\apple\img\backButton.png" />
+    <Content Include="Content\Mobile\Themes\apple\img\blueButton.png" />
+    <Content Include="Content\Mobile\Themes\apple\img\cancel.png" />
+    <Content Include="Content\Mobile\Themes\apple\img\chevron.png" />
+    <Content Include="Content\Mobile\Themes\apple\img\grayButton.png" />
+    <Content Include="Content\Mobile\Themes\apple\img\greenButton.png" />
+    <Content Include="Content\Mobile\Themes\apple\img\listArrowSel.png" />
+    <Content Include="Content\Mobile\Themes\apple\img\listGroup.png" />
+    <Content Include="Content\Mobile\Themes\apple\img\loading.gif" />
+    <Content Include="Content\Mobile\Themes\apple\img\on_off.png" />
+    <Content Include="Content\Mobile\Themes\apple\img\pinstripes.png" />
+    <Content Include="Content\Mobile\Themes\apple\img\redButton.png" />
+    <Content Include="Content\Mobile\Themes\apple\img\selection.png" />
+    <Content Include="Content\Mobile\Themes\apple\img\thumb.png" />
+    <Content Include="Content\Mobile\Themes\apple\img\toggle.png" />
+    <Content Include="Content\Mobile\Themes\apple\img\toggleOn.png" />
+    <Content Include="Content\Mobile\Themes\apple\img\toolbar.png" />
+    <Content Include="Content\Mobile\Themes\apple\img\toolButton.png" />
+    <Content Include="Content\Mobile\Themes\apple\img\whiteButton.png" />
+    <Content Include="Content\Mobile\Themes\apple\theme.css" />
+    <Content Include="Content\Mobile\Themes\apple\theme.min.css" />
+    <Content Include="Content\Mobile\Themes\default\img\backButton.png" />
+    <Content Include="Content\Mobile\Themes\default\img\backButtonActive.png" />
+    <Content Include="Content\Mobile\Themes\default\img\bigButton.png" />
+    <Content Include="Content\Mobile\Themes\default\img\bigButtonActive.png" />
+    <Content Include="Content\Mobile\Themes\default\img\button.png" />
+    <Content Include="Content\Mobile\Themes\default\img\buttonActive.png" />
+    <Content Include="Content\Mobile\Themes\default\img\chevron.png" />
+    <Content Include="Content\Mobile\Themes\default\img\chevronActive.png" />
+    <Content Include="Content\Mobile\Themes\default\img\chevronCircle.png" />
+    <Content Include="Content\Mobile\Themes\default\img\chevronCircleActive.png" />
+    <Content Include="Content\Mobile\Themes\default\img\loading.gif" />
+    <Content Include="Content\Mobile\Themes\default\img\toggleSwitch.png" />
+    <Content Include="Content\Mobile\Themes\default\img\toolbarBackground.png" />
+    <Content Include="Content\Mobile\Themes\default\theme.css" />
+    <Content Include="Content\Mobile\Themes\jqt\img\activeButton.png" />
+    <Content Include="Content\Mobile\Themes\jqt\img\back_button.png" />
+    <Content Include="Content\Mobile\Themes\jqt\img\back_button_clicked.png" />
+    <Content Include="Content\Mobile\Themes\jqt\img\blueButton.png" />
+    <Content Include="Content\Mobile\Themes\jqt\img\button.png" />
+    <Content Include="Content\Mobile\Themes\jqt\img\button_clicked.png" />
+    <Content Include="Content\Mobile\Themes\jqt\img\chevron.png" />
+    <Content Include="Content\Mobile\Themes\jqt\img\chevron_circle.png" />
+    <Content Include="Content\Mobile\Themes\jqt\img\grayButton.png" />
+    <Content Include="Content\Mobile\Themes\jqt\img\greenButton.png" />
+    <Content Include="Content\Mobile\Themes\jqt\img\loading.gif" />
+    <Content Include="Content\Mobile\Themes\jqt\img\on_off.png" />
+    <Content Include="Content\Mobile\Themes\jqt\img\redButton.png" />
+    <Content Include="Content\Mobile\Themes\jqt\img\rowhead.png" />
+    <Content Include="Content\Mobile\Themes\jqt\img\toggle.png" />
+    <Content Include="Content\Mobile\Themes\jqt\img\toggleOn.png" />
+    <Content Include="Content\Mobile\Themes\jqt\img\toolbar.png" />
+    <Content Include="Content\Mobile\Themes\jqt\img\whiteButton.png" />
+    <Content Include="Content\Mobile\Themes\jqt\theme.css" />
+    <Content Include="Content\Mobile\Themes\jqt\theme.min.css" />
+    <Content Include="Content\products.js" />
+    <Content Include="Content\Scripts\jquery-1.4.2.js" />
+    <Content Include="Content\Scripts\jquery-1.4.2.min.js" />
+    <Content Include="Content\Scripts\jquery-ui-1.8.2.js" />
+    <Content Include="Content\Scripts\jquery.autocomplete.js" />
+    <Content Include="Content\Scripts\jquery.cookie.js" />
+    <Content Include="Content\Scripts\jquery.dataTables.min.js" />
+    <Content Include="Content\Scripts\jquery.fancybox-1.3.3.pack.js" />
+    <Content Include="Content\Themes\Aristo\images\button_bg.png" />
+    <Content Include="Content\Themes\Aristo\images\datepicker.gif" />
+    <Content Include="Content\Themes\Aristo\images\icon_sprite.png" />
+    <Content Include="Content\Themes\Aristo\images\progress_bar.gif" />
+    <Content Include="Content\Themes\Aristo\images\slider_handles.png" />
+    <Content Include="Content\Themes\Aristo\images\slider_h_bg.gif" />
+    <Content Include="Content\Themes\Aristo\images\slider_v_bg.gif" />
+    <Content Include="Content\Themes\Aristo\images\tab_bg.gif" />
+    <Content Include="Content\Themes\Aristo\images\the_gradient.gif" />
+    <Content Include="Content\Themes\Aristo\images\ui-bg_diagonals-thick_18_b81900_40x40.png" />
+    <Content Include="Content\Themes\Aristo\images\ui-bg_diagonals-thick_20_666666_40x40.png" />
+    <Content Include="Content\Themes\Aristo\images\ui-bg_flat_10_000000_40x100.png" />
+    <Content Include="Content\Themes\Aristo\images\ui-bg_glass_100_f6f6f6_1x400.png" />
+    <Content Include="Content\Themes\Aristo\images\ui-bg_glass_100_fdf5ce_1x400.png" />
+    <Content Include="Content\Themes\Aristo\images\ui-bg_glass_65_ffffff_1x400.png" />
+    <Content Include="Content\Themes\Aristo\images\ui-bg_gloss-wave_35_f6a828_500x100.png" />
+    <Content Include="Content\Themes\Aristo\images\ui-bg_highlight-soft_100_eeeeee_1x100.png" />
+    <Content Include="Content\Themes\Aristo\images\ui-bg_highlight-soft_75_ffe45c_1x100.png" />
+    <Content Include="Content\Themes\Aristo\images\ui-icons_222222_256x240.png" />
+    <Content Include="Content\Themes\Aristo\images\ui-icons_228ef1_256x240.png" />
+    <Content Include="Content\Themes\Aristo\images\ui-icons_ef8c08_256x240.png" />
+    <Content Include="Content\Themes\Aristo\images\ui-icons_ffd27a_256x240.png" />
+    <Content Include="Content\Themes\Aristo\images\ui-icons_ffffff_256x240.png" />
+    <Content Include="Content\Themes\Aristo\jquery-ui-1.8rc3.custom.css" />
+    <Content Include="Content\ui.selectmenu.css" />
+    <Content Include="Content\ui.selectmenu.js" />
+    <Content Include="error.html" />
+    <Content Include="Global.asax" />
+    <Content Include="Areas\Public\Views\Web.config" />
+    <None Include="Areas\Admin\Views\Account\Index.spark">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Areas\Admin\Views\Award\AwardCreateModel.spark" />
+    <None Include="Areas\Admin\Views\Award\Certificate.spark" />
+    <None Include="Areas\Admin\Views\Award\Edit.spark">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Areas\Admin\Views\Award\Index.spark" />
+    <None Include="Areas\Admin\Views\Catalog\CatalogCreateModel.spark" />
+    <None Include="Areas\Admin\Views\Catalog\Edit.spark" />
+    <None Include="Areas\Admin\Views\Catalog\Index.spark" />
+    <None Include="Areas\Admin\Views\Configuration\Index.spark" />
+    <None Include="Areas\Admin\Views\Error\Display.spark" />
+    <None Include="Areas\Admin\Views\Error\Index.spark" />
+    <None Include="Areas\Admin\Views\Game\Edit.spark">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Areas\Admin\Views\Game\Index.spark" />
+    <None Include="Areas\Admin\Views\Game\GameCreateModel.spark" />
+    <None Include="Areas\Admin\Views\Group\Edit.spark" />
+    <None Include="Areas\Admin\Views\Group\GroupCreateModel.spark" />
+    <None Include="Areas\Admin\Views\Group\Index.spark" />
+    <None Include="Areas\Admin\Views\Home\Index.spark" />
+    <None Include="Areas\Admin\Views\Import\Review.spark" />
+    <None Include="Areas\Admin\Views\Import\Edit.spark" />
+    <None Include="Areas\Admin\Views\Import\Events.spark" />
+    <None Include="Areas\Admin\Views\Import\ImportCreateModel.spark" />
+    <None Include="Areas\Admin\Views\Import\Index.spark" />
+    <None Include="Areas\Admin\Views\Import\Randomizer.spark" />
+    <None Include="Areas\Admin\Views\Import\Reset.spark" />
+    <None Include="Areas\Admin\Views\Ledger\Index.spark" />
+    <None Include="Areas\Admin\Views\Menu\Edit.spark" />
+    <None Include="Areas\Admin\Views\Menu\Index.spark" />
+    <None Include="Areas\Admin\Views\Menu\MenuCreateModel.spark" />
+    <None Include="Areas\Admin\Views\Messaging\Activation.spark" />
+    <None Include="Areas\Admin\Views\Messaging\Welcome.spark" />
+    <None Include="Areas\Admin\Views\Messaging\Display.spark" />
+    <None Include="Areas\Admin\Views\Messaging\Messages.spark" />
+    <None Include="Areas\Admin\Views\Messaging\Edit.spark" />
+    <None Include="Areas\Admin\Views\Messaging\Index.spark" />
+    <None Include="Areas\Admin\Views\Messaging\TemplateCreateModel.spark" />
+    <None Include="Areas\Admin\Views\Migration\Index.spark" />
+    <None Include="Areas\Admin\Views\Page\Edit.spark" />
+    <None Include="Areas\Admin\Views\Page\Index.spark" />
+    <None Include="Areas\Admin\Views\Page\PageCreateModel.spark" />
+    <None Include="Areas\Admin\Views\Product\_Filter.spark" />
+    <None Include="Areas\Admin\Views\Product\Index.spark" />
+    <None Include="Areas\Admin\Views\Product\Edit.spark">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Areas\Admin\Views\Quiz\Edit.spark">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Areas\Admin\Views\Quiz\Index.spark" />
+    <None Include="Areas\Admin\Views\Quiz\QuizCreateModel.spark" />
+    <None Include="Areas\Admin\Views\Shared\Application.spark" />
+    <None Include="Areas\Admin\Views\Shared\EditorTemplates\AccountChooser.spark">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Areas\Admin\Views\Shared\EditorTemplates\IssuanceEditModel.spark" />
+    <None Include="Areas\Admin\Views\Shared\_Navigation.spark" />
+    <None Include="Areas\Admin\Views\Shared\EditorTemplates\AvailabilityEditModel.spark" />
+    <None Include="Areas\Admin\Views\Shared\EditorTemplates\BudgetEditModel.spark" />
+    <None Include="Areas\Admin\Views\Shared\EditorTemplates\ContentEditModel.spark" />
+    <None Include="Areas\Admin\Views\Shared\EditorTemplates\FolderEditModel.spark" />
+    <None Include="Areas\Admin\Views\Shared\EditorTemplates\GroupChooser.spark" />
+    <None Include="Areas\Admin\Views\Shared\EditorTemplates\GroupMultiChooser.spark" />
+    <None Include="Areas\Admin\Views\Shared\EditorTemplates\Ledger.spark">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Areas\Admin\Views\Shared\EditorTemplates\UserChooser.spark" />
+    <None Include="Areas\Admin\Views\Shared\EditorTemplates\UserMultiChooser.spark" />
+    <None Include="Areas\Admin\Views\Shared\FileChooser.spark" />
+    <None Include="Areas\Admin\Views\Survey\Edit.spark" />
+    <None Include="Areas\Admin\Views\Survey\Index.spark" />
+    <None Include="Areas\Admin\Views\Survey\SurveyCreateModel.spark" />
+    <None Include="Areas\Admin\Views\Tenant\Edit.spark" />
+    <None Include="Areas\Admin\Views\Tenant\Index.spark" />
+    <None Include="Areas\Admin\Views\Tenant\TenantCreateModel.spark" />
+    <None Include="Areas\Admin\Views\Theme\Edit.spark" />
+    <None Include="Areas\Admin\Views\Theme\Index.spark" />
+    <None Include="Areas\Admin\Views\Theme\ThemeCreateModel.spark" />
+    <None Include="Areas\Admin\Views\User\DisplayTemplates\LoginIncrements.spark" />
+    <None Include="Areas\Admin\Views\User\Edit.spark" />
+    <None Include="Areas\Admin\Views\User\EditorTemplates\UserState.spark" />
+    <None Include="Areas\Admin\Views\User\Index.spark" />
+    <None Include="Areas\Admin\Views\User\UserCreateModel.spark" />
+    <Content Include="Areas\Admin\Views\Web.config" />
+    <None Include="Areas\Admin\Views\Validation\Index.spark" />
+    <None Include="Areas\Dash\Views\Home\Org.spark" />
+    <None Include="Areas\Dash\Views\Home\Index.spark" />
+    <None Include="Areas\Dash\Views\Report\Index.spark" />
+    <None Include="Areas\Dash\Views\Shared\Application.spark" />
+    <None Include="Areas\Public\Views\Award\Index.spark" />
+    <None Include="Areas\Public\Views\Login\NoDomain.spark" />
+    <None Include="Areas\Public\Views\Login\Register.spark" />
+    <None Include="Areas\Public\Views\Login\ResetSuccess.spark" />
+    <None Include="Areas\Public\Views\Login\Reset.spark" />
+    <None Include="Areas\Public\Views\Shared\Application.spark" />
+    <None Include="Areas\Site\Views\Award\Index.spark" />
+    <None Include="Areas\Site\Views\Budget\Distribute.spark" />
+    <None Include="Areas\Site\Views\Budget\Index.spark" />
+    <None Include="Areas\Site\Views\Cart\Wishlist.spark" />
+    <None Include="Areas\Site\Views\Cart\Empty.spark" />
+    <None Include="Areas\Site\Views\Cart\Index.spark" />
+    <None Include="Areas\Site\Views\Catalog\Categories.spark" />
+    <None Include="Areas\Site\Views\Catalog\_Nav.spark" />
+    <None Include="Areas\Site\Views\Catalog\GiftCards.spark" />
+    <None Include="Areas\Site\Views\Catalog\Product.spark" />
+    <None Include="Areas\Site\Views\Catalog\Index.spark" />
+    <None Include="Areas\Site\Views\Game\Review.spark" />
+    <None Include="Areas\Site\Views\Home\Index.spark" />
+    <None Include="Areas\Public\Views\Login\Index.spark" />
+    <Content Include="Theme.js" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Areas\Site\Views\Web.config" />
+    <None Include="Areas\Site\Views\Order\Checkout.spark">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Areas\Site\Views\Order\Complete.spark" />
+    <None Include="Areas\Site\Views\Order\Index.spark" />
+    <None Include="Areas\Site\Views\Home\Terms.spark" />
+    <None Include="Areas\Site\Views\Page\Index.spark" />
+    <None Include="Areas\Site\Views\Profile\_Tabs.spark" />
+    <None Include="Areas\Site\Views\Profile\Recognitions.spark" />
+    <None Include="Areas\Site\Views\Profile\Orders.spark" />
+    <None Include="Areas\Site\Views\Profile\Activity.spark" />
+    <None Include="Areas\Site\Views\Profile\Index.spark" />
+    <None Include="Areas\Site\Views\Quiz\Review.spark" />
+    <None Include="Areas\Site\Views\Quiz\Index.spark" />
+    <None Include="Areas\Site\Views\Shared\Application.spark" />
+    <None Include="Areas\Site\Views\Shared\Modules\Budget.spark" />
+    <None Include="Areas\Site\Views\Shared\Unavailable.spark" />
+    <None Include="Areas\Site\Views\Shared\Modules\Balance.spark" />
+    <None Include="Areas\Site\Views\Shared\Modules\Cart.spark" />
+    <None Include="Areas\Site\Views\Shared\Modules\Wishlist.spark" />
+    <None Include="Areas\Site\Views\Shared\_Menu.spark" />
+    <None Include="Areas\Site\Views\Shared\_FlatMenu.spark" />
+    <None Include="Areas\Site\Views\Survey\Index.spark" />
+    <None Include="Areas\Site\Views\Survey\Review.spark" />
+    <None Include="Areas\Site\Views\Ticket\Ticket.spark" />
+    <None Include="Areas\Site\Views\Ticket\DisplayTemplates\Events.spark" />
+    <None Include="Areas\Site\Views\Ticket\_Search.spark" />
+    <None Include="Areas\Site\Views\Ticket\Event.spark" />
+    <None Include="Areas\Site\Views\Ticket\Performer.spark" />
+    <None Include="Areas\Site\Views\Ticket\Performers.spark" />
+    <None Include="Areas\Site\Views\Ticket\Venue.spark">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Areas\Site\Views\Ticket\Venues.spark" />
+    <None Include="Areas\Site\Views\Ticket\Local.spark" />
+    <None Include="Areas\Site\Views\Ticket\Index.spark" />
+    <None Include="Content\Games\Match3\board.xcf" />
+    <None Include="Content\Games\Match3\sprites.xcf" />
+    <None Include="Messages\UserActivation.template" />
+    <None Include="Messages\UserAward.template" />
+    <None Include="Messages\UserReset.template" />
+    <None Include="Messages\UserWelcome.template" />
+    <None Include="T4MVC.settings.t4" />
+    <None Include="T4MVC.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>T4MVC.cs</LastGenOutput>
+    </None>
+    <None Include="Views\Shared\DisplayTemplates\ContentViewModel.spark" />
+    <None Include="Views\Shared\DisplayTemplates\Strings.spark" />
+    <None Include="Views\Shared\EditorTemplates\Strings.spark" />
+    <None Include="Views\Shared\_Topbar.spark" />
+    <None Include="Views\Shared\_Analytics.spark" />
+    <None Include="Views\Shared\DisplayTemplates\Address.spark" />
+    <None Include="Views\Shared\DisplayTemplates\Phone.spark" />
+    <None Include="Views\Shared\DisplayTemplates\DateTime.spark" />
+    <None Include="Views\Shared\EditorTemplates\Address.spark" />
+    <None Include="Views\Shared\EditorTemplates\Availability.spark" />
+    <None Include="Views\Shared\EditorTemplates\TextArea.spark" />
+    <None Include="Views\Shared\EditorTemplates\Enum.spark" />
+    <None Include="Views\Shared\EditorTemplates\Phone.spark" />
+    <None Include="Views\Shared\EditorTemplates\DateTime.spark" />
+    <None Include="Views\Shared\_Notifications.spark" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Ascend.Core\Ascend.Core.csproj">
+      <Project>{2643FBEF-F02D-48D4-809D-4F93F11CDAA4}</Project>
+      <Name>Ascend.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Ascend.Infrastructure\Ascend.Infrastructure.csproj">
+      <Project>{58C5B9B1-E094-4E89-B3CD-4C80711B3EB8}</Project>
+      <Name>Ascend.Infrastructure</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Areas\Dash\Views\User\" />
+    <Folder Include="Areas\Dash\Views\Widget\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />
+  <Import Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v9.0\WebApplications\Microsoft.WebApplication.targets" />
+  <Target Name="MvcBuildViews" AfterTargets="AfterBuild" Condition="'$(MvcBuildViews)'=='true'">
+    <AspNetCompiler VirtualPath="temp" PhysicalPath="$(WebProjectOutputDir)" />
+  </Target>
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349C5851-65DF-11DA-9384-00065B846F21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>54054</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://ascend.local</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+    <MonoDevelop>
+      <Properties VerifyCodeBehindFields="true" VerifyCodeBehindEvents="true">
+        <XspParameters Port="8080" Address="127.0.0.1" SslMode="None" SslProtocol="Default" KeyType="None" CertFile="" KeyFile="" PasswordOptions="None" Password="" Verbose="true" />
+      </Properties>
+    </MonoDevelop>
+  </ProjectExtensions>
+</Project>

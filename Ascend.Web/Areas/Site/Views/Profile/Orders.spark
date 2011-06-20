@@ -1,0 +1,111 @@
+﻿<viewdata model="IEnumerable<Order>" />
+
+<style>
+  
+  div#orders-header {
+      border-bottom: 1px dotted #777;
+      padding-bottom: 5px;
+  }
+
+  div#orders-footer {
+      margin: 5px 0 0 0;
+      border-top: 1px dotted #777;
+      padding-top: 5px;
+  }
+
+  span.orders-program-amount {
+      float: right;
+      width: 100px;
+      padding-right: 20px;
+  }
+
+  span.orders-program-items {
+      float: right;
+      width: 100px;
+      padding-right: 20px;
+  }
+
+  div.orders-program {
+      margin: 5px 0 0 0;
+      cursor: pointer;
+  }
+
+  table.orders-program {
+      display: none;
+      margin: 10px 0 5px 10px;
+      width: 480px;
+      background-color: #fff;
+      border: 1px solid #eee;
+      padding: 4px;
+      -moz-border-radius: 6px;    
+      -webkit-border-radius: 6px;
+  }
+
+  table.orders-program td.date  {
+      width: 90px;
+  }
+  
+  table.orders-program td.number  {
+      width: auto;
+  }
+
+</style>
+
+<use file="Profile/_Tabs" />
+
+<div class="tab-content">
+
+  <h3>Orders Placed by ${currentUser.DisplayName}</h3>
+
+  <div id="orders-header">
+    <span class="number orders-program-amount">Points</span>
+    <span class="orders-program-items">Items</span>
+    <span class="">Date</span>
+  </div>
+  <for each="var order in Model">
+    <div class="orders-program">
+      <span class="number orders-program-amount">${order.Total.ToString("n0")}</span>
+      <span class="orders-program-items">${order.Items.Count()} Items</span>
+      <span>
+        <img src="${Links.Content.Images.Plus_png}" /> ${order.Ordered.ToShortDateString()}
+      </span>
+    </div>
+    <table class="orders-program">
+      <thead>
+        <tr>
+          <td></td>
+          <td>State</td>
+          <td>Product</td>
+          <td class="number">Price</td>
+          <td class="number">Qty.</td>
+        </tr>
+      </thead>
+      <tr each="var x in order.Items">
+        <td><img class="cart-image"
+                     width="100px"
+                     height="100px"
+                     src="${Html.GetProductImageUrl(x.ProductId, 0, 100, 100)}"
+                /></td>
+        <td>${x.State.Current}</td>
+        <td>${x.ProductName}</td>
+        <td class="number">${x.UnitPrice.ToString("n0")}</td>
+        <td class="number">${x.Quantity}</td>
+      </tr>
+    </table>
+  </for>
+  <div id="orders-footer">
+    <span class="number orders-program-amount">${Model.Sum(x => x.Total).ToString("n0")}</span>
+    <span>Total</span>
+  </div>
+
+</div>
+
+<script type="text/javascript">
+
+  $(function() {
+      $('div.orders-program').click(function() {
+          $(this).next('table').toggle();
+      });
+  });
+
+</script>

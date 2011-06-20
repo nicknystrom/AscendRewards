@@ -1,0 +1,86 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" >
+<head>
+	
+	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+
+    <link href="~/Content/Site.css" rel="Stylesheet" type="text/css" />
+    <link href="~/Content/Themes/Aristo/jquery-ui-1.8rc3.custom.css" rel="stylesheet" type="text/css" />
+
+    <script type="text/javascript" src="~/Content/Scripts/jquery-1.4.2.js"></script>
+    <script type="text/javascript" src="~/Content/Scripts/jquery-ui-1.8.2.js"></script>
+    <script type="text/javascript" src="http://www.google.com/jsapi"></script>
+    
+    <use content="head" />
+    
+    <title>${application.ProgramName}</title>
+    
+</head>
+<body>
+
+	<viewdata application="IApplicationConfiguration"
+              today="DateTime"
+              currentUser="User"
+    />
+	
+	<div id="page">
+
+        <use file="Views/Shared/_Topbar" />
+
+		<div id="header">
+            <a id="header-banner" href="${Url.Action(MVC.Site.Home.Index())}"></a>
+            <div id="header-links"></div>
+		</div>
+        
+        <div id="left">
+            <div id="menu">
+                <ul>
+                    <li><span style="float: left; width: 16px; height: 16px;"></span>${Html.ActionLink("Dashboard", MVC.Dash.Home.Index())}</li>
+                    <li><span style="float: left; width: 16px; height: 16px;"></span>${Html.ActionLink("Organization", MVC.Dash.Home.Org())}</li>
+                    <li>
+                        <span class="ui-icon ui-icon-circlesmall-minus" style="float: left;"></span>
+                        <span class="nonlink">Reports</span>
+                        <ul style="display: block">
+                            <li><span style="float: left; width: 16px; height: 16px;"></span>${Html.ActionLink("Users", MVC.Dash.Report.UsersReport())}</li>
+                            <li><span style="float: left; width: 16px; height: 16px;"></span>${Html.ActionLink("Wishlist", MVC.Dash.Report.Wishlist())}</li>
+                            <li><span style="float: left; width: 16px; height: 16px;"></span>${Html.ActionLink("Points Liability", MVC.Dash.Report.PointLiability())}</li>
+                            <li><span style="float: left; width: 16px; height: 16px;"></span>${Html.ActionLink("Program Liability", MVC.Dash.Report.ProgramLiability())}</li>
+                        </ul>
+                    </li>
+                    <li><span style="float: left; width: 16px; height: 16px;"></span>${Html.ActionLink("User Administration", MVC.Dash.Home.Index())}</li>
+                    <li><span style="float: left; width: 16px; height: 16px;"></span>${Html.ActionLink("Budget Administration", MVC.Dash.Home.Index())}</li>
+                </ul>
+            </div>
+
+            <use content="left" />
+        </div>
+		
+        <div id="content" class="dashboard">
+            <use content="view" />	
+		</div>
+        
+		<div id="copyright">
+            &copy; ${today.Year} ${application.ProgramName}, All rights reserved.
+        </div>
+	
+	</div>
+	
+    <script type="text/javascript">
+        google.load(
+            "visualization",
+            "1", { packages:["piechart","annotatedtimeline","orgchart","columnchart","table"]});
+
+        $(function () {
+
+            $('#menu span.nonlink, #menu span.ui-icon').live('click', function () {
+                $(this).closest('li').find('ul').toggle('slide', { duration: 200, direction: 'up' });
+                $(this).closest('li').find('span.ui-icon')
+                    .toggleClass('ui-icon-circlesmall-plus')
+                    .toggleClass('ui-icon-circlesmall-minus');
+            });
+
+        });
+    </script>
+
+</body>
+</html>

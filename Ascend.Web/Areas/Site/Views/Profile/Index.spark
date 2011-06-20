@@ -1,0 +1,81 @@
+﻿<viewdata model="ProfileEditModel" force="bool" />
+
+<style if="force">
+
+  /* hide most normally visible content, user feedback was that they thought site was broke */
+  div#left,
+  div#right,
+  div#header-links,
+  div#footer
+  { visibility: hidden; }
+
+</style>
+
+<p class="notification" if="force">
+  Please update your profile information before using the site for the first time. This
+  information helps us get in touch with you and ship your rewards to the correct location.
+</p>
+
+<p class="notification" if="force">
+  Since this is your first time logging into the system, please be sure to update
+  your password.
+</p>
+
+# using (Html.BeginForm(MVC.Site.Profile.Index()))
+# {
+
+<div if="Model.Elements.Password">
+<h1>Password</h1>
+${Html.Scaffold(s => {
+  s.Open();
+  s.Field(x => x.Password);
+  s.Field(x => x.PasswordConfirmation);
+  s.Close();
+})}
+</div>
+
+<h2>General</h2>
+${Html.Scaffold(s => {
+  s.Open();
+  if (Model.Elements.Email) {
+    s.Field(x => x.Email);
+  }
+  if (Model.Elements.Name) {
+    s.Field(x => x.FirstName);
+    s.Field(x => x.LastName);
+  }
+  if (Model.Elements.DateOfBirth) {
+    s.Field(x => x.DateBirth);
+  }
+  if (Model.Elements.DateOfHire) {
+    s.Field(x => x.DateHired);
+  }
+  if (Model.Elements.HomeAddress) {
+    s.Field(x => x.HomeAddress);
+  }
+  if (Model.Elements.WorkAddress) {
+    s.Field(x => x.WorkAddress);
+  }
+  if (Model.Elements.HomePhone) {
+    s.Field(x => x.HomePhone);
+  }
+  if (Model.Elements.WorkPhone) {
+    s.Field(x => x.WorkPhone);
+  }
+  if (Model.Elements.MobilePhone) {
+    s.Field(x => x.MobilePhone);
+  }
+  if (Model.Elements.CustomFields) {
+    var i = -1;
+    foreach (var field in Model.Custom) {
+      i++;
+      s.Custom(field.Key, 
+        "<input type='hidden' name='Custom[" + i + "].Key' value='" + field.Key + "' /><input type='text' name='Custom[" + i + "].Value' value='" + field.Value + "' />");
+    }
+  }
+  s.Close();
+})}
+
+<input type="submit" value="Update My Profile" />
+
+# }

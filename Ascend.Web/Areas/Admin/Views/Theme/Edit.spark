@@ -1,0 +1,263 @@
+﻿<viewdata id="string" model="ThemeEditModel" />
+<set entity="Model.Name" />
+
+<style>
+
+    div#content .ui-icon {
+        cursor: pointer;
+        margin-top: 4px;
+        float: left;
+        height: 20px;
+    }
+
+    ul#colors, ul#fonts, ul#boxes {
+        margin: 0;
+        padding: 0;
+    }
+
+    ul#colors > li, ul#fonts > li, ul#boxes > li {
+        list-style: none;
+    }
+
+    ul#colors > li {
+        margin-right: 5px;
+        margin-bottom: 5px;
+        float: left;
+        background-color: #eee;
+        padding: 4px;
+        -moz-border-radius: 4px;    
+        -webkit-border-radius: 4px;
+    }
+
+    ul#fonts > li, ul#boxes > li {
+        background-color: #f8f8f8;
+        border: 1px solid #ccc;
+        padding: 0;
+        margin-bottom: 6px;
+        -moz-border-radius: 6px;    
+        -webkit-border-radius: 6px;
+    }
+
+    ul#fonts > li > .font-header, ul#boxes > li > .box-header {
+        padding: 8px 12px;
+        background-color: #ccc;
+    }
+
+    ul#fonts > li > ul, ul#boxes > li > ul {
+        margin-top: 8px;
+    }
+
+    ul#fonts > li li, ul#boxes > li li {
+        list-style: none;
+    }
+
+    span.label {
+        display: inline-block;
+        width: 100px;
+    }
+
+    input.pixels {
+        width: 40px;
+    }
+
+    input.color {
+        width: 120px;
+    }
+
+    .preview-font {
+        display: inline-block;
+        background-color: #fff;
+        border: 1px solid #666;
+        padding: 4px 10px; 
+    }
+
+    .preview-box {
+        display: inline-block;
+        background-color: #fff;
+        border: 1px solid #666;
+        padding: 4px 10px; 
+    }
+
+    .preview-color {
+        display: inline-block;
+        width: 72px;
+        height: 20px;
+        -moz-border-radius: 4px;    
+        -webkit-border-radius: 4px;
+    }
+
+    input[name="ColorNames"] {
+        width: 170px;
+    }
+
+    input[name="ColorValues"] {
+        width: 55px;
+    }
+
+</style>
+
+<ul id="new-color-template" style="display: none;">
+    <li>
+        <div class="preview-color" style="background-color: #ff0">&nbsp;&nbsp;</div>
+        <input type="text" name="ColorValues" value="#ff0" />
+        <input type="button" class="delete-color" value="X" />
+        <br />
+        <input type="text" name="ColorNames" value="New Color" />
+    </li>
+</ul>
+<ul id="new-font-template" style="display: none;">
+    <li>
+        <div class="font-header">
+            <span class="ui-icon ui-icon-triangle-1-s"></span>
+            Name <input type="text" name="FontNames" value="New Font" />
+            <div class="preview-font">The quick brown fox...</div>
+            <input type="button" class="delete-font" value="X" />
+        </div>
+        <ul>
+            <li><span class="label">Color</span><input type="text" name="Color" class="color" value="#fff" /></li>
+            <li><span class="label">Family</span><input type="text" name="Family" value="Arial" /></li>
+            <li><span class="label">Size</span><input type="text" class="pixels" name="Size" value="10px" /></li>
+            <li><span class="label"></span><input type="checkbox" name="Underline" value="true" />Underline</li>
+            <li><span class="label"></span><input type="checkbox" name="Italic" value="true" />Italic</li>
+            <li><span class="label"></span><input type="checkbox" name="Caps" value="true" />Caps</li>
+        </ul>
+    </li>
+</ul>
+
+<form method="post">
+
+<div id="admin-edit-tabs">
+    <ul>
+        <li><a href="#admin-theme-general">General</a></li>
+        <li><a href="#admin-theme-custom">Custom</a></li>
+        <li><a href="#admin-theme-colors">Colors<span if="null != Model.ColorNames"> (${Model.ColorNames.Length})</span></a></li>
+        <li><a href="#admin-theme-fonts">Fonts<span if="null != Model.FontNames"> (${Model.FontNames.Length})</span></a></li>
+    </ul>
+    <div id="admin-theme-general">
+        ${Html.Scaffold(s => {
+            s.Open();
+            s.Field(x => x.Name);
+            s.Field(x => x.Stylesheet);
+            s.Field(x => x.Banner);
+            s.Field(x => x.LoginBanners);
+            s.Field(x => x.LoginInfos);
+            s.Close();
+        })}
+    </div>
+    <div id="admin-theme-custom">
+        This content will appear at the end of the site and login CSS files.
+        ${Html.Scaffold(s => {
+            s.Open();
+            s.Field(x => x.CustomLogin);
+            s.Field(x => x.CustomSite);
+            s.Close();
+        })}
+    </div>
+    <div id="admin-theme-colors">
+        <ul id="colors">
+            # for (int i=0; i< (Model.ColorNames ?? new string[0]).Length; i++)
+            # {
+            <li>
+                <div class="preview-color" style="background-color: ${Model.ColorValues[i]};">&nbsp;&nbsp;</div>
+                <input type="text" name="ColorValues" value="${H(Model.ColorValues[i])}" />
+                <input type="button" class="delete-color" value="X" />
+                <br />
+                <input type="text" name="ColorNames" value="${H(Model.ColorNames[i])}" />
+            </li>
+            # }
+        </ul> 
+        <input type="button" id="new-color" value="New Color" />
+    </div>
+    <div id="admin-theme-fonts">
+        <ul id="fonts">
+            # for (int i=0; i<(Model.FontNames ?? new string[0]).Length; i++)
+            # {
+            # var x = Model.FontValues[i];
+            <li>
+                <div class="font-header">
+                    <span class="ui-icon ui-icon-triangle-1-e"></span>
+                    Name <input type="text" name="FontNames" value="${H(Model.FontNames[i])}" />
+                    <div class="preview-font"
+                         style="${Model.FontPreviews[i]}">The quick brown fox...</div>
+                    <input type="button" class="delete-font" value="X" />
+                </div>
+                <ul style="display: none">
+                    <li><span class="label">Color</span><input type="text" name="Color" class="color" value="${H(x.Color)}" /></li>
+                    <li><span class="label">Family</span><input type="text" name="Family" value="${H(x.Family)}" /></li>
+                    <li><span class="label">Size</span><input type="text" name="Size" class="pixels" value="${H(x.Size)}" /></li>
+                    <li><span class="label"></span><input type="checkbox" name="Underline" value="true" checked="true?{x.Underline}" />Underline</li>
+                    <li><span class="label"></span><input type="checkbox" name="Italic" value="true" checked="true?{x.Italic}" />Italic</li>
+                    <li><span class="label"></span><input type="checkbox" name="Caps" value="true" checked="true?{x.Caps}" />Caps</li>
+                </ul>
+            </li>
+            # }
+        </ul>
+        <input type="button" id="new-font" value="New Font" />
+    </div>
+</div>
+
+</form>
+
+<content name="actions">
+    <input type="submit" value="Update Theme" />
+    <ul>
+    </ul>
+</content>
+
+
+<script type="text/javascript">
+
+$(function() {
+
+    $('#colors, #fonts, #boxes').sortable();
+    
+    $('.ui-icon').live('click', function() {
+        $(this).closest('li').find('ul').toggle();
+        $(this).toggleClass('ui-icon-triangle-1-e');
+        $(this).toggleClass('ui-icon-triangle-1-s');
+    });
+    
+    $('form').submit(function() {
+       
+        $('#fonts ul').each(function(i, x) {
+            var pre = 'FontValues[' + i + '].';
+            $(x).find('input').each(function(j, y) {
+                $(y).attr('name', pre + $(y).attr('name'));
+            });
+        });
+
+    });
+
+    $('input.pixels').live('change', function() {
+        var x = Number($(this).val());
+        if (!isNaN(x) && $(this).val().length > 0) {
+            $(this).val(x + 'px');
+        }
+    });
+
+    // ------------------------------------------------ Colors
+
+    $('input[name="ColorValues"]').live('keyup', function() {
+        $(this).next('.preview-color').css('background-color', $(this).val());
+    });
+
+    $('#new-color').click(function() {
+        $('#colors').append($('#new-color-template > li').clone());
+    });
+
+    $('#colors .delete-color').live('click', function() {
+        $(this).closest('li').remove();
+    });    
+    
+    // ------------------------------------------------ Fonts
+
+    $('#new-font').click(function() {
+        $('#fonts').append($('#new-font-template > li').clone());
+    });
+
+    $('#fonts .delete-font').live('click', function() {
+        $(this).closest('li').remove();
+    });
+});
+        
+</script>

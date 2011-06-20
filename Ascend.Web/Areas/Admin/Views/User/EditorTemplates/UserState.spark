@@ -1,0 +1,9 @@
+﻿<viewdata model="object" />
+<var s="(UserState)Model" />
+${Html.DropDownListFor(
+    x => x,
+    (s == UserState.Registered
+        ? new[] { UserState.Registered, UserState.Active, UserState.Suspended, UserState.Terminated }
+        : new[] { UserState.Active, UserState.Suspended, UserState.Terminated })
+        .Select(y => new SelectListItem { Selected = (s == y), Text = y.ToString() })
+)}

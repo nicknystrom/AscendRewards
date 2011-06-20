@@ -1,0 +1,12 @@
+﻿<viewdata model="IList<UserSummary>" />
+<div id="budget">
+    <div class="toolbar">
+        <h1>Distribute Budget</h1>
+        <a class="button back" href="#">Back</a>
+    </div>
+    <ul class="edgetoedge">
+        <li each="var u in Model">
+            <a href="${Url.RouteUrl(MobileRoutes.Distribute, new { id=u.Id })}" class="slideup">${u.DisplayName}</a>
+        </li>
+    </ul>
+</div>

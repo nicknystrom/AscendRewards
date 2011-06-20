@@ -1,0 +1,4 @@
+﻿<viewdata model="IDictionary<string, string>" />
+<set title="'File Management'" />
+
+<use file="Files" />

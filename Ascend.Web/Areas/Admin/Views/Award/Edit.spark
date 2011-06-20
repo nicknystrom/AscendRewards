@@ -1,0 +1,251 @@
+﻿<viewdata id="string" model="AwardEditModel" />
+<set entity="Model.Title" />
+
+<style>
+
+    textarea#Content {
+        width: 400px;
+        height: 100px;
+    }
+
+    .certificate {
+        background-color: #f8f8f8;
+        border: 1px solid #ccc;
+        padding: 0;
+        margin-bottom: 6px;
+        -moz-border-radius: 6px;
+        -webkit-border-radius: 6px;
+    }
+    
+    .certificate textarea 
+    {
+        width: 150px;
+        height: 75px;
+    }
+
+    .certificate-header {
+        padding: 8px 12px;
+        background-color: #ccc;
+    }
+
+    .certificate-header > img {
+        vertical-align: middle;
+    }
+
+    .certificate-header > input[type="button"] {
+        float: right;
+    }
+
+    .certificate-body {
+        display: none;
+        padding-top: 8px;
+        min-height: 400px;
+    }
+
+    .certificate-body-left {
+        float: left;
+    }
+
+    .certificate-area-menu {
+        padding: 0;
+    }
+
+    .certificate-area-menu li {
+        float: left;
+        list-style: none;
+        padding: 4px;
+        margin-top: 4px;
+        border-bottom: 1px solid #666;
+    }
+
+    .certificate-area-menu li.selected {
+        border-top: 1px solid #888;
+        border-left: 1px solid #aaa;
+        border-right: 1px solid #666;
+        border-bottom: none;
+    }
+
+    .certificate-area-font {
+        display: none;
+        clear: left;
+    }
+
+    .certificate-canvas,
+    .certificate-canvas-placeholder {
+        margin-left: 300px;
+    }
+
+    .certificate-canvas-panel {
+        background-color: rgba(255,255,255,0.5);
+        border: 2px dashed #ccc;
+        color: #000;
+    }
+
+    .ui-icon {
+        cursor: pointer;
+        margin-top: 4px;
+        float: left;
+        vertical-align: middle;
+    }
+
+</style>
+
+<use file="FileChooser" />
+
+# using (Html.BeginForm(MVC.Admin.Award.Edit(id)))
+# {
+
+${Html.ValidationSummary()}
+
+<div id="admin-edit-tabs">
+    <ul>
+        <li><a href="#admin-award-program">Program</a></li>
+        <li><a href="#admin-award-availability">Availability (${Model.Availability})</a></li>
+        <li><a href="#admin-award-nominees">Nominees</a></li>
+        <li><a href="#admin-award-budget">Budget</a></li>
+        <li><a href="#admin-award-certificates">Certificates</a></li>
+    </ul>
+    <div id="admin-award-program">
+        ${Html.EditorFor(x => x.Content)}
+    </div>
+    <div id="admin-award-availability">
+        ${Html.EditorFor(x => x.Availability)}
+    </div>
+    <div id="admin-award-budget">
+      ${Html.EditorFor(x => x.Issuance)}
+    </div>
+    <div id="admin-award-certificates">
+        <div id="certificates">
+            <for each="var c in (Model.Certificates ?? new Certificate[0])">
+                ${Html.Partial("Certificate", c)}
+            </for>
+        </div>
+        <div class="fieldset-footer">
+            <input type="text" id="certificate-url" />
+            <input type="button" id="certificate-url-chooser" value="..." />
+            <input type="button" id="certificate-new" value="Create Certificate" />
+        </div>
+    </div>
+    <div id="admin-award-nominees">
+        ${Html.Scaffold(s => {
+        s.Open();
+        s.Field(x => x.OpenNomination);
+        s.Close();
+        })}
+        <fieldset id="permissions-groups">
+            <legend>Groups</legend>
+            ${Html.EditorFor(x => x.NomineeGroups)}
+        </fieldset>
+
+        <fieldset id="permissions-users">
+            <legend>Users</legend>
+            ${Html.EditorFor(x => x.NomineeUsers)}
+        </fieldset>
+    </div>
+</div>
+
+# }
+
+<content name="actions">
+    <input type="submit" value="Update Award" />
+    <ul>
+    </ul>
+</content>
+
+<script type="text/javascript">
+
+    function stripPx(px) {
+    return px.substr(0, px.length-2);
+    }
+
+    function recordDraggable(e, ui) {
+    ui.helper.find('input:eq(0)').val(ui.helper[0].offsetLeft);
+    ui.helper.find('input:eq(1)').val(ui.helper[0].offsetTop);
+    ui.helper.find('input:eq(2)').val(stripPx(ui.helper.css('width')));
+    ui.helper.find('input:eq(3)').val(stripPx(ui.helper.css('height')));
+    }
+
+    function makeDraggable(el) {
+    el.draggable({ stop: recordDraggable, containment: 'parent' })
+    .resizable({ stop: recordDraggable });
+    }
+
+    $(function() {
+
+    $('.certificate-header > .ui-icon').live('click', function() {
+    $(this).closest('.certificate').find('.certificate-body').toggle();
+    });
+
+    $('form').submit(function() {
+
+    $('.certificate').each(function(i, x) {
+    $(this).find('input, textarea').each(function(j, y) {
+    $(y).attr('name', 'Certificates[' + i + '].' + $(y).attr('name'));
+    });
+    });
+
+    });
+
+    $('#certificate-url-chooser').click(function() {
+    fileChooser(function(url) {
+    $('#certificate-url').val(url);
+    });
+    });
+
+    $('#certificate-new').click(function() {
+    var url = $('#certificate-url').val();
+    if (url) {
+    $.ajax({
+    url: '${Url.Action(MVC.Admin.Award.Certificate())}',
+    type: 'post',
+    data: { 'Url': url },
+    dataType: 'html',
+    success: function(data) {
+    var x = $(data);
+    $('#certificates').append(x);
+    makeDraggable(x.find('.certificate-canvas-panel'));
+    }
+    });
+    }
+    $('#certificate-url').val('');
+    });
+
+    makeDraggable($('.certificate-canvas-panel'))
+
+    $('#certificates').sortable({
+    handle: '.certificate-header'
+    });
+    $('.certificate-delete').live('click', function() {
+    $(this).closest('.certificate').remove();
+    return false;
+    });
+
+    $('.certificate-area-menu a').live('click', function() {
+    $(this).parent().siblings().removeClass('selected');
+    $(this).parent().addClass('selected');
+    $(this).closest('div').find('.certificate-area-font').hide();
+    $(this).closest('div').find('.' + $(this).attr('target')).show();
+    return false;
+    });
+
+    $('.certificate-area-font input[type="checkbox"]').live('click', function() {
+    $(this).closest('.certificate-body')
+    .find('.certificate-canvas .' + $(this).attr('area'))
+    .toggle($(this).is(':checked'));
+    });
+
+    $('.certificate-area-font :text').live('change', function() {
+    var tgt = $(this).attr('area');
+    var attr = $(this).attr('target');
+    var val = $(this).val();
+    if (attr == 'font-size') {
+    val = val + 'px';
+    }
+    $(this).closest('.certificate-body')
+    .find('.certificate-canvas .' + tgt)
+    .css(attr, val);
+    });
+
+    });
+
+</script>

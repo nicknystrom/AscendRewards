@@ -1,0 +1,54 @@
+﻿<viewdata model="IEnumerable<Template>" create="TemplateCreateModel" />
+
+<div id="create-template" class="create-dialog">
+    # Html.RenderPartial("TemplateCreateModel", create ?? new TemplateCreateModel());
+</div>
+
+<table class="index-table">
+    <thead>
+        <tr>
+            <th>Template</th>
+            <th>Subject</th>
+            <th>Content</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr each="var t in Model">
+            <td>${Html.ActionLink(t.Name, MVC.Admin.Messaging.Edit(t.Document.Id))}</td>
+            <td>${H(t.Subject.ShortenTo(50))}</td>
+            <td>${H(t.Content.ShortenTo(100))}</td>
+        </tr>
+    </tbody>
+</table>
+
+<br/>
+
+<p>You must give a template a specific name for it to be used by the system. Otherwise
+the built-in, generic template will be used for that purpose. These are:</p>
+<table>
+    <tr>
+        <td>User Activation</td>
+        <td>Sent when a user account is created, with a link that activates the account.</td>
+    </tr>
+    <tr>
+        <td>User Welcome</td>
+        <td>Sent when a user account has been activated.</td>
+    </tr>
+    <tr>
+        <td>User Award</td>
+        <td>Sent to the recipient of an award with a link to the award.</td>
+    </tr>
+    <tr>
+        <td>User Reset</td>
+        <td>Sent when a user or administrator resets a user's password.</td>
+    </tr>
+</table>
+
+<content name="actions">
+    <ul>
+        <li>${Html.ActionLink("Send Activation Messages", MVC.Admin.Messaging.Activation())}</li>
+        <li>${Html.ActionLink("Send Welcome Messages", MVC.Admin.Messaging.Welcome())}</li>
+        <li>${Html.ActionLink("Review Sent Messages", MVC.Admin.Messaging.Messages(null, null))}</li>
+        <li><a href="#create-template" class="create-button">New Template</a></li>
+    </ul>
+</content>

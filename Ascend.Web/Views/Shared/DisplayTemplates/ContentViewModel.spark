@@ -1,0 +1,2 @@
+﻿<viewdata model="Ascend.Web.Areas.Site.Controllers.ContentViewModel" />
+${Model.Html}

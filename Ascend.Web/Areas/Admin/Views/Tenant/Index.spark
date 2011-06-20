@@ -1,0 +1,31 @@
+﻿<viewdata model="IEnumerable<Tenant>" create="TenantCreateModel" />
+
+<div id="create-tenant" class="create-dialog">
+    # Html.RenderPartial("TenantCreateModel", create ?? new TenantCreateModel());
+</div>
+
+<table class="index-table">
+    <thead>
+        <tr>
+            <th>Enabled</th>
+            <th>Tenant</th>
+            <th>Database</th>
+            <th>Urls</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr each="var t in Model">
+            <td>${t.Enabled}</td>
+            <td>${Html.ActionLink(t.Name.Or("(Tenant)"), MVC.Admin.Tenant.Edit(t.Document.Id))}</td>
+            <td>${t.Database}</td>
+            <td>${String.Join("; ", t.Match)}</td>
+        </tr>
+    </tbody>
+    
+</table>
+
+<content name="actions">
+    <ul>
+        <li><a href="#create-tenant" class="create-button">New Tenant</a></li>
+    </ul>
+</content>

@@ -1,0 +1,23 @@
+﻿<viewdata err="string" />
+<form id="login" method="post" action="${Url.RouteUrl(MobileRoutes.Login)}">
+    <div class="toolbar">
+        <h1>Welcome</h1>
+    </div>
+    <div class="info" if="String.IsNullOrEmpty(err)">
+        <div class="logo">
+            <img src="/f/folder-images/Banner.png" width="80%" />
+        </div>
+        Please login to your ${application.ProgramName} account using your company email address:
+    </div>
+    <div class="info" if="!String.IsNullOrEmpty(err)">
+        <div class="logo">
+            <img src="/f/folder-images/Banner.png" width="80%" />
+        </div>
+        ${err}
+    </div>
+    <ul class="edit rounded">
+        <li><input type="text" placeholder="Email" name="login" autocapitalize="off" autocorrect="off" autocomplete="off" /></li>
+        <li><input type="password" placeholder="Password" name="password" autocapitalize="off" autocorrect="off" autocomplete="off" /></li>
+    </ul>
+    <a href="#" class="submit whiteButton">Login</a>
+</form>

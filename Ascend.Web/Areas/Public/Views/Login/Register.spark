@@ -1,0 +1,18 @@
+﻿<viewdata />
+
+<div id="form-links">
+    <ul>
+        <li>${Html.ActionLink("Login", MVC.Public.Login.Index())}</li>
+    </ul>
+</div>
+
+# using (Html.BeginForm(MVC.Public.Login.Reset()))
+# {
+    <table>
+    <tr><td>First Name:</td><td><input type="text" /></td></tr>
+    <tr><td>Last Name:</td><td><input type="text" /></td></tr>
+    <tr><td>Password:</td><td><input type="text" /></td></tr>
+    <tr><td>Email:</td><td><input type="text" /></td></tr>
+    <tr><td></td><td><input type="button" value="Submit" /></td></tr>
+    </table>
+# }

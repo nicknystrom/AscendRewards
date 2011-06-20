@@ -1,0 +1,45 @@
+﻿<viewdata id="string" model="GroupEditModel" />
+<set entity="Model.Name" />
+
+# using (Html.BeginForm(MVC.Admin.Group.Edit(id)))
+# {
+
+<div id="admin-edit-tabs">
+    <ul>
+        <li><a href="#admin-group-general">General</a></li>
+        <li><a href="#admin-group-users">Users</a></li>
+        <li><a href="#admin-group-managers">Managers</a></li>
+    </ul>
+    <div id="admin-group-general">
+        ${Html.Scaffold(s => {
+            s.Open();
+
+            s.Field(x => x.Number);
+            s.Field(x => x.Catalog);
+            s.Field(x => x.HomePage);
+            s.Field(x => x.TermsOfService);
+            s.Field(x => x.BannerImage);
+
+            s.Close();
+        })}
+    </div>
+    <div id="admin-group-users">
+    </div>
+    <div id="admin-group-managers">
+    </div>
+</div>
+
+# }
+
+<content name="actions">
+    <input type="submit" value="Update Group" />
+    <ul>
+    </ul>
+</content>
+
+<script type="text/javascript">
+
+$(function() {
+});
+        
+</script>

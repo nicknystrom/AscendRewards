@@ -1,0 +1,84 @@
+﻿<viewdata model="IEnumerable<CatalogProduct>" />
+
+<style>
+
+    ul#giftcards {
+        float: left;
+        margin: 0 10px 0 0;
+        padding: 0;
+        width: 210px;
+        height: 500px;
+    }
+
+    ul#giftcards > li {
+        list-style: none;
+        float: left;
+        width: 100px;
+        margin-right: 5px;
+    }
+
+    ul#giftcards > li img {
+        border: 1px solid #ccc;
+    }
+
+    .giftcard-detail { 
+        display: none;
+    }
+
+</style>
+
+<use file="Catalog/_Nav" />
+
+<h1>Gift Cards</h1>
+
+<p>Select a Gift Card below, then choose a denomination ($25, $50, etc.).</p>
+
+<ul id="giftcards">
+    <li each="var gc in Model">
+        <a href="#${gc.Name.ToSlug()}">
+            <img width="100px"
+                 height="100px"
+                 alt="${gc.Name}"
+                 src="${Html.GetProductImageUrl(gc.Id, 0, 100, 100)}"
+            />
+        </a> 
+    </li>
+</ul>
+
+<div each="var gc in Model" class="giftcard-detail" id="${gc.Name.ToSlug()}">
+    <h2>${gc.Name}</h2>
+    <p>${gc.Description}</p>
+    <select productId="${gc.Id}">
+        <option each="var d in gc.Options" value="${d.Name}">
+            ${d.Name} (${d.Price})
+        </option>
+    </select>
+    <input type="button" class="add-to-cart" value="Add To Cart" />
+</div>
+
+<script type="text/javascript">
+  
+    $(function () {
+        $('#giftcards a').click(function() {
+            $('.giftcard-detail').hide();
+            $($(this).attr('href')).show();
+            return false;
+        });
+        $('input.add-to-cart').click(function() {
+            var id = $(this).prev('select').val();
+            $.ajax({
+                url: '${Url.Action(MVC.Site.Cart.Index())}',
+                type: 'POST',
+                data: {
+                    productId: $(this).prev('select').attr('productId'),
+                    optionName: id,
+                    quantity: 1
+                },
+                success: function (data) {
+                    window.location = '${Url.Action(MVC.Site.Cart.Index())}';
+                }
+            });
+        });
+    });
+
+</script>

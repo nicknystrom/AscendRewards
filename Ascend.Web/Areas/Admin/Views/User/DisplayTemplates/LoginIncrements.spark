@@ -1,0 +1,3 @@
+﻿<viewdata model="LoginIncrements" />
+
+${Model.Count > 0 ? Model.Count.ToString() : "(none)"} <span if="Model.Last.HasValue">(${Model.Last.Value.ToShortDateString()})</span>

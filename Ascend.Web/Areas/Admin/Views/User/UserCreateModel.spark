@@ -1,0 +1,19 @@
+﻿<viewdata model="UserCreateModel" />
+
+# using (Html.BeginForm(MVC.Admin.User.Index()))
+# {
+
+    ${Html.Scaffold(s => {
+            s.Open();
+            s.Field(u => u.Login);
+            s.Field(u => u.Password);
+            s.Field(u => u.Email);
+            s.Field(u => u.FirstName);
+            s.Field(u => u.LastName);
+            s.Field(u => u.Activate, "If set, the user will be able to login immediatley, without activating their account.");
+            s.Field(u => u.Welcome, "If set, the user will receive either an Activation or Welcome email.");
+            s.Submit("Create User");
+            s.Close();
+    })}
+    
+# }

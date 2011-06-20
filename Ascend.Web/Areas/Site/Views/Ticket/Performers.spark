@@ -1,0 +1,39 @@
+﻿<viewdata model="IEnumerable<EventPerformer>" />
+
+<style>
+
+</style>
+
+<use file="Catalog/_Nav" />
+
+<h1>Event Tickets</h1>
+
+<use file="_Search" />
+
+<p>Several venues matched your search, please choose one:</p>
+
+<div each="var group in Model.GroupBy(x => x.Category.Description)">
+    <h2>${group.Key}</h2>
+    <table>
+        <!--
+        <thead>
+            <tr>
+                <th>Performer</th>
+            </tr>
+        </thead>
+        -->
+        <tbody>
+            <tr each="var p in group">
+                <td>${Html.PerformerLink(p)}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<script type="text/javascript">
+  
+    $(function () {
+        
+    });
+
+</script>

@@ -1,0 +1,16 @@
+﻿Thanks for registering, now activate your {program} account.
+
+<p>Thanks for registering an account for {program}! Before you can start using your new account, you
+need to click on the link below activate your account. This confirms that your account is active and
+that your email address is correct.</p>
+
+<p><a href="{url}">{url}</a></p>
+
+<p>Once you've activated, you'll be able to sign in immediately with your new username, '{login}'
+and the password selected during registration. If an adminstrator created your account for you,
+you should have received your new password in a separate communication.</p>
+
+<p>
+    Thanks!<br />
+    {program}
+</p>

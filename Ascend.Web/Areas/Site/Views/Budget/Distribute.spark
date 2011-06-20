@@ -1,0 +1,67 @@
+﻿<viewdata model="BudgetDistributionViewModel" />
+
+${Html.Scaffold(s => {
+
+    s.Open();
+    s.Display(x => x.DisplayName);
+    s.Display(x => x.Balance);
+    s.Display(x => x.LastBudgetDistribution);
+    s.Close();
+
+})}
+
+<div class="wishlist" if="null != Model.Wishlist && Model.Wishlist.Count > 0">
+<div class="wishlist-info">
+    User's current wishlist (click on a point value to award the user enough points to purchase the product):
+</div>
+<table>
+    <thead>
+        <tr>
+            <td></td>
+            <td>Product</td>
+            <td>Points</td>
+            <td>User Needs...</td>
+        </tr>
+    </thead>
+    <tbody>
+        <tr each="var x in Model.Wishlist">
+            <td>
+                <a href="${Url.Action(MVC.Site.Catalog.Product(x.Value.ProductId))}">
+                <img class="wishlist-image"
+                     width="100px"
+                     height="100px"
+                     src="${Html.GetProductImageUrl(x.Value.ProductId, 0, 100, 100)}"
+                />
+                </a>
+            </td>
+            <td>
+                <a href="${Url.Action(MVC.Site.Catalog.Product(x.Value.ProductId))}">${x.Value.ProductName}</a>
+            </td>
+            <td>${x.Value.UnitPrice.ToString("n0")}</td>
+            <td class="budget-wishlist-difference"
+                amount="${(int)Math.Max(0, x.Value.UnitPrice - Model.Balance)}">
+                ${Model.Balance < x.Value.UnitPrice
+                    ? (x.Value.UnitPrice - Model.Balance).ToString("n0")
+                    : "-"}
+            </td>
+        </tr>
+    </tbody>
+</table>
+</div>
+
+<table class="scaffold">
+    <tr>
+        <th>Amount</th>
+        <td><input type="text" name="Amount" value="" /></td>
+    </tr>
+    <tr>
+        <th>Message</th>
+        <td><textarea type="text" name="Message" value="" /></td>
+    </tr>
+    <tr>
+        <th></th>
+        <td><input type="button" value="Award Points" /></td>
+    </tr>
+</table>
+
+</form>

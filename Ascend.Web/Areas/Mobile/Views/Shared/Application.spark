@@ -1,0 +1,231 @@
+﻿<viewdata application="IApplicationConfiguration" />
+<!DOCTYPE HTML>
+<html>
+    <head>
+        
+        <link rel="apple-touch-icon" href="~/Content/Images/Icons/apple-touch-icon-57x57.png" />
+        <link rel="apple-touch-icon" sizes="72x72" href="~/Content/Images/Icons/apple-touch-icon-72x72.png" />
+        <link rel="apple-touch-icon" sizes="114x114" href="~/Content/Images/Icons/apple-touch-icon-114x114.png" />
+        <link rel="apple-touch-icon-precomposed" href="http://sandbox.ascendrewards.com/Content/Images/Icons/apple-touch-icon-precomposed.png" />
+
+        <script type="text/javascript" src="/Content/Scripts/jquery-1.4.2.min.js"></script>
+        <script type="text/javascript" src="/Content/Mobile/jqtouch.js"></script>
+        <!--<script type="text/javascript" src="/Content/Mobile/jqtouch.transitions.js"></script>-->
+        <style type="text/css" media="screen">@import "/Content/Mobile/jqtouch.css";</style>
+        <style type="text/css" media="screen">@import "/Content/Mobile/Themes/apple/theme.css";</style>
+
+        <title>${application.ProgramName}</title>
+
+        <script type="text/javascript">
+
+            var jQT = $.jQTouch({
+                useAnimations: true,
+                statusBar: 'black',
+                cacheGetRequests: false
+            });
+
+            function bindAwardPanel() {
+                $('#award-nominees-search').bind('keyup blur', function () {
+                    var a = $(this).val().toLowerCase();
+                    if (a.length > 1) {
+                        $('#award-nominees > li > a').each(function () {
+                            var name = $(this).text().toLowerCase();
+                            $(this).closest('li').toggle(name.indexOf(a) != -1);
+                        });
+                    }
+                    else {
+                        $('#award-nominees > li').toggle(true);
+                    }
+                });
+                $('#award-nominees > li > a').click(function (e) {
+                    $('#award-nominees a.selected').toggleClass('selected', false);
+                    $(this).toggleClass('selected', true);
+                    $('#award-nominee').val($(this).attr('nominee'));
+                    return false;
+                });
+                $('#award').submit(function () {
+                    var recipient = $('#award-nominee').val();
+                    if (!recipient) {
+                        $('html,body').animate({ scrollTop: $("#award-nominees").offset().top }, 200, "swing");
+                        return false;
+                    }
+                });
+            }
+
+            function pageInserted(e, o) {
+                switch (o.page.attr('id')) {
+                    case 'award':
+                        bindAwardPanel();
+                        break;
+                }
+            }
+
+            $(function () {
+                $('#jqt').bind('pageInserted', pageInserted);
+            });
+
+        </script>
+        <style>
+            
+            div.logo
+            {
+                margin-bottom: 10px;
+            }
+            
+            a.whiteButton 
+            {
+                margin: 0 10px;
+                text-shadow: rgba(0,0,0,.5) 0 1px 1px;
+            }
+           
+            ul.display
+            {
+                padding: 10px !important;
+            }
+           
+            ul.display > li 
+            {
+                background: none;
+                border: none;
+            }
+            
+            ul.display > li > h2 { margin: 0 !important; }
+
+            small#home-display-points
+            {
+                font-size: 24px;
+                line-height: 21px;   
+                margin-top: -5px;
+            }
+            
+            body > footer 
+            {
+                display: block;
+                min-height: inherit !important;
+            }
+            
+            div#wishlist > ul > li > a 
+            {
+                text-overflow: ellipsis;
+                padding-right: 100px;
+            }
+            
+            div#product img
+            {
+                float: right;
+                width: 200px;
+                height: 200px;
+                margin-left: 10px;
+                margin-bottom: 10px;
+            }
+            
+            div#product .description
+            {
+                font-size: 12px;
+                color: #fff;
+            }
+            
+            form#distribute > ul > li > .counter
+            {
+                margin-top: 0;
+            }
+            
+            ul.distribute-wishlist > li > a
+            {
+                width: 70%;
+            }
+            
+            a.selected 
+            {
+                background-color: #cfc;
+                background-image: url(/Content/Images/tick.png);
+                background-repeat: no-repeat;
+                background-position: 95% center;
+            }
+            
+            /* saffire specific things */
+            
+            div#home ul.menu li
+            {
+                height: 40px;
+            }
+            
+            div#home ul.menu li img
+            {
+                float: left;
+            }
+            
+            div#home ul.menu li a
+            {
+                padding-left: 60px;
+                line-height: 40px;
+            }
+            
+            div#home ul.menu li small.counter
+            {
+                margin-top: -35px;
+            }
+            
+            div#jqt ul#reward-code,
+            div#jqt ul#reward-code li
+            {
+                background-color: #c7d143;
+                color: #717174;
+            }
+            
+            div#jqt ul#reward-code li
+            {
+                padding: 0;
+                background-image: url(/Content/Mobile/Saffire/snapreward-bg.png);
+                background-position: top left;
+                background-repeat: no-repeat;
+                height: 120px !important;
+            }
+            
+            ul#reward-code input[type=submit]
+            {
+                margin-top: 75px;
+                float: right;
+            }
+            
+            div#jqt ul#reward-code input[type=text]
+            {
+                position: relative;
+                top: 90px;
+                left: 60px;
+                width: 156px;
+                                
+                font-size: 18px;
+                background-color: #fff;
+                border: none;
+                color: #000;
+            }
+            
+            div#jqt > * 
+            {
+                background-image: none;
+                background-color: #15264B;
+            }
+            
+            input[type=submit]
+            {
+                background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#45567B), to(#15264B));
+                color: #fff;
+                text-shadow:
+            }
+            
+            div#jqt h2
+            {
+                color: #c7d143;
+                text-shadow: none;
+            }
+
+        </style>
+    </head>
+    <body>
+        <div id="jqt">
+            <use content="view" />
+        </div>
+    </body>
+</html>
+    

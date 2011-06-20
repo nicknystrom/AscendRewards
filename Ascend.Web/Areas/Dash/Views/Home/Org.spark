@@ -1,0 +1,18 @@
+﻿<viewdata />
+
+<div id="org"></div>
+
+<script type="text/javascript">
+
+    $(function () {
+
+        var u = new google.visualization.Query("${Url.Action(MVC.Dash.Widget.Org())}");
+        u.send(function(response) {
+            var d = response.getDataTable();
+            var chart = new google.visualization.OrgChart(document.getElementById('org'));
+            chart.draw(d, {allowHtml:true});
+        });
+
+    });
+
+</script>

@@ -1,0 +1,57 @@
+﻿<viewdata application="IApplicationConfiguration"
+          currentUser="User"
+          currentUserLedger="Ledger"
+          currentUserBudget="Ledger"
+          wishlist="ShoppingCart"
+          awards="IList<Award>"
+          rewardCodeMessage="string"
+/>
+
+<div id="home">
+    <div class="toolbar">
+        <h1>${application.ProgramName}</h1>
+        <!--<a class="button back" id="home-logout" href="#login">Logout</a>-->
+    </div>
+    <ul class="display">
+        <li>
+             <div class="logo">
+                <img src="/f/folder-images/Banner.png" width="80%" />
+            </div>
+            <h2 id="home-display-name">${currentUser.DisplayName}</h2>
+            Point balance:
+            <small id="home-display-points" class="counter">${currentUserLedger.Balance.ToString("n0")}</small>
+        </li>
+    </ul>
+    <ul id="reward-code" class="display" if="String.IsNullOrEmpty(rewardCodeMessage)">
+        <li>
+            <form action="${Url.RouteUrl(MobileRoutes.RewardCode)}" method="post">
+                <input type="submit" class="" value="Go" />
+                <input type="text" id="rewardcode" name="rewardcode" />
+            </form>
+        </li>
+    </ul>
+    <ul id="reward-code" class="display" if="!String.IsNullOrEmpty(rewardCodeMessage)">
+        <li style="background-image: none; height: 30px !important; padding: inherit;">
+            ${rewardCodeMessage}
+        </li>
+    </ul>
+    <ul class="menu">
+        <li>
+            <img src="/Content/Mobile/Saffire/wishlist.png" />
+            <a id="home-wishlist" href="${Url.RouteUrl(MobileRoutes.Wishlist)}">Wishlist</a>
+            <small id="home-wishlist-count" class="counter">${null == wishlist ? 0 : wishlist.Count}</small>
+        </li>
+        <test if="null != awards">
+        <li class="arrow" each="var award in awards">
+            <img src="/Content/Mobile/Saffire/thankyou-reward.png" if="award.Title == 'Thank You'" />
+            <img src="/Content/Mobile/Saffire/spotlight-reward.png" if="award.Title == 'Spotlight'" />
+            <a href="${Url.RouteUrl(MobileRoutes.Award, new { id=award.Document.Id })}" class="slideup">${award.Title}</a>
+        </li>
+        </test>
+        <li if="null != currentUserBudget">
+            <img src="/Content/Mobile/Saffire/budget.png" />
+            <a id="home-budget-link" href="${Url.RouteUrl(MobileRoutes.Budget)}">Distribute Budget</a>
+            <small id="home-budget-balance" class="counter">${currentUserBudget.Balance.ToString("n0")}</small>
+        </li>
+    </ul>
+</div>

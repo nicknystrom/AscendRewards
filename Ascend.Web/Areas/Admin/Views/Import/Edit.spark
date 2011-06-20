@@ -1,0 +1,111 @@
+﻿<viewdata id="string" model="ImportEditModel" targets="string[][]" />
+<set entity="Model.Location" />
+
+# using (Html.BeginForm(MVC.Admin.Import.Edit(id)))
+# {
+
+${Html.Scaffold(s => {
+    s.Open();
+
+    s.Display(x => x.Location);
+    s.Field(x => x.Type);
+    s.Field(x => x.Notify);
+
+    s.Close();
+})}
+
+<div id="admin-edit-tabs">
+    <ul>
+        <li><a href="#admin-import-mapping">Mapping</a></li>
+        <li><a href="#admin-import-results">Results <span if="null != Model.Attempts && Model.Attempts.Count > 0">(${Model.Attempts.Count})</span></a></li>
+    </ul>
+    <div id="admin-import-mapping">
+        <table class="scaffold">
+            <var i="0" />
+            <thead>
+                <tr>
+                    <th>Column</th>
+                    <th>Target</th>
+                    <th>Custom</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr each="var c in Model.Columns">
+                    <th>
+                        <input type="hidden" name="Columns[${i}].Name" value="${c.Name}" />
+                        ${c.Name}
+                    </th>
+                    <td>
+                        <select name="Columns[${i}].Target">
+                            <option value="">(none)</option>
+                            <option each="var t in targets[(int)Model.Type]"
+                                    value="${t}"
+                                    selected="true?{t == c.Target}">${t}</option>
+                        </select>
+                    </td>
+                    <td><input type="text" name="Columns[${i}].CustomName" style="display: none?{c.Target != "Custom"}" /></td>
+                    # i++;
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div id="admin-import-results">
+        <table if="null != Model.Attempts && Model.Attempts.Count > 0">
+            <thead>
+                <tr>
+                    <th>Success</th>
+                    <th>Date</th>
+                    <th>Step</th>
+                    <th>Processed</th>
+                    <th>Failed</th>
+                    <th>Problems</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr each="var a in Model.Attempts">
+                    <td>${a.Success}</td>
+                    <td>${a.Date.ToShortDateString()}</td>
+                    <td>${a.Step}</td>
+                    <td>${a.RowsProcessed.ToString("N0")}</td>
+                    <td>${a.RowsFailed.ToString("N0")}</td>
+                    <td>
+                        <ul style="padding: 0; margin: 0;" if="null != a.Problems && a.Problems.Count > 0">
+                            <li each="var p in a.Problems">${H(p)}</li>
+                        </ul>
+                        <span if="null == a.Problems || a.Problems.Count == 0">-</span>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <span if="null == Model.Attempts || Model.Attempts.Count == 0">
+            No results available.
+        </span>
+    </div>
+</div>
+
+<input type="hidden" name="import" id="import" value="False" />
+
+# }
+
+<content name="actions">
+    <input type="submit" value="Save Import" />
+    <ul>
+        <li><a href="#" id="complete-import">Complete Import</a></li>
+    </ul>
+</content>
+
+<script type="text/javascript">
+
+$(function() {
+    
+    $('#complete-import').click(function() {
+        if (confirm('Are you sure you wish to beging this import now? This action cannot be undone.'))
+        {
+            $('#import').val('True');
+            $('#import').closest('form').submit();
+        }
+    });
+    
+});
+        
+</script>

@@ -1,0 +1,40 @@
+﻿<viewdata model="string" />
+
+<input
+    type="text"
+    class="account"
+    id="${ViewData.TemplateInfo.GetFullHtmlFieldId(String.Empty)}"
+    name="${ViewData.TemplateInfo.GetFullHtmlFieldName(String.Empty)}"
+    value="${Model}"
+/>
+<button
+    class="account-chooser-button"
+    for="${ViewData.TemplateInfo.GetFullHtmlFieldId(String.Empty)}">
+    Choose Account
+</button>
+
+<script type="text/javascript">
+
+    $(function () {
+        
+        $('button.account-chooser-button').click(function() {
+            var target = $(this).attr('for');
+            var dlg = $('<div style="display: none;"></div>')
+                .appendTo('body')
+                .load('${Url.Action(MVC.Admin.Account.Choose(AccountType.Program))}',
+            function() {
+                dlg.dialog({
+                    title: 'Select Budget Account for Program',
+                    modal: true,
+                    buttons: {
+                        'Cancel': function() { $(this).dialog('close'); }
+                    }
+                });
+            });
+            return false;
+        });    
+
+
+    });
+
+</script>

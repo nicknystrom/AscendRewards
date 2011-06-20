@@ -1,0 +1,44 @@
+﻿<viewdata model="RecognitionsViewModel" />
+
+<style>
+  
+  .certificate {
+    float: left;
+    width: 160px;
+    height: 200px;
+    margin-right: 8px;
+  }
+  
+  .certificate span {
+    display: block;
+    font-size: 10px;
+    color: #000;
+  }
+  
+  .certificate a img {
+    border: 1px solid #ccc;
+  }
+  
+</style>
+
+<use file="Profile/_Tabs" />
+
+<div class="tab-content" style="height: ${200 * Math.Ceiling(Model.Recognitions.Count() / (double)3)}px;">
+
+  <div class="certificate" each="var x in Model.Recognitions">
+    <a href="${Url.Action(MVC.Public.Award.Index(x.Id))}" target="_blank">
+        <img src="${x.Certificate.BackgroundUrl.ToAbsoluteUrl(Request)}" style="width: 160px; height: 120px;" />
+        <span>${x.Date.ToShortDateString()}</span>
+        <span>From: ${H(x.NominatorName)}</span>
+        <span>To: ${H(x.RecipientName)}</span>
+        <span>"${H((x.Message ?? "").ShortenTo(40))}"</span>
+    </a>
+  </div>
+</div>
+
+<script type="text/javascript">
+
+  $(function() {
+  });
+
+</script>

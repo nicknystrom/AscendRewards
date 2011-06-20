@@ -1,0 +1,10 @@
+﻿<viewdata model="BudgetEditModel" />
+
+${Html.Scaffold(s => {
+    s.Open();
+    s.Field(x => x.RefreshLimit);    
+    s.Field(x => x.RefreshInterval);    
+    s.Display(x => x.LastRefreshed);    
+    s.Field(x => x.NextRefresh);    
+    s.Close();
+})}

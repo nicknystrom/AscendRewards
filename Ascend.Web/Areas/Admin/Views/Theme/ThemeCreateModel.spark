@@ -1,0 +1,14 @@
+﻿<viewdata model="ThemeCreateModel" />
+
+# using (Html.BeginForm(MVC.Admin.Theme.Index()))
+# {
+
+    ${Html.Scaffold(s => {
+            s.Open();
+            s.Field(t => t.Name);
+            s.Field(t => t.Stylesheet);
+            s.Submit("Create Theme");
+            s.Close();
+    })}
+    
+# }

@@ -1,0 +1,30 @@
+﻿<viewdata category="Category" tag="string" />
+
+# var parents = new List<Category>();
+
+<test if="null != category">
+    # var x = category.Parent;
+    # if (ViewContext.RouteData.GetRequiredString("Action") == "Product") parents.Add(category);
+    # while (null != x)
+    # {
+    #     parents.Add(x);
+    #     x =  x.Parent;
+    # }
+    <ul id="breadcrumb">
+        # for (int n=parents.Count-1; n>=0; n--)
+        # {
+        <li><span if="n<parents.Count-1">&#0187;</span> ${Html.CategoryLink(Url, parents[n])}</li>
+        # }
+        <li if="ViewContext.RouteData.GetRequiredString('Action') != 'Product'">&#0187; ${category.Name} <span if="!String.IsNullOrWhiteSpace(tag)">[${tag}]</span></li>
+    </ul>
+</test>
+
+<content name="left">
+	<ul id="categories">
+        ${Html.CategoryNode(
+            Url,
+            category.Root,
+            c => c == category || parents.Contains(c)
+        )}
+	</ul>
+</content>

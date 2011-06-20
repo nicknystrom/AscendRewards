@@ -1,0 +1,13 @@
+﻿<viewdata model="QuizCreateModel" />
+
+# using (Html.BeginForm(MVC.Admin.Quiz.Index()))
+# {
+
+    ${Html.Scaffold(s => {
+            s.Open();
+            s.Field(q => q.Title);
+            s.Submit("Create Quiz");
+            s.Close();
+    })}
+    
+# }

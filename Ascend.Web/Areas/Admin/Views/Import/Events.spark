@@ -1,0 +1,14 @@
+﻿<viewdata />
+<set entity="'Repopulate Event Ticketing Service'" />
+
+<form method="post">
+
+<p>This will force a full update from the event ticketing system (Ticket Jones). This could take some time (~5 minutes).</p>
+
+<input type="submit" value="Submit" />
+</form>
+
+<script type="text/javascript">
+  $(function() {
+  });
+</script>

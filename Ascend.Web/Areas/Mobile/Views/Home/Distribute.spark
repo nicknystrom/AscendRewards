@@ -1,0 +1,26 @@
+﻿<viewdata model="Ascend.Web.Areas.Site.Controllers.BudgetDistributionViewModel" />
+<form id="distribute" method="post" action="${Url.RouteUrl(MobileRoutes.Distribute)}">
+    <div class="toolbar">
+        <h1>Distribute Budget</h1>
+        <a class="button cancel" href="#">Cancel</a>
+    </div>
+    <ul class="rounded">
+        <li id="distribute-name">${Model.DisplayName}</li>
+        <li>Balance: <small id="distribute-balance" class="counter">${Model.Balance.ToString("n0")}</small></li>
+        <li>Last Awarded: <small id="distribute-last" class="counter">${Model.LastBudgetDistribution.HasValue ? Model.LastBudgetDistribution.Value.ToShortDateString() : "(never)" }</small></li>
+    </ul>
+    <test if="Model.Wishlist != null">
+    <h2>Wishlist</h2>
+    <ul class="distribute-wishlist">
+        <li each="var x in Model.Wishlist">
+            <small class="counter">${x.Value.UnitPrice.ToString("n0")}</small>
+            <a href="${Url.RouteUrl(MobileRoutes.Product, new { id=x.Value.ProductId, userId=Model.Id })}" class="slideup">${x.Value.ProductName}</a>
+        </li>
+    </ul>
+    </test>
+    <ul class="rounded">
+        <li><input type="text" placeholder="Amount" id="distribute-amount" name="Amount" /></li>
+        <li><input type="text" placeholder="Message" id="distribute-message" name="Message" /></li>
+    </ul>
+    <a href="#" class="submit whiteButton">Send</a>
+</form>

@@ -1,0 +1,8 @@
+﻿<viewdata model="Address" />
+<span if="null == Model">(none)</span>
+<else>
+<span if="!String.IsNullOrEmpty(Model.Address1)">${Model.Address1}<br /></span>
+<span if="!String.IsNullOrEmpty(Model.Address2)">${Model.Address2}<br /></span>
+<span if="!String.IsNullOrEmpty(Model.Address3)">${Model.Address3}<br /></span>
+<span>${Model.City</span>, <span>${Model.State}</span> <span>${Model.PostalCode}</span>
+</else>

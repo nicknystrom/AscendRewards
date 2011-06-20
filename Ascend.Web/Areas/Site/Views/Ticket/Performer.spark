@@ -1,0 +1,27 @@
+﻿<viewdata model="PerformerViewModel" />
+
+<style>
+
+</style>
+
+<use file="Catalog/_Nav" />
+
+<h1>Event Tickets</h1>
+
+<use file="_Search" />
+
+${Html.Scaffold(s => {
+    s.Open();
+    s.Display(x => x.Performer.Name);
+    s.Close();
+})}
+
+${Html.DisplayFor(x => x.Events)}
+
+<script type="text/javascript">
+  
+    $(function () {
+        
+    });
+
+</script>

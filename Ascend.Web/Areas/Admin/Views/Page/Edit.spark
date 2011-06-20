@@ -1,0 +1,31 @@
+﻿<viewdata model="PageEditModel" />
+<set entity="Model.Content.Title" />
+
+<style>
+
+</style>
+
+# using (Html.BeginForm(MVC.Admin.Page.Edit()))
+# {
+
+<div id="admin-edit-tabs">
+    <ul>
+        <li><a href="#admin-page-general">General</a></li>
+        <li><a href="#admin-page-availability">Availability (${Model.Availability})</a></li>
+    </ul>
+    <div id="admin-page-general">
+        ${Html.EditorFor(x => x.Content)}
+    </div>
+    <div id="admin-page-availability">
+        ${Html.EditorFor(x => x.Availability)}
+    </div>
+</div>
+
+
+# }
+
+<content name="actions">
+    <input type="submit" value="Update Page" />
+    <ul>
+    </ul>
+</content>

@@ -1,0 +1,109 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" >
+<head>
+	
+	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+
+    <link rel="apple-touch-icon" href="~/Content/Images/Icons/apple-touch-icon-57x57.png" />
+    <link rel="apple-touch-icon" sizes="72x72" href="~/Content/Images/Icons/apple-touch-icon-72x72.png" />
+    <link rel="apple-touch-icon" sizes="114x114" href="~/Content/Images/Icons/apple-touch-icon-114x114.png" />
+    <link rel="apple-touch-icon-precomposed" href="http://sandbox.ascendrewards.com/Content/Images/Icons/apple-touch-icon-precomposed.png" />
+
+    <link href="~/Content/Site.css" rel="Stylesheet" type="text/css" />
+    <link href="~/Content/Themes/Aristo/jquery-ui-1.8rc3.custom.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="~/Content/Scripts/jquery-1.4.2.js"></script>
+    <script type="text/javascript" src="~/Content/Scripts/jquery-ui-1.8.2.js"></script>
+    
+    <use content="head" />
+    
+    <title>${application.ProgramName}</title>
+    
+    <script type="text/javascript">
+        $(function () {
+            $('#menu span.nonlink, #menu span.ui-icon, #categories .expandable').live('click', function () {
+                $(this).closest('li').find('ul').toggle('slide', { duration: 200, direction: 'up' });
+                $(this).closest('li').find('span.ui-icon')
+                    .toggleClass('ui-icon-circlesmall-plus')
+                    .toggleClass('ui-icon-circlesmall-minus');
+            });
+        });
+    </script>
+
+</head>
+<body>
+
+	<viewdata application="IApplicationConfiguration"
+              today="DateTime"
+              currentUser="User"
+			  currentUserLedger="Ledger"
+			  currentUserBudget="Ledger"
+              headerMenu="MenuViewModel"
+              navigationMenu="MenuViewModel"
+              footerMenu="MenuViewModel"
+              wishlist="ShoppingCart"
+              cart="ShoppingCart"
+    />
+	
+	<div id="page">
+
+        <use file="Views/Shared/_Topbar" />
+
+		<div id="header">
+            <a id="header-banner" href="${Url.Action(MVC.Site.Home.Index())}"></a>
+            <div id="header-links">
+                <FlatMenu menu="headerMenu" />
+            </div>
+		</div>
+        
+        <div id="left">
+            <div id="menu">
+                <Menu menu="navigationMenu" />
+            </div>
+            <div id="search">
+                <form action="${Url.Action(MVC.Site.Catalog.Index())}" method="get">
+                <span>Search Catalog</span>
+                <span><input type="text" id="search-term" name="q" /></span>
+                <span><input type="submit" id="search-go" value="Search" /></span>
+                </form>
+            </div>
+            <use content="left" />
+        </div>
+        
+        <div id="right">
+            <div id="balance" class="module">
+                <use file="Modules/Balance" />
+            </div>
+            <div id="budget" class="module" if="null != currentUserBudget">
+                <use file="Modules/Budget" />
+            </div>
+            <div id="cart-module" class="module" if="null != cart && cart.Count > 0" >
+                <use file="Modules/Cart" />
+            </div>
+            <div id="wishlist" class="module">
+                <use file="Modules/Wishlist" />
+            </div>
+            <use content="right" />
+        </div>
+		
+        <div id="content">
+            <use file="Views/Shared/_Notifications" />
+            <use content="view" />	
+		</div>
+        
+		<div id="footer">
+            <FlatMenu menu="footerMenu" />
+        </div>
+        <div id="copyright">
+            &copy; ${today.Year} ${application.ProgramName}, All rights reserved.
+        </div>
+	
+	</div>
+	
+    <script type="text/javascript">
+        $(function () {
+        });
+    </script>
+    <use file="Views/Shared/_Analytics" />
+
+</body>
+</html>

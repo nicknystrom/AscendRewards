@@ -1,0 +1,21 @@
+﻿<viewdata model="ShoppingCartItem" />
+<use namespace="Ascend.Web.Areas.Site.Controllers" />
+<div id="product-${Model.ProductId.ToSlug()}">
+    <div class="toolbar">
+        <h1>Wishlist</h1>
+        <a class="button back" href="#">Back</a>
+    </div>
+    <ul class="display">
+        <li>
+            <h1>${Model.ProductName}</h1>
+        </li>
+        <li>
+            <h2>Points</h2>
+            <small class="counter">${Model.UnitPrice.ToString("n0")}</small>
+        </li>
+        <li>
+            <img src="${Html.GetProductImageUrl(Model.ProductId, 0, 200, 200)}"/>
+            <div class="description">${Model.Description}</div>
+        </li>
+    </ul>
+</div>

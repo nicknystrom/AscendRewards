@@ -1,0 +1,14 @@
+﻿<viewdata wishlist="ShoppingCart"
+/>
+<div id="wishlist">
+    <div class="toolbar">
+        <h1>Wishlist</h1>
+        <a class="button back" href="#">Back</a>
+    </div>
+    <ul class="edgetoedge" if="null != wishlist">
+        <li each="var i in wishlist">
+            <a href="${Url.RouteUrl(MobileRoutes.Product, new { id=i.Value.ProductId })}" class="slideup">${i.Value.ProductName}</a>
+            <small class="counter">${i.Value.UnitPrice.ToString("n0")}</small>
+        </li>
+    </ul>
+</div>

@@ -1,0 +1,2 @@
+﻿<viewdata model="object" />
+${null == Model ? "(none)" : ((DateTime)Model).ToLocalTime().ToString()}

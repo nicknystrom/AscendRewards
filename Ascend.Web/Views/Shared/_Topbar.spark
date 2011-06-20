@@ -1,0 +1,7 @@
+﻿<div id="topbar">
+    <ul>
+        <li>${Html.ActionLink("Logout", MVC.Public.Login.Logout())}</li>
+        <li>&nbsp;|&nbsp;${Html.ActionLink("My Profile", MVC.Site.Profile.Index())}</li>
+        <li if="currentUser.Permissions != null && currentUser.Permissions.Dashboard">&nbsp;|&nbsp;${Html.ActionLink("Dashboard", MVC.Dash.Home.Index())}</li>
+    </ul>
+</div>

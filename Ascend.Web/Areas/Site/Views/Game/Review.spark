@@ -1,0 +1,22 @@
+﻿<viewdata model="GameReviewModel" />
+
+<style>
+
+</style>
+
+<h1>Results for ${Model.Game.Title}</h1>
+
+<p>You played this game on ${Model.Result.Taken.ToShortDateString()}.</p>
+
+<p>
+    You scored ${Model.Score} points in ${Model.Time} seconds.
+</p>
+
+<p if="Model.PointsEarned > 0">
+    Great job, you earned ${Model.PointsEarned} points!
+</p>
+
+<script type="text/javascript">
+    $(function () {
+    });
+</script>

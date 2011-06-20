@@ -1,0 +1,4 @@
+﻿<viewdata model="Phone" />
+${Html.TextBoxFor(x => x.Number, new { class="phone" })}
+${Html.LabelFor(x => x.Extension)}
+${Html.TextBoxFor(x => x.Extension, new { class="ext" })}

@@ -1,0 +1,14 @@
+﻿<viewdata />
+<set entity="'User Reset'" />
+
+<form method="post">
+  <p>This will erase ALL users and their activity from the system. There is no way to undo this. This is meant only for wiping a database prior to going
+  live for a client, or for using the Randomizer feature.</p>
+  <p>${Html.CheckBox("confirm")} I really want to erase everything.</p>
+  <input type="submit" value="Submit" />
+</form>
+
+<script type="text/javascript">
+  $(function() {
+  });
+</script>

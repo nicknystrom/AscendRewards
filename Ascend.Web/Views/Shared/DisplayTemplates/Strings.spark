@@ -1,0 +1,4 @@
+﻿<viewdata model="IEnumerable<string>" />
+<ul class="strings">
+    <li each="var a in Model ?? new string[0]">${a}</li>
+</ul>

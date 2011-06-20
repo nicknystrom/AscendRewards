@@ -1,0 +1,66 @@
+﻿<viewdata model="EventViewModel" />
+
+<style>
+
+</style>
+
+<use file="Catalog/_Nav" />
+
+<h1>Event Tickets</h1>
+
+<h2>${Model.Event.Title}</h2>
+<p>
+    <span if="null != Model.Event.Performers && Model.Event.Performers.Count > 0">featuring ${Html.PerformerLink(Model.Event.Performers[0])}</span>
+    <span if="null != Model.Event.Performers && Model.Event.Performers.Count > 1"> and ${Html.PerformerLink(Model.Event.Performers[1])}</span>
+</p>
+<table>
+    <tr>
+        <td>Date:</td>
+        <td>${Model.Event.Date.ToShortDateString()}</td>
+    </tr>
+    <tr>
+        <td>Time:</td>
+        <td>${Model.Event.Time}</td>
+    </tr>
+    <tr>
+        <td>Venue:</td>
+        <td>
+            ${Html.VenueLink(Model.Event.Venue)}<br/>
+        </td>
+    </tr>
+</table>
+
+<h2>Tickets:</h2>
+<table if="Model.Tickets != null && Model.Tickets.Length > 0">
+    <tr>
+        <th>Section</th>
+        <th>Row</th>
+        <th>Seats</th>
+        <th>Notes</th>
+        <th>Quantity</th>
+        <th>Points</th>
+        <th></th>
+    </tr>
+    <tr each="var t in Model.Tickets">
+        <td>${t.Section}</td>
+        <td>${t.Row}</td>
+        <td>${t.SeatFrom} - ${t.SeatThrough}</td>
+        <td>${t.Description}</td>
+        <td>${t.Quantity.ToString("n0")}</td>
+        <td>${t.Points.ToString("n0")}</td>
+        <td><input type="button"
+                   value="Purchase"
+                   if="t.Quantity > 0 && t.Points <= currentUserLedger.Balance" /></td>
+    </tr>
+</table>
+
+<img src="http://www.eventinventory.com/EIBOVenueMap.cfm?eid=${Model.Event.Performers[0].Id.Substring('ticketjonesperformer-'.Length)}&vid=${Model.Event.Venue.Id.Substring('ticketjonesvenue-'.Length)}" />
+
+
+<script type="text/javascript">
+  
+    $(function () {
+        
+    });
+
+</script>

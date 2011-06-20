@@ -1,0 +1,163 @@
+﻿<viewdata model="ThemeViewModel" />
+<macro name="C" id="string">${Model.C(id)}</macro>
+<macro name="F" id="string">${Model.F(id)}</macro>
+<macro name="B" id="string">${Model.B(id)}</macro>
+
+body {
+    background-color: ${C("login-background")};
+    margin: 0;
+    padding: 0;
+    ${F("login-default")}
+}
+
+a {
+    ${F("login-link")}
+}
+
+p, ul {
+    margin: 0 0 20px 0;
+    line-height: 1.6em;
+}
+
+.field-validation-error { color: ${C("error-foreground")}; }
+
+input[type=text], 
+input[type=password] 
+{
+    /* normalize accross all browsers, user ff default settings */
+    margin: 0;
+    padding: 2px;  
+    border: 1px solid #ccc;
+}
+
+button,
+input[type=submit]
+{
+    /* normalize accross all browsers, user ff default settings */
+    margin: 0;    
+}
+
+/* LAYOUT ------------------------------------------------ */
+
+#page {
+    width: 980px;
+    margin: 0 auto
+}
+
+#splash {
+    height: 300px;
+    margin-top: 16px;
+}
+
+<test if="null != Model.LoginBanners">
+<for each="var i in System.Linq.Enumerable.Range(0, Model.LoginBanners.Length)">
+#splash.splash-${i+1} { background: url(${Model.LoginBanners[i].ToAbsoluteUrl()}); }
+</for>
+</test>
+
+#next, #prev {
+    display: none;
+    float: right;
+    width: 38px;
+    height: 39px;
+    cursor: pointer;
+    padding: 4px;
+    margin: 242px 10px 0 10px;
+    background-color: rgba(255, 255, 255, 0.7);
+    background-image: url(Images/arrow-next.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    border: 1px solid rgba(255,255,255,0.8);
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+
+}
+
+#splash #prev {
+    float: left;
+    background-image: url(Images/arrow-prev.png);
+}
+
+#content {
+    margin-top: 16px;
+}
+
+#form {
+    float: left;
+    left: 0px;
+    width: 358px; /* 394px - 26px - 10px */
+    height: 150px; /* 190px - 20*2px */
+    padding: 20px 10px 20px 26px;
+    
+    background-color: ${C("scheme-deep")};
+    color: ${C("scheme-deep-fg")};
+}
+
+#form input[type="text"],
+#form input[type="password"] {
+    width: 150px;
+}
+
+#form-links {
+    float: right;
+    height: 100%;
+    border-left: 1px solid ${C("scheme-deep-fg")};
+    padding: 0 12px;
+}
+
+#form-links ul {
+    list-style: none;
+    padding: 0;
+}
+
+#form-links li 
+{
+    margin-bottom: 4px;
+}
+
+#form span {
+    display: block;
+    margin-bottom: 8px;
+}
+
+#info {
+    width: 570px;
+    height: 190px;
+    padding: 0;
+    margin-left: 410px; 
+    overflow: hidden;
+}
+
+<test if="null != Model.LoginInfos">
+<for each="var i in Enumerable.Range(0, Model.LoginInfos.Length)">
+#info.info-${i+1} { background: url(${Model.LoginInfos[i].ToAbsoluteUrl()}); }
+</for>
+</test>
+
+#footer {
+    clear: both;
+    margin-top: 16px;
+    padding: 16px;
+    background-color: ${C("scheme-shallow")};
+    color: ${C("scheme-shallow-fg")};
+    text-align: right;
+}
+
+#footer ul  
+{
+    margin: 0;
+    padding: 0;
+}
+
+#footer li  {
+    display: inline;
+    list-style: none;
+}
+
+#copyright {
+    padding: 16px;
+    color: #000;
+    text-align: right;
+}
+
+${Model.CustomLogin}

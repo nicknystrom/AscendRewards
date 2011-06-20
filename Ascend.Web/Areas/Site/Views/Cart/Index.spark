@@ -1,0 +1,188 @@
+﻿<viewdata model="ShoppingCart" checkout="bool" deficit="int" />
+
+<style>
+
+    table#cart
+    {
+        width: 100%;
+        border-collapse: collapse;
+    }
+    
+    table#cart ul
+    {
+        padding: 0px;
+        font-size: 10px;
+    }
+    
+    table#cart li
+    {
+        list-style-position: inside;
+    }
+    
+    table#cart span
+    {
+        display: block;
+        margin-bottom: 6px;
+    }
+    
+    table#cart thead td
+    {
+        padding: 6px 16px;
+    }
+    
+    table#cart thead
+    {
+        text-transform: uppercase;
+        font-weight: bold;
+        font-size: 12px;
+    }   
+    
+    table#cart tbody td
+    {
+        padding: 16px 0px;
+        border-bottom: 2px dotted #ddd;
+        vertical-align: top;
+    }
+    
+    table#cart tbody td.cart-product-cell
+    {
+        padding-left: 16px;
+        padding-right: 16px;
+    }
+    
+    table#cart tbody td.cart-value-cell
+    {
+        width: 150px;
+    }
+    
+    table#cart tfoot td
+    {
+        text-align: right;
+    }
+    
+    span#cart-total
+    {
+        font-weight: bold;
+    }
+    
+    .cart-detail
+    {
+        font-size: 10px;
+        text-align: justify;
+    }
+    
+    .cart-name
+    {
+        font-weight: bold;
+    }
+    
+    .cart-price
+    {
+        font-weight: bold;
+        padding: 4px 12px;
+        text-align: center;
+    }
+    
+    .cart-quantity
+    {
+        text-align: center;
+    }    
+
+    .cart-quantity > input[type="text"]
+    {
+        width: 30px;
+    }
+    
+</style>
+
+<table id="cart">
+    <thead>
+        <tr>
+            <td></td>
+            <td>Product</td>
+            <td>Points</td>
+            <td>Quantity</td>
+            <td></td>
+        </tr>
+    </thead>
+    <tbody>
+        <tr each="var x in Model">
+            <td>
+                <a href="${Url.Action(MVC.Site.Catalog.Product(x.Value.ProductId))}">
+                <img class="cart-image"
+                     width="100px"
+                     height="100px"
+                     src="${Html.GetProductImageUrl(x.Value.ProductId, 0, 100, 100)}"
+                />
+                </a>
+            </td>
+            <td class="cart-product-cell">
+                <span>${x.Value.ProductName}</span>
+                <span if="!String.IsNullOrEmpty(x.Value.OptionName)">${x.Value.OptionName}</span>
+            </td>
+            <td class="cart-price">${x.Value.UnitPrice.ToString("n0")}</td>
+            <td class="cart-quantity">
+                <input type="text"
+                       value="${x.Value.Quantity}"
+                       maxlength="2"
+                       autocomplete="off" />
+                <br/>
+                <a href="${Url.Action(MVC.Site.Cart.Update("Cart", x.Value.ProductId, x.Value.OptionName, null))}" class="update">Update</a>
+            </td>
+            <td><a href="${Url.Action(MVC.Site.Cart.Update("Cart", x.Value.ProductId, x.Value.OptionName, null))}" class="remove">Remove</a></td>
+        </tr>
+    </tbody>
+    <tfoot>
+        <tr>
+            <td colspan="5">Total: <span id="cart-total">${Model.Total.ToString("n0")}</span></td>
+        </tr>
+    </tfoot>
+</table>
+
+<form action="${Url.Action(MVC.Site.Order.Checkout())}" method="get" if="checkout">
+    You have enough points to place this order. 
+    <input type="submit" value="Checkout" />
+</form>
+
+<div if="!checkout">
+    You need ${deficit} more points to complete this order.
+</div>
+
+<script type="text/javascript">
+
+    $(function () {
+
+        $('a.update').click(function() {
+            var txt = $(this).siblings('input[type="text"]');
+            var q = Number(txt.val());
+            if (isNaN(q)) {
+                $(txt).toggleClass('input-validation-error', true);
+                return false;
+            }
+            $.ajax({
+                url: $(this).attr('href'),
+                type: 'POST',
+                data: { quantity: q },
+                success: function (data) {
+                    window.location.reload();
+                }
+            });
+            return false;
+        });
+
+        $('a.remove').click(function () {
+            $.ajax({
+                url: $(this).attr('href'),
+                type: 'POST',
+                data: { quantity: 0 },
+                success: function (data) {
+                    window.location.reload();
+                }
+            });
+            return false;
+        });
+
+
+    });
+    
+</script>

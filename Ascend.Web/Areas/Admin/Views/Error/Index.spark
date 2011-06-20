@@ -1,0 +1,26 @@
+﻿<viewdata model="IEnumerable<Error>" />
+
+Showing the last 1,000 errors (this month only):
+
+<table class="index-table">
+    <thead>
+        <tr>
+            <th>Date</th>
+            <th>Url</th>
+            <th>Type</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr each="var e in Model">
+            <td>${Html.ActionLink(e.Created.Date.ToLocalTime().ToString('MM/dd/yyyy hh:mm tt'), MVC.Admin.Error.Display(e.Document.Id))}</td>
+            <td>${e.Url.Or("-")}</td>
+            <td>${e.Type.Or("-")}</td>
+        </tr>
+    </tbody>
+</table>
+
+<content name="actions">
+    <ul>
+        <li>${Html.ActionLink("Clear Errors", "Clear")}</li>
+    </ul>
+</content>

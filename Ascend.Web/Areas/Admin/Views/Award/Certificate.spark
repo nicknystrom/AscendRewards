@@ -1,0 +1,112 @@
+﻿<viewdata model="Certificate" />
+
+<macro name="certificatePanel" box="CertificateArea" formName="string" text="string">
+  
+   # if (null == box) box = new CertificateArea();
+   <div  class="certificate-canvas-panel ${formName}"
+         style="position: absolute;
+                top:    ${box.Top}px;
+                left:   ${box.Left}px;
+                width:  ${box.Width}px;
+                height: ${box.Height}px;
+                font-family:    ${box.FontFace};
+                font-size:      ${box.FontSize}px;
+                text-align:     ${box.Alignment};
+                color:          ${box.FontColor};
+                display:        ${box.Enabled ? 'block' : 'none'};
+        ">
+      <input type="hidden" name="${formName}.Left"   value="${box.Left}" />
+      <input type="hidden" name="${formName}.Top"    value="${box.Top}" />
+      <input type="hidden" name="${formName}.Width"  value="${box.Width}" />
+      <input type="hidden" name="${formName}.Height" value="${box.Height}" />
+      ${text}
+    </div>
+  
+</macro>
+<macro name="certificateAreaFont" box="CertificateArea" formName="string">
+    # if (null == box) box = new CertificateArea();
+    <table class="certificate-area-font ${formName} scaffold">
+      <tr>
+        <th>Enabled</th>
+        <td><input type="checkbox" area="${formName}" name="${formName}.Enabled" checked="yes?{box.Enabled}" value="true" /></td>
+      </tr>
+      <tr>
+        <th>Font Face:</th>
+        <td><input type="text" area="${formName}" target="font-family" name="${formName}.FontFace" value="${box.FontFace}" /></td>
+      </tr>      
+      <tr>
+        <th>Font Size:</th>
+        <td><input type="text" area="${formName}" target="font-size" name="${formName}.FontSize" value="${box.FontSize}" /></td>
+      </tr>      
+      <tr>
+        <th>Font Color:</th>
+        <td><input type="text" area="${formName}" target="color" name="${formName}.FontColor" value="${box.FontColor}" /></td>
+      </tr>     
+      <tr>
+        <th>Alignment:</th>
+        <td><input type="text" area="${formName}" target="text-align" name="${formName}.Alignment" value="${box.Alignment}" /></td>
+      </tr>
+    </table>
+</macro>
+
+<div class="certificate">
+
+  <input type="hidden" name="BackgroundUrl" value="${H(Model.BackgroundUrl)}" />
+  <input type="hidden" name="BackgroundContentType" value="${Model.BackgroundContentType}" />
+  <input type="hidden" name="BackgroundSize.Width" value="${Model.BackgroundSize.Width}" />
+  <input type="hidden" name="BackgroundSize.Height" value="${Model.BackgroundSize.Height}" />
+
+  <div class="certificate-header">
+    <span class="ui-icon ui-icon-triangle-1-e"></span>
+    <img if="Model.BackgroundUrl.StartsWith('~')"
+         src="${Model.BackgroundUrl.ToAbsoluteUrl(Request)}?w=40&h=30"
+    />
+    Title:
+    ${Html.EditorFor(x => x.Name)}
+    <input type="button" class="certificate-delete" value="Remove" />
+  </div>
+  <div class="certificate-body">
+    <div class="certificate-body-left">
+      ${Html.Scaffold(s => {
+      s.Open();
+      s.Field(x => x.Enabled);
+      s.Field(x => x.DefaultMessage);
+      s.Field(x => x.MessageWordLimit);
+      s.Close();
+      })}
+
+      <ul class="certificate-area-menu">
+        <li><a href="#" target="FromBox">From</a></li>
+        <li><a href="#" target="ToBox">To</a></li>
+        <li><a href="#" target="DateBox">Date</a></li>
+        <li><a href="#" target="MessageBox">Message</a></li>
+        <li><a href="#" target="AwardBox">Award</a></li>
+      </ul>
+
+      ${certificateAreaFont(Model.FromBox, "FromBox")}
+      ${certificateAreaFont(Model.ToBox, "ToBox")}
+      ${certificateAreaFont(Model.DateBox, "DateBox")}
+      ${certificateAreaFont(Model.AwardBox, "AwardBox")}
+      ${certificateAreaFont(Model.MessageBox, "MessageBox")}
+
+    </div>
+
+      <div class="certificate-canvas"
+           style="position: absolute;
+                  width: ${Model.BackgroundSize.Width}px;
+                  height: ${Model.BackgroundSize.Height}px;
+                  background-image: url('${Model.BackgroundUrl.ToAbsoluteUrl(Request)}')">
+        ${certificatePanel(Model.FromBox, "FromBox", "Anthony Sather")}
+        ${certificatePanel(Model.ToBox, "ToBox", "Nick Nystrom")}
+        ${certificatePanel(Model.DateBox, "DateBox", DateTime.Now.ToShortDateString())}
+        ${certificatePanel(Model.AwardBox, "AwardBox", "5,000 points")}
+        ${certificatePanel(Model.MessageBox, "MessageBox", "Message")}
+      </div>
+      <div class="certificate-canvas-placeholder"
+           style="width: ${Model.BackgroundSize.Width}px;
+                  height: ${Model.BackgroundSize.Height}px;">
+      </div>
+
+  </div>
+
+</div>

@@ -1,0 +1,47 @@
+﻿<viewdata />
+
+<div id="file-chooser"></div>
+
+<script type="text/javascript">
+  
+  function closeChooser() {
+    $('#file-chooser').dialog('close');
+  }
+
+  function showChooser() {
+    $('#file-chooser').dialog('open');
+  }
+
+  function fileChooser(callback) {
+    var chooser = $('#file-chooser');
+    chooser.data('callback', callback);
+    if (chooser.find('#folders').size() == 0) {
+      chooser.load(
+        '${Url.Action(MVC.Admin.File.Index())}',
+        null,
+        function() {
+             $('#file-chooser').dialog({
+                autoOpen: false,
+                draggable: false,
+                modal: true,
+                title: 'File Chooser',
+                width: 750,
+                height: 630,
+                buttons: { 'Close': closeChooser }
+            });
+            showChooser();
+        });
+    }
+    else showChooser();
+  }
+  
+  $(function() {
+    $('.filelink > a').live('click', function() {
+      var a = $(this).attr('href');
+      ($('#file-chooser').data('callback'))(a);
+      closeChooser();
+      return false;
+    });
+  });
+  
+</script>

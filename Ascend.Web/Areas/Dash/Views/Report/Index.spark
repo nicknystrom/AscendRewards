@@ -1,0 +1,16 @@
+﻿<viewdata />
+
+<ul>
+    <li>${Html.ActionLink("Users Report", MVC.Dash.Report.UsersReport())}</li>
+    <li>${Html.ActionLink("Wishlist Report", MVC.Dash.Report.Wishlist())}</li>
+    <li>${Html.ActionLink("Point Liability Report", MVC.Dash.Report.PointLiability())}</li>
+    <li>${Html.ActionLink("Program Liability Report", MVC.Dash.Report.ProgramLiability())}</li>
+</ul>
+
+<script type="text/javascript">
+
+    $(function () {
+
+    });
+
+</script>

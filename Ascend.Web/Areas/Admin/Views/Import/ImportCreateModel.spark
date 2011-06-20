@@ -1,0 +1,26 @@
+﻿<viewdata model="ImportCreateModel" />
+
+<use file="FileChooser" />
+
+# using (Html.BeginForm(MVC.Admin.Import.Index()))
+# {
+
+    Type: ${Html.EditorFor(x => x.Type)}<br />
+    File: 
+    <input type="text" id="import-url" name="Location" value="${Model.Location}" />
+    <input type="button" id="import-url-chooser" value="..." /><br />
+
+    <input type="submit" value="Create Import" />
+# }
+
+<script type="text/javascript">
+
+$(function() {
+    $('#import-url-chooser').click(function() {
+        fileChooser(function(url) {
+            $('#import-url').val(url);
+        });
+    });
+});
+
+</script>

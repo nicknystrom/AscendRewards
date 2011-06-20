@@ -1,0 +1,5 @@
+﻿<viewdata model="IEnumerable<string>" />
+<ul class="strings">
+    <li each="var a in Model ?? new string[0]">${Html.TextBox("", a)}</li>
+    <li if="null == Model || Model.Count() == 0 || !String.IsNullOrWhiteSpace(Model.LastOrDefault())">${Html.TextBox("")}</li>
+</ul>

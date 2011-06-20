@@ -1,0 +1,4 @@
+﻿<viewdata model="object" />
+<select name="${ViewData.TemplateInfo.HtmlFieldPrefix}">
+  <option each="var a in Enum.GetNames(Model.GetType())" selected="true?{Model.ToString() == a}">${a}</option>
+</select>

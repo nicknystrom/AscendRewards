@@ -1,0 +1,48 @@
+﻿<viewdata model="Event[]" />
+
+<style>
+    div#events table { display: none; }
+</style>
+
+<div id="events" if="null != Model && Model.Length > 0">
+    <div id="category-${group.Key.ToSlug()}" each="var group in Model.GroupBy(x => x.Category.Description)">
+        <h2><a href="#category-${group.Key.ToSlug()}">${group.Key} (${group.Count()})</a></h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Event/Headliner</th>
+                    <th>Venue</th>
+                    <th>Performers</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr each="var s in group">
+                    <td>${s.Date.ToShortDateString()}</td>
+                    <td>${Html.EventLink(s)}</td>
+                    <td>${Html.VenueLink(s.Venue)}</td>
+                    <td>
+                        <span if="null != s.Performers && s.Performers.Count > 0">${Html.PerformerLink(s.Performers[0])}</span>
+                        <span if="null != s.Performers && s.Performers.Count > 1">, ${Html.PerformerLink(s.Performers[1])}</span>
+                        <span if="null != s.Performers && s.Performers.Count > 2">, ${Html.PerformerLink(s.Performers[2])}</span>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+</div>
+
+<div id="no-events" if="null == Model || Model.Length == 0">
+    This venue/performer has no scheduled events in our system.
+</div>
+
+<script type="text/javascript">
+
+    $(function () {
+        $('#events h2 a').click(function () {
+            $($(this).attr('href')).find('table').toggle('fast');
+        });
+    });
+
+</script>

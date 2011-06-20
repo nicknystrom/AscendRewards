@@ -1,0 +1,16 @@
+﻿<viewdata menu="MenuViewModel" />
+
+<macro name="RenderViewModelItem" i="MenuViewModelItem" first="bool">
+    <li><span if="!first">&nbsp;|&nbsp;</span><a href="${i.Location}">${i.Name}</a></li>
+    # if (i.Items != null && i.Items.Count > 0) 
+    # {
+    <for each="var j in i.Items">
+    ${RenderViewModelItem(j, false)}
+    </for>
+    # }
+</macro>
+<ul>
+<test if="null != menu">
+    <for each="var x in menu">${RenderViewModelItem(x, x == menu.First())}</for>
+</test>
+</ul>

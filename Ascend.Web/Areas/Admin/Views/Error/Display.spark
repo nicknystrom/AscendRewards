@@ -1,0 +1,60 @@
+﻿<viewdata model="Error" />
+<set entity="Model.Document.Id" />
+
+<table>
+    <tr>
+        <td>Date</td>
+        <td>${Model.Created.Date.ToString()}</td>
+    </tr>
+    <tr>
+        <td>User</td>
+        <td>${Html.ActionLink(Model.Created.User.Or("-"), MVC.Admin.User.Edit(Model.Created.User))}</td>
+    </tr>
+    <tr>
+        <td>Url</td>
+        <td>${H(Model.Url)}</td>
+    </tr>
+    <tr>
+        <td>Type</td>
+        <td>${H(Model.Type)}</td>
+    </tr>
+    <tr>
+        <td>Message</td>
+        <td><pre>${H(Model.Message)}</pre></td>
+    </tr>
+    <tr>
+        <td>Stack</td>
+        <td><pre>${H(Model.Stack)}</pre></td>
+    </tr>
+    <tr>
+        <td>Form</td>
+        <td>
+            <table if="Model.FormValues != null && Model.FormValues.Count > 0">
+                <tr each="var x in Model.FormValues">
+                    <td>${H(x.Key)}</td>
+                    <td>${H(x.Value)}</td>
+                </tr>    
+            </table>            
+        </td>
+    </tr>
+    <tr>
+        <td>QueryString</td>
+        <td>
+            <table if="Model.QueryValues != null && Model.QueryValues.Count > 0">
+                <tr each="var x in Model.QueryValues">
+                    <td>${H(x.Key)}</td>
+                    <td>${H(x.Value)}</td>
+                </tr>    
+            </table>            
+        </td>    
+    </tr>
+</table>
+
+<script type="text/javascript">
+
+$(function() {
+    
+    
+});
+        
+</script>

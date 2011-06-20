@@ -1,0 +1,7 @@
+﻿<html>
+<body>
+	<script type="text/javascript">
+	    parent.loadFolder('${Url.Action(MVC.Admin.File.Index())}');
+	</script>
+</body>
+</html>

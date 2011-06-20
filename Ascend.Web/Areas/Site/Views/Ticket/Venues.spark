@@ -1,0 +1,35 @@
+﻿<viewdata model="IEnumerable<EventVenue>" />
+
+<style>
+
+</style>
+
+<use file="Catalog/_Nav" />
+
+<h1>Event Tickets</h1>
+
+<use file="_Search" />
+
+<p>Several venues matched your search, please choose one:</p>
+<table>
+    <thead>
+        <tr>
+            <th>Venue</th>
+            <th>Location</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr each="var v in Model">
+            <td>${Html.VenueLink(v)}</td>
+            <td>${v.Address.City}, ${v.Address.State}</td>
+        </tr>
+    </tbody>
+</table>
+
+<script type="text/javascript">
+  
+    $(function () {
+        
+    });
+
+</script>

@@ -1,0 +1,22 @@
+﻿<viewdata model="AvailabilityEditModel" />
+
+${Html.Scaffold(s => {
+  s.Open();
+  s.Field(x => x.Enabled);
+  s.Field(x => x.Archived);
+  s.Field(x => x.From);
+  s.Field(x => x.To);
+  s.Field(x => x.Mode);
+ s.Close();
+})}
+
+<fieldset id="permissions-groups">
+  <legend>Groups</legend>
+  ${Html.EditorFor(x => x.Groups)}
+</fieldset>
+
+<fieldset id="permissions-users">
+  <legend>Users</legend>
+  ${Html.EditorFor(x => x.Users)}
+</fieldset>
+

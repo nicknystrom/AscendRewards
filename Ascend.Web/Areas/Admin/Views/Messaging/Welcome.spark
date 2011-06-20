@@ -1,0 +1,32 @@
+﻿<viewdata model="IEnumerable<User>" />
+<set entity="'Welcome'" />
+<style>
+
+</style>
+
+# using (Html.BeginForm(MVC.Admin.Messaging.Welcome()))
+# {
+
+<p>The following users are active, but have not received a 'Welcome' email:</p>
+
+<ul>
+    <li each="var x in Model">
+        <input type="checkbox" name="id" value="${x.Document.Id}" checked="true" />
+        ${x.DisplayName} &lt;${x.Email}&gt;
+    </li>
+</ul>
+
+<p>${Html.CheckBox("send")} I wish to send these messages. ${Html.ValidationMessage("send")}</p>
+
+
+<input type="submit" value="Update Template" />
+
+# }
+
+<script type="text/javascript">
+
+$(function() {
+    
+});
+        
+</script>

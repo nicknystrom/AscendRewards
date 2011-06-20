@@ -1,0 +1,20 @@
+﻿<viewdata model="OrderEditModel" cart="ShoppingCart" />
+
+<p>Current cart total: ${cart.Total}</p>
+
+<form id="checkout-form" action="${Url.Action(MVC.Site.Order.Checkout())}" method="post">
+    <h2>Shipping Information</h2>
+    ${Html.Scaffold(s => {
+        s.Open();
+        s.Field(x => x.ShippingName);
+        s.Field(x => x.ShippingAddress);
+        s.Field(x => x.ShippingPhone);
+        s.Close();
+    })}
+<input type="submit" value="Submit" />
+</form>
+
+<script type="text/javascript">
+    $(function () {
+    });
+</script>

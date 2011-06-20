@@ -1,0 +1,178 @@
+<viewdata model="GameViewModel" />
+<style type="text/css">
+
+    .match3-board
+    {
+        position: relative;
+        background: url(/Content/Games/Match3/board.png);
+        width: 520px;
+        height: 520px;
+    }
+    
+    .match3-board > .tile
+    {
+        position: absolute;
+        background-image: url(/Content/Games/Match3/sprites.png);
+        width: 60px;
+        height: 60px;
+        -moz-border-radius: 2px;
+    }
+    
+    .match3-board > .tile-0
+    {
+        background-position: 0 0;
+    }
+    .match3-board > .tile-1
+    {
+        background-position: 0 60px;
+    }
+    .match3-board > .tile-2
+    {
+        background-position: 0 120px;
+    }
+    .match3-board > .tile-3
+    {
+        background-position: 0 180px;
+    }
+    .match3-board > .tile-4
+    {
+        background-position: 0 240px;
+    }
+    .match3-board > .tile-5
+    {
+        background-position: 0 300px;
+    }
+    
+    .match3-board > .selected
+    {
+        background-color: #ccc;
+    }
+    
+    .match3-board > .highlight
+    {
+        background-color: #ff0;
+    }
+    
+    .match3-board > .matched
+    {
+        background-color: #0ff;
+    }
+    
+    .match3-board > .drop-over
+    {
+        background-color: #fdf;
+    }
+
+    .score-points { font-size: 40px; }
+    .score-time { font-size: 40px; }
+    div#score { float: left; }
+    div#time { width: 520px; text-align: right; }
+    
+    .match3-overlay
+    {
+        position: absolute;
+        background-color: rgba(1, 1, 1, 0.9);
+        display: none;
+        text-align: center;
+        width: 100%;
+        height: 100%;
+        z-index: 1;
+        color: #fff;
+    }
+    
+    div#leaderboard
+    {
+        margin: 110px 110px 0 110px;
+        width: 300px;
+        height: 200px;
+    }
+    
+    div#leaderboard > div
+    {
+        margin: 20px 20px 0 20px;
+        background-color: #888;
+        padding: 10px;
+    }
+
+    div#controls
+    {
+        width: 520px;
+        text-align: right;
+    }
+
+    div#description { margin-bottom: 20px; }
+
+</style>
+
+<h1>${Model.Content.Title}</h1>
+<div id="description">${Model.Content.Html}</div>
+
+<div id="score">Score<br /><span class="score-points"></span></div>
+<div id="time">Time Left<br /><span class="score-time"></span></div>
+<div id="game">
+    <div id="leaderboard" class="match3-overlay">
+        <div id="leaderboard-gameover">
+            Game Over!<br />
+            Your score: <span id="leaderboard-score"></span><br />
+        </div>
+        <div id="leaderboard-lose">
+            You needed to have scored 100 points to win. So close!
+            <button id="again">Play Again?</button>
+        </div>
+        <div id="leaderboard-win">
+            Great job, you WON!
+            <button id="leaderboard-record">Continue</button>
+        </div>
+    </div>
+</div>
+<div id="controls">
+    <button id="hint">Hint</button>
+    <button id="reset">Reset</button>
+</div>
+<script type="text/javascript" src="/Content/Games/Match3/jquery.match3.js"></script>
+<script type="text/javascript">
+
+$(function ()
+{
+    $('#game').match3({
+        scoreBoard: '#score',
+        boardPadding: [3, 3],
+        tileSpacing: [5, 5],
+        tileSize: [60, 60],
+        gameDurationInSeconds: ${Model.TimeLimit ?? 60},
+        onGameover: function (score)
+        {
+            $('#leaderboard-win').show();
+            $('#leaderboard-lose').hide();
+            $('#leaderboard-gameover').show();
+            $('#leaderboard-score').text(score);
+            $('#leaderboard').show();
+        }
+    });
+    $('#hint').click(function ()
+    {
+        $('#game').match3('hint');
+    });
+    $('#reset, #again').click(function ()
+    {
+        $('#game').match3('reset');
+    });
+    $('#leaderboard-record').click(function ()
+    {
+        $.ajax({
+            url: '${Url.Action(MVC.Site.Game.Index())}',
+            type: 'POST',
+            dataType: 'text',
+            data: {
+                time: ${Model.TimeLimit ?? 60},
+                score: $('#leaderboard-score').text()
+            },
+            success: function(data, status, xhr ) { window.location = data; },
+            error: function() {
+                alert('We experienced a problem processing your score.');
+            }
+        });
+    });
+});
+
+</script>

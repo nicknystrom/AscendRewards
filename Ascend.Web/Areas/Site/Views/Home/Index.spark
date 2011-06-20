@@ -1,0 +1,2 @@
+﻿<viewdata model="PageViewModel" />
+${Model.Content.Html}

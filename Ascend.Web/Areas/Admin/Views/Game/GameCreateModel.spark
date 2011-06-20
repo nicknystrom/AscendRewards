@@ -1,0 +1,14 @@
+﻿<viewdata model="GameCreateModel" />
+
+# using (Html.BeginForm(MVC.Admin.Game.Index()))
+# {
+
+    ${Html.Scaffold(s => {
+            s.Open();
+            s.Field(g => g.Type);
+            s.Field(g => g.Title);
+            s.Submit("Create Game");
+            s.Close();
+    })}
+    
+# }

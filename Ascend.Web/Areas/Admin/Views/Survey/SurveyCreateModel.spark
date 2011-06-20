@@ -1,0 +1,13 @@
+﻿<viewdata model="SurveyCreateModel" />
+
+# using (Html.BeginForm(MVC.Admin.Survey.Index()))
+# {
+
+    ${Html.Scaffold(s => {
+            s.Open();
+            s.Field(q => q.Title);
+            s.Submit("Create Survey");
+            s.Close();
+    })}
+    
+# }

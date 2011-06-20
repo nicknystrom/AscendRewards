@@ -1,0 +1,11 @@
+﻿Your {program} account is ready for use.
+
+<p>Your {program} is activated and ready for use. Simply follow the link below to login to
+the site using your new username, '{login}'.</p>
+
+<p><a href="{url}">{url}</a></p>
+
+<p>
+    Thanks!<br />
+    {program}
+</p>

@@ -1,0 +1,31 @@
+﻿<viewdata login="string" email="string" />
+
+<div id="form-links">
+    <ul>
+        <li>${Html.ActionLink("Reset password", MVC.Public.Login.Reset())}</li>
+        <li>${Html.ActionLink("Register", MVC.Public.Login.Register())}</li>
+    </ul>
+</div>
+<form id="login-form" method="post">
+    <span>username</span>
+    <span>${Html.TextBox("login")}</span>
+    <span>password</span>
+    <span>${Html.Password("password")}</span>
+    <span><input type="submit" value="Submit" /></span>
+    <span>${Html.ValidationMessage("login")}</span>
+</form>
+
+<script type="text/javascript">
+    $(function ()
+    {
+        if ($('#login').val())
+        {
+            $('#password').focus();
+        }
+        else
+        {
+            $('#login').focus();
+        }
+
+    });
+</script>

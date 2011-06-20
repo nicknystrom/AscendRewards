@@ -1,0 +1,13 @@
+﻿<viewdata groups="Ascend.Core.Services.Caching.IGroupSummaryCache" model="IEnumerable<string>" />
+
+<ul>
+    # var n = 0;
+    <li each="var g in groups.All">
+        <input type="checkbox"
+               name="${ViewData.TemplateInfo.HtmlFieldPrefix}"
+               id="${ViewData.TemplateInfo.HtmlFieldPrefix}_${++n}"
+               value="${H(g.Id)}"
+               checked="true?{null != Model && Model.Contains(g.Id)}" />
+        <label for="${ViewData.TemplateInfo.HtmlFieldPrefix}_${n}">${g.Name}</label>
+    </li>
+</ul>

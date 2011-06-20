@@ -1,0 +1,48 @@
+﻿<viewdata model="IEnumerable<Quiz>" create="QuizCreateModel" />
+
+<style>
+    span.expired { color: #f00; }
+</style>
+
+<div id="create-quiz" class="create-dialog">
+    # Html.RenderPartial("QuizCreateModel", create ?? new QuizCreateModel()   );
+</div>
+
+<table class="index-table">
+    <thead>
+        <tr>
+            <th style="width: 100px;">Title</th>
+            <th style="width: 100px;">Questions</th>
+            <th style="width: 80px;">Enabled</th>
+            <th style="width: 80px;">Archived</th>
+            <th style="width: 280px;">Availability</th>
+
+        </tr>
+    </thead>
+    <tbody>
+        <tr each="var q in Model">
+            <td>${Html.ActionLink(q.Title, MVC.Admin.Quiz.Edit(q.Document.Id))}</td>
+            <td><span if="null != q.Questions">${q.Questions.Count}</span></td>
+
+            <td><span class="ui-icon ui-icon-check" if="q.Enabled" /></td>
+            <td><span class="ui-icon ui-icon-check" if="q.Archived" /></td>
+            <td>
+                <span if="q.Availability.Mode == AvailabilityMode.AvailableToPublic">Public</span>
+                <span if="q.Availability.Mode == AvailabilityMode.AvailableToAllUsers">Registered Users</span>
+                <span if="q.Availability.Mode == AvailabilityMode.AvailableOnlyTo">Specific Users</span>
+                <span if="q.Availability.Mode == AvailabilityMode.AvailableToEveryoneBut">Registered Users with Exceptions</span>
+                <span if="q.Availability.From.HasValue"
+                      class="expired?{q.Availability.From.Value > DateTime.UtcNow}">, From ${q.Availability.From.Value.ToShortDateString()}</span>
+                <span if="q.Availability.To.HasValue"
+                      class="expired?{q.Availability.To.Value < DateTime.UtcNow}">, Until ${q.Availability.To.Value.ToShortDateString()}</span>
+            </td>
+
+        </tr>
+    </tbody>
+</table>
+
+<content name="actions">
+    <ul>
+        <li><a href="#create-quiz" class="create-button">New Quiz</a></li>
+    </ul>
+</content>

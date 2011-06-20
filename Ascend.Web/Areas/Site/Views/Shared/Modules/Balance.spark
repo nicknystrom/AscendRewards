@@ -1,0 +1,19 @@
+﻿<h2 class="ui-widget-header"><span class="ui-icon ui-icon-person"></span> Balance</h2>
+<div>
+    <span>Welcome, ${currentUser.DisplayName}</span>
+    <table>
+        <tr>
+            <td>Points Earned</td>
+            <td class="number">${currentUserLedger.TotalCredits.ToString("n0")}</td>
+        </tr>
+        <tr>
+            <td>Less Points</td>
+            <td class="number">${currentUserLedger.TotalDebits.ToString("n0")}</td>
+        </tr>
+        <tr class="balance-total">
+            <td>Point Balance</td>
+            <td class="number">${currentUserLedger.Balance.ToString("n0")}</td>
+        </tr>
+    </table>
+    ${Html.ActionLink("View Your Activity", MVC.Site.Profile.Activity())}
+</div>

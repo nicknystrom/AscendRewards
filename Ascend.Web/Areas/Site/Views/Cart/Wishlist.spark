@@ -1,0 +1,152 @@
+﻿<viewdata model="ShoppingCart" />
+
+<style>
+
+    table#wishlist-details
+    {
+        border-collapse: collapse;
+    }
+    
+    table#wishlist-details ul
+    {
+        padding: 0px;
+        font-size: 10px;
+    }
+    
+    table#wishlist-details li
+    {
+        list-style-position: inside;
+    }
+    
+    table#wishlist-details span
+    {
+        display: block;
+        margin-bottom: 6px;
+    }
+    
+    table#wishlist-details thead td
+    {
+        padding: 6px 16px;
+    }
+    
+    table#wishlist-details thead
+    {
+        text-transform: uppercase;
+        font-weight: bold;
+        font-size: 14px;
+    }   
+    
+    table#wishlist-details tbody td
+    {
+        padding: 16px 0px;
+        border-bottom: 2px dotted #ddd;
+        vertical-align: top;
+    }
+    
+    table#wishlist-details tbody td.wishlist-description-cell
+    {
+        padding-left: 16px;
+        padding-right: 16px;
+    }
+    
+    table#wishlist-details tbody td.wishlist-value-cell
+    {
+        width: 150px;
+    }
+    
+    .wishlist-detail
+    {
+        font-size: 10px;
+        text-align: justify;
+    }
+    
+    .wishlist-name
+    {
+        font-weight: bold;
+    }
+    
+    .wishlist-price
+    {
+        font-weight: bold;
+        padding: 4px 12px;
+    }
+    
+</style>
+
+<div if="null == Model || Model.Count < 1">
+    You wishlist is empty.
+</div>
+
+<table id="wishlist-details" if="null != Model && Model.Count > 0">
+    <thead>
+        <tr>
+            <td colspan="2">Products</td> 
+            <td>Value</td>
+        </tr>
+    </thead>
+    <tbody>
+        <tr each="var x in Model">
+            <td>
+                <a href="${Url.Action(MVC.Site.Catalog.Product(x.Value.ProductId))}">
+                <img class="wishlist-image"
+                     width="150px"
+                     height="150px"
+                     src="${Html.GetProductImageUrl(x.Value.ProductId, 0, 150, 150)}"
+                />
+                </a>
+            </td>
+            <td class="wishlist-description-cell">
+                <a href="${Url.Action(MVC.Site.Catalog.Product(x.Value.ProductId))}">
+                    <span class="wishlist-name">${x.Value.ProductName}</span>
+                </a>
+                <span if="!String.IsNullOrEmpty(x.Value.OptionName)" class="wishlist-item">${x.Value.OptionName}</span>
+                <span class="wishlist-detail">${x.Value.Description}</span>
+            </td>
+            <td class="wishlist-value-cell">
+                <span class="wishlist-price">${x.Value.UnitPrice.ToString("n0")} points</span>
+                <ul>
+                    <li><a href="${Url.Action(MVC.Site.Catalog.Product(x.Value.ProductId))}">See Details</a></li>
+                    <li><a href="${Url.Action(MVC.Site.Cart.Index(x.Value.ProductId, x.Value.OptionName))}" class="add">Add to Cart</a></li>
+                    <li><a href="${Url.Action(MVC.Site.Cart.Update("wishlist", x.Value.ProductId, x.Value.OptionName, null))}" class="remove">Remove from Wishlist</a></li>
+                </ul>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+<script type="text/javascript">
+
+    $(function () {
+        $('a.remove').click(function () {
+            var li = $(this).closest('tr');
+            $.ajax({
+                url: $(this).attr('href'),
+                type: 'POST',
+                data: { quantity: 0 },
+                success: function (data) {
+                    if ($('#wishlist-details > tbody > tr').length == 1) {
+                        window.location.reload();
+                    }
+                    else {
+                        li.remove();
+                        $('#wishlist').html(data);
+                    }
+                }
+            });
+            return false;
+        });
+        $('a.add').click(function () {
+            $.ajax({
+                url: $(this).attr('href'),
+                type: 'POST',
+                data: {
+                    quantity: 1
+                },
+                success: function (data) {
+                    window.location = '${Url.Action(MVC.Site.Cart.Index())}';
+                }
+            });
+            return false;
+        });
+    });
+</script>

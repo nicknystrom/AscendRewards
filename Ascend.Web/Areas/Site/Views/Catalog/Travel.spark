@@ -1,0 +1,50 @@
+﻿<viewdata model="IEnumerable<CatalogProduct>" />
+
+<style>
+
+    ul#travel-packages {
+        margin: 0 10px 0 0;
+        padding: 0;
+        width: 550px;
+    }
+
+    ul#travel-packages > li {
+        list-style: none;
+        width: 550px;
+        height: 125px;
+        overflow: hidden;
+        margin-bottom: 5px;
+        border: 1px solid #ccc;
+    }
+
+    ul#travel-packages > li img {
+        border: none;
+        margin-top: -200px;
+    }
+
+</style>
+
+<use file="Catalog/_Nav" />
+
+<h1>Travel Packages</h1>
+
+<p>Select a destination below:</p>
+
+<ul id="travel-packages">
+    <li each="var tp in Model">
+        <a href="${Url.Action(MVC.Site.Catalog.Product(tp.Id))}">
+            <img width="550px"
+                 height="500px"
+                 alt="${tp.Name}"
+                 src="${Html.GetProductImageUrl(tp.Id, 0, 550, 500)}"
+            />
+        </a> 
+    </li>
+</ul>
+
+<script type="text/javascript">
+
+    $(function () {
+    });
+
+</script>

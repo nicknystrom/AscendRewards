@@ -1,0 +1,66 @@
+﻿<viewdata model="ConfigurationEditModel" />
+
+# using (Html.BeginForm(MVC.Admin.Configuration.Index()))
+# {
+
+<div id="admin-edit-tabs">
+    <ul>
+        <li><a href="#admin-config-general">General</a></li>
+        <li><a href="#admin-config-profile">Profile</a></li>
+    </ul>
+    <div id="admin-config-general">
+        ${Html.Scaffold(s => {
+            s.Open();
+            s.Field(c => c.ProgramName);
+            s.Field(c => c.DefaultTheme);
+            s.Field(c => c.DefaultHomePage);
+            s.Field(c => c.DefaultTermsOfService);
+            s.Field(c => c.DefaultLoginMenu);
+            s.Field(c => c.DefaultHeaderMenu);
+            s.Field(c => c.DefaultNavigationMenu);
+            s.Field(c => c.DefaultFooterMenu);
+            s.Field(c => c.MaintenancePage);
+            s.Field(c => c.PaymentType);
+            s.Field(c => c.GeneralControlAccount);
+            s.Field(c => c.GeneralExpenseAccount);
+            s.Field(c => c.DefaultCatalog);
+            s.Field(c => c.PointsPerDollar);
+            s.Field(c => c.EmailSenderAddress);
+            s.Field(c => c.EmailSenderName);
+            s.Field(c => c.SupportEmailAddress);
+            s.Field(c => c.SupportPhoneNumber);
+            s.Field(c => c.GoogleAnalyticsCode);
+            s.Field(c => c.TicketJonesKey);
+            s.Field(c => c.TicketJonesUrl);
+            s.Close();
+        })}
+    </div>
+    <div id="admin-config-profile">
+        ${Html.Scaffold(s => {
+            s.Open();
+            s.Field(c => c.ShowProfileOnActivate);
+            s.Field(c => c.Profile.Email);
+            s.Field(c => c.Profile.Password);
+            s.Field(c => c.Profile.Name);
+            s.Field(c => c.Profile.DateOfBirth);
+            s.Field(c => c.Profile.DateOfHire);
+            s.Field(c => c.Profile.HomeAddress);
+            s.Field(c => c.Profile.WorkAddress);
+            s.Field(c => c.Profile.HomePhone);
+            s.Field(c => c.Profile.WorkPhone);
+            s.Field(c => c.Profile.MobilePhone);
+            s.Field(c => c.Profile.CustomFields);
+            s.Close();
+        })}
+        <ul id="custom-fields" class="strings">
+            <li each="var f in Model.CustomFields ?? new string[0]">
+                <input name="CustomFields" type="text" value="${H(f)}" />
+            </li>
+            <li><input name="CustomFields" type="text" value="" autocomplete="off" /></li>
+        </ul>
+    </div>
+</div>
+
+<input type="submit" value="Update Application" />
+
+# }

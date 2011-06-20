@@ -1,0 +1,14 @@
+﻿<viewdata model="PageCreateModel" />
+
+# using (Html.BeginForm(MVC.Admin.Page.Index()))
+# {
+
+    ${Html.Scaffold(s => {
+            s.Open();
+            s.Field(p => p.Title);
+            s.Field(p => p.Format);
+            s.Submit("Create Page");
+            s.Close();
+    })}
+    
+# }

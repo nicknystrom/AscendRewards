@@ -1,0 +1,43 @@
+﻿<viewdata model="IEnumerable<Email>" />
+<set entity="'Review Sent Messages'" />
+<style>
+
+</style>
+
+<table class="index-table">
+    <thead>
+        <tr>
+            <th>Status</th>
+            <th>Attempts</th>
+            <th>Recipient</th>
+            <th>Address</th>
+            <th>Subject</th>
+            <th>Message</th>
+            <th>Queued</th>
+            <th>Sent</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr each="var m in Model">
+            <td>${m.Attempts.Any(x => x.Success) ? "-" : m.Attempts.Last().Error}</td>
+            <td>${m.Attempts.Count}</td>
+            <td>${m.Recipient.Name}</td>
+            <td>${m.Recipient.Address}</td>
+            <td>${Html.ActionLink(m.Subject, MVC.Admin.Messaging.Display(m.Document.Id))}</td>
+            <td>${H(m.Body.ShortenTo(40))}</td>
+            <td>${m.Queued}</td>
+            <td>${m.Sent}</td>
+        </tr>
+    </tbody>
+</table>
+
+<content name="actions">
+</content>
+
+<script type="text/javascript">
+
+$(function() {
+    
+});
+        
+</script>

@@ -1,0 +1,146 @@
+﻿<viewdata id="string" model="UserEditModel" orders="IEnumerable<Order>" />
+<set entity="Model.Login" />
+
+# using (Html.BeginForm(MVC.Admin.User.Edit(id)))
+# {
+
+<div id="admin-edit-tabs">
+    <ul>
+        <li><a href="#admin-user-general">General</a></li>
+        <li><a href="#admin-user-org">Organization</a></li>
+        <li><a href="#admin-user-contact">Contact</a></li>
+        <li><a href="#admin-user-perms">Permissions</a></li>
+        <li><a href="#admin-user-points">Points (${Model.PointsLedger.Balance.ToString("N0")})</a></li>
+        <li><a href="#admin-user-budget">Budget <span if="null != Model.BudgetLedger">(${Model.BudgetLedger.Balance.ToString("N0")})</span></a></li>
+        <li><a href="#admin-user-orders">Orders</a></li>
+    </ul>
+    <div id="admin-user-general">
+        ${Html.Scaffold(s => {
+            s.Open();
+            s.Field(x => x.EmployeeId);
+            s.Field(x => x.Email);
+            s.Field(x => x.FirstName);
+            s.Field(x => x.LastName);    
+            s.Field(x => x.Title);    
+            s.Field(x => x.State);
+            s.Seperator();
+            s.Field(x => x.DateBirth);
+            s.Field(x => x.DateHired);
+            s.Seperator();
+            s.Display(x => x.FailedLogins);
+            s.Display(x => x.SuccessfulLogins);
+            s.Seperator();
+            s.Display(x => x.DateAcceptedTermsOfService);
+            s.Display(x => x.DateRegistered);
+            s.Display(x => x.DateActivated);
+            s.Display(x => x.DateSuspended);
+            s.Display(x => x.DateTerminated);
+            s.Close();
+        })}
+    </div>
+    <div id="admin-user-org">
+        ${Html.Scaffold(s => {
+            s.Open();
+            s.Field(x => x.Group);
+            s.Field(x => x.Manager);
+            s.Field(x => x.ManagedGroups);
+            s.Close();
+        })}
+    </div>
+    <div id="admin-user-contact">
+        ${Html.Scaffold(s => {
+            s.Open();
+            s.Field(x => x.HomeAddress);
+            s.Seperator();
+            s.Field(x => x.WorkAddress);
+            s.Seperator();
+            s.Field(x => x.HomePhone);
+            s.Field(x => x.WorkPhone);
+            s.Field(x => x.MobilePhone);
+            s.Close();
+        })}
+    </div>
+    <div id="admin-user-perms">
+        ${Html.Scaffold(s => {
+            s.Open();
+            s.Field(x => x.Permissions.Dashboard);
+            s.Field(x => x.Permissions.StandardReports);
+            s.Field(x => x.Permissions.FinancialReports);
+            s.Field(x => x.Permissions.Users);
+            s.Close();
+        })}
+    </div>
+    <div id="admin-user-points">
+        ${Html.EditorFor(x => x.PointsLedger)}
+    </div>
+    <div id="admin-user-budget">
+        <div class="ledger-panel ui-dialog ui-widget ui-widget-content ui-corner-all">
+          <div class="ui-dialog-titlebar ui-widget-header ui-corner-all">Budget</div>
+          <div class="ui-dialog-content">
+            ${Html.EditorFor(x => x.Budget)}
+          </div>
+        </div>
+        <test if="null != Model.BudgetLedger">
+            ${Html.EditorFor(x => x.BudgetLedger)}
+        </test>
+    </div>
+    <div id="admin-user-orders">
+        <table>
+            <thead>
+                <tr>
+                    <th>Total</th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr each="var o in orders">
+                    <td>${o.Total.ToString("n0")}</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+</div>
+
+# }
+
+<content name="actions">
+    <input type="submit" value="Update User" />
+    <ul>
+        <li><a href="${Url.Action(MVC.Admin.Messaging.Messages(null, Model.Email))}" target="_blank">Review Emails</a></li>
+        <li><a href="${Url.Action(MVC.Admin.User.Assume(id))}" target="_blank">Assume User Identity</a></li>
+        <li><a href="#reset" id="reset-show">Reset Password</a></li>
+    </ul>
+</content>
+
+<div id="reset" style="display: none;">
+    <form action="${Url.Action(MVC.Admin.User.Reset(id, null))}" method="post">
+        <p>The user's password will be reset to a random value.</p>
+        <p>${Html.CheckBox("sendEmail", true)} Notifier user by email.</p>
+        <input type="submit" value="Reset Password" />
+    </form>
+</div>
+
+<script type="text/javascript">
+
+$(function() {
+    
+    $('#reset-show').click(function() {
+        $('#reset').dialog({
+            title: 'Reset Password',
+            modal: true,
+        });
+    });
+    
+});
+        
+</script>

@@ -1,0 +1,19 @@
+﻿<viewdata menu="MenuViewModel" />
+
+<macro name="RenderViewModelItem" i="MenuViewModelItem">
+    <test if="!String.IsNullOrEmpty(i.Location)">
+    <span style="float: left; width: 16px; height: 16px;"></span>
+    <a href="${i.Location}">${i.Name}</a>
+    </test>
+    <else>
+    <span class="ui-icon ui-icon-circlesmall-plus" style="float: left;"></span>
+    <span class="nonlink">${i.Name}</span>
+    </else>
+    <ul if="i.Items != null && i.Items.Count > 0">
+        <li each="var j in i.Items">${RenderViewModelItem(j)}</li>
+    </ul>
+</macro>
+
+<ul if="null != menu">
+    <li each="var x in menu">${RenderViewModelItem(x)}</li>
+</ul>

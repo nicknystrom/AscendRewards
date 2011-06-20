@@ -1,0 +1,35 @@
+﻿<viewdata model="ContentViewModel" updated="bool" />
+
+<style>
+
+  /* hide most normally visible content, user feedback was that they thought site was broke */
+  div#left,
+  div#right,
+  div#header-links,
+  div#footer
+  { visibility: hidden; }
+
+  .notice
+  {
+    background-color: #eee;
+    padding: 12px;
+  }
+
+</style>
+
+<p class="notice" if="updated">
+  The Terms of Service have been updated. Please review the new Terms
+  and indicate that you accept these Terms at the bottom of the page.
+</p>
+
+<p class="notice" if="!updated">
+  Please review the Terms of Service and indicate that you accept
+  these Terms at the bottom of the page.
+</p>
+
+# using (Html.BeginForm(MVC.Site.Home.Terms()))
+# {
+${Model.Html}
+${Html.CheckBox("accept")} I accept the Terms of Service.
+<input type="submit" value="Submit" />
+# }

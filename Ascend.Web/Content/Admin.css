@@ -1,0 +1,585 @@
+﻿
+body
+{
+    font-size: .75em;
+    font-family: "Lucida Grande",Verdana,Arial,"Bitstream Vera Sans",sans-serif;
+    margin: 0;
+    padding: 0;
+    color: #696969;
+
+    background: -webkit-gradient(linear,left top, left bottom, from(#e8e4e0), to(#fcfcfc));
+    background: -moz-linear-gradient(top, #e8e4e0, #fcfcfc);
+    background-color: #fcfcfc;
+    background-repeat: no-repeat;
+    background-size: 100% 700px;
+}
+
+a:link    { color: #034af3; }
+a:visited { color: #505abc; }
+a:hover   { color: #1d60ff; }
+a:active  { color: #12eb87; }
+
+p, ul
+{
+    margin: 0 0 20px 0;
+    line-height: 1.6em;
+}
+
+/* HEADINGS   
+----------------------------------------------------------*/
+h1, h2, h4, h5, h6, h2 > input[type="text"]
+{
+    font-family: Georgia,"Times New Roman","Bitstream Charter",Times,serif;
+    font-size: 22px;
+    font-weight: normal;
+    margin: 0;
+}
+
+h4
+{
+    font-size: 1.1em;
+}
+h5, h6
+{
+    font-size: 1em;
+}
+
+/* --------------------------------------------------- Tables */
+
+table 
+{
+    border: none;
+    border-collapse: collapse;
+}
+
+table td 
+{
+    padding: 5px;   
+    border: none;
+}
+
+table th
+{
+    padding: 6px 5px;
+    text-align: left;
+    background-color: rgba(164,164,164,0.15); 
+    border: none;   
+}
+
+/* data tables */
+
+.index-table { width: 100%; }
+.index-table tr { border-bottom: 1px dotted #eee; }
+.index-table tr.even { background-color: #fff; }
+.index-table tr.odd { background-color: #fcfcfc; }
+.index-table td.sorting_1,
+.index-table td.sorting_2,
+.index-table td.sorting_3 {
+    background-color: rgba(0,0,0,0.02);
+}
+.css_right { float: right; }
+.dataTables_info,
+.dataTables_filter {
+    float: left;
+    margin-right: 20px;
+    line-height: 35px;
+}
+
+/* --------------------------------------------------- Misc */
+
+form
+{
+    /* ie7 puts a huge margin in there for us */
+    margin: 0;
+}
+
+.clear
+{
+    clear: both;
+}
+
+.field-validation-error
+{
+    color: #ff0000;
+}
+
+.input-validation-error
+{
+    border: 1px solid #ff0000;
+    background-color: #ffeeee;
+}
+
+.validation-summary-errors > ul
+{
+    margin: 10px 0 0 0;
+}
+
+.validation-summary-errors
+{
+    font-weight: bold;
+    color: #ff0000;
+}
+
+textarea, input, select {
+    -moz-border-radius: 4px;    
+    -webkit-border-radius: 4px;
+    border: 1px solid #ccc;
+    border-width:1px;
+    margin:1px;
+    padding:3px;
+    color: #696969;
+}
+
+input[type="text"],
+input[type="password"] 
+{
+    width: 150px;
+    height: 23px;
+}
+
+input[type="text"].date
+{
+    width: 110px;
+}
+
+table.scaffold td {
+    padding: 2px;
+}
+
+textarea
+{
+    width: 500px;
+    height: 200px;
+}
+
+textarea#Content_Body {
+    width: 700px;
+    height: 300px;
+}
+
+.create-dialog {
+    display: none;
+}
+
+/* -------------------------------------- Dashboard Layout */
+
+#page 
+{
+    margin-left: 300px;
+}
+
+#ascend, #tenant-button, #controller, #entity {
+    display: block;
+    width: auto !important;
+}
+
+#tenant-button > .ui-button-text,
+#controller > .ui-button-text,
+#entity > .ui-button-text
+{
+    background: none !important;
+}
+
+#ascend
+{
+    height: 75px;
+    background-image: url(Images/Admin/ascend.png) !important;
+    background-repeat: no-repeat;
+}
+
+#navigation
+{
+    float: left;
+    width: 260px;
+    margin: 20px 0 0 -300px;
+    padding: 0 10px 0 10px;
+    border: 0;
+}
+
+/* -------------------------------------- Recurve Footer */
+
+#recurve
+{
+    display: block;
+    background-image: url(Images/Admin/recurve.png);
+    width: 253px;
+    height: 61px;
+}
+
+#who
+{
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    padding: 10px;
+    text-align: center;
+}
+
+#who > ul
+{
+    padding: 0;
+    list-style: none;
+}
+
+#who > ul li
+{
+    font-size: 8px;
+    display: inline;
+    padding: 0 1px;
+}
+
+
+/* -------------------------------------- Menu */
+
+#menu-tabs > ul span.ui-icon 
+{
+    float: left;
+    margin-left: -8px;
+    margin-right: 1px;
+}
+
+#tenant
+{
+    width: 100%;
+}
+
+#menu-tabs
+{
+    margin-top: 10px;
+}
+
+#menu-user-search-icon
+{
+    display: inline-block;
+}
+
+#menu-user-search
+{
+    width: 145px;
+}
+
+#menu-tabs .menu-navigation
+{
+    padding: 0;
+    list-style: none;
+}
+
+#menu-tabs .menu-navigation a
+{
+    display: block;
+}
+
+#content
+{
+    position:absolute;
+    overflow:auto;
+    top:20px;
+    left:290px;
+    bottom:70px;
+    right:20px;
+}
+
+#actions
+{
+    position: absolute;
+    overflow: hidden;
+    left: 290px;
+    right: 20px;
+    bottom: 20px;
+    height: 35px;
+}
+
+#actions > ul
+{
+    float: right;
+    padding: 0;
+    margin: 0;
+}
+
+#actions > ul > li
+{
+    float: left;
+    list-style: none;
+}
+
+/* -------------------------------------- File Types */
+
+.filetype-icon
+{
+    width: 48px;
+    height: 48px;
+    display: inline-block;
+    float: left;
+    background-image: url(Images/FileType/Unknown.png);
+}
+
+.document    { background-image: url(Images/FileType/Document.png); }
+.spreadsheet { background-image: url(Images/FileType/Spreadsheet.png); }
+.image       { background-image: url(Images/FileType/Image.png); }
+.video       { background-image: url(Images/FileType/Video.png); }
+.pdf         { background-image: url(Images/FileType/PDF.png); }
+.html        { background-image: url(Images/FileType/HTML.png); }
+.archive     { background-image: url(Images/FileType/Archive.png); }
+
+/* -------------------------------------- Address/Phone editors */
+
+table.address td {
+    padding: 2px;
+}
+
+input.street { width: 200px; }
+input.city   { width: 120px; }
+input.state  { width: 100px; }
+input.postal { width: 80px; }
+input.phone  { width: 100px; } 
+input.ext    { width: 60px; } 
+
+/* -------------------------------------- Notifications */
+
+.notification
+{
+    cursor: pointer;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+.notification-hover
+{
+    -moz-box-shadow: 0 0 2px rgba(0, 0, 0, 0.2);
+    -webkit-box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+/* -------------------------------------- Create Panel */
+
+fieldset.dashboard-create th { 
+    background: none;
+}
+fieldset.dashboard-create 
+{
+    -moz-border-radius: 6px;    
+    -webkit-border-radius: 6px;
+    background-color: #f8f8e4;
+    padding: 10px;
+    display: none;
+    margin-right: 20px;
+    margin-top: 10px;
+    border: 1px solid #666;
+}
+
+input[type="button"].dashboard-create
+{
+    vertical-align: top;
+    margin-left: 16px;
+}
+
+fieldset.dashboard-create legend
+{
+    
+}
+
+/* -------------------------------------- Entity Actions */
+
+ul.actions
+{
+    float: right;
+}
+
+/* -------------------------------------- File chooser */
+
+ul#folders
+{
+    float: left;
+    margin-top: 25px;
+}
+
+ul#folders li
+{
+    min-width: 150px;
+}
+
+ul#folders li
+{
+    -moz-border-radius-topright: 0px;
+    -moz-border-radius-bottomright: 0px;
+    -webkit-border-top-right-radius: 0px;
+    -webkit-border-bottom-right-radius: 0px;
+    padding-right: 10px;
+}
+
+div#files
+{
+    float: left;
+    margin-top: 10px;
+    margin-right: 10px;
+    height: 500px;
+    width: 480px;
+    border: 2px solid #6d6d6d;
+    padding: 0px;
+    -moz-border-radius: 6px;    
+    -webkit-border-radius: 6px;
+}
+
+div#folder-edit
+{
+    padding: 10px;
+    background-color: #ccc;
+    
+    -moz-border-radius-topright: 6px;
+    -moz-border-radius-topleft: 6px;
+    -webkit-border-top-right-radius: 6px;
+    -webkit-border-top-left-radius: 6px;
+}
+
+div#file-upload
+{
+    position: relative;
+    bottom: 0;
+    
+    padding: 10px;
+    background-color: #ccc;
+    
+    -moz-border-radius-bottomleft: 6px;
+    -moz-border-radius-bottomright: 6px;
+    -webkit-border-bottom-left-radius: 6px;
+    -webkit-border-bottom-right-radius: 6px;
+}
+
+div#folder-edit input[type="text"] 
+{
+    width: 280px;
+}
+
+div#files ul
+{
+    height: 446px;
+    margin: 0;
+    padding: 0;
+    overflow: scroll;
+    
+    list-style-type: none;
+}
+
+div#files li  
+{
+    clear: both; 
+    height: 48px;
+    padding: 2px 4px;
+}
+.filelink
+{
+    float: left;
+    margin-top: 15px;
+}
+.filesize
+{
+    float: right;
+    margin-top: 15px;
+}
+.filedelete
+{
+    float: right;
+    margin-top: 10px;
+    margin-left: 10px;
+}
+
+/* -------------------------------------- Availability */
+
+fieldset#permissions-groups,
+fieldset#permissions-users
+{
+    margin-top: 10px;
+    margin-right: 10px;
+    height: 300px;
+    width: 480px;
+    border: 1px solid #6d6d6d;
+    padding: 0px;
+    -moz-border-radius: 6px;
+    -webkit-border-radius: 6px;
+}
+
+fieldset#permissions-groups
+{
+    float: left;
+}
+  
+fieldset#permissions-groups > legend,
+fieldset#permissions-users > legend
+{
+    margin-left: 10px;
+}
+
+fieldset#permissions-groups > ul,
+fieldset#permissions-users > ul
+{
+    overflow: scroll;
+    height: 227px;
+    list-style: none;
+    margin: 0;
+    padding: 10px 0 0 0;
+}
+  
+fieldset#permissions-groups > ul > li,
+fieldset#permissions-users > ul > li
+{
+    clear: both; 
+    padding: 2px 12px;
+}
+
+fieldset#permissions-groups
+{
+    width: 200px;
+}
+  
+.fieldset-footer
+{
+    position: relative;
+    bottom: 0;
+    
+    padding: 10px;
+    background-color: #ccc;
+    
+    -moz-border-radius-bottomleft: 6px;
+    -moz-border-radius-bottomright: 6px;
+    -webkit-border-bottom-left-radius: 6px;
+    -webkit-border-bottom-right-radius: 6px;
+}
+
+/* -------------------------------------- Ledgers */
+
+.ledger > table td {
+    padding: 4px;
+}
+
+.ledger > table thead td {
+    font-weight: bold;
+    border-bottom: 1px solid #000;
+}
+
+.ledger > table td.balance {
+    font-weight: bold;
+}
+
+.ledger > table td.number {
+    text-align: right;
+}
+
+.ledger > table td.debit {
+    color: #f00;
+}
+
+.ledger-panel {
+    position: relative !important;
+    clear: right;
+    float: right;
+    width: 300px;
+    margin-bottom: 10px;
+}
+
+.ledger-panel > .ui-dialog-content {
+    overflow: visible !important;
+}
+
+.ledger-transfer td {
+    padding: 2px;
+}

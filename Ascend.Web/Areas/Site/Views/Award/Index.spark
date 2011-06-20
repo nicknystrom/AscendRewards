@@ -1,0 +1,295 @@
+﻿<viewdata model="AwardViewModel" />
+
+<content name="head">
+    <script type="text/javascript" src="${Links.Content.Scripts.jquery_autocomplete_js}"></script>
+</content>
+
+<style>
+    
+textarea#message {
+    width: 510px;
+    height: 100px;
+}
+
+.input-validation-error { color: #f00; }
+
+ul#certificate {
+    padding: 0;
+}
+
+ul#certificate li {
+    display: block;
+    float: left;
+    list-style: none;
+    margin-right: 6px;
+}
+
+ul.award
+{
+    padding: 0;
+    margin: 0;
+    height: 354px;
+}
+
+li.award-step 
+{
+    display: none;
+    list-style-type: none;
+    height: 330px;
+    background-color: #eee;
+    padding: 12px;
+    margin: 0 0 12px 0;
+}
+
+div#controls 
+{
+    position: absolute;
+    margin-top: -55px;
+    padding; 0 20px;
+    width: 510px;
+    text-align: right;
+}
+
+</style>
+
+<h1 if="!String.IsNullOrEmpty(Model.Content.Title)">${Model.Content.Title}</h1>
+
+# var defaultAward = Math.Min(Model.MaxAward ?? 0, Model.Issuance.DefaultIssuance ?? 0);
+# var fixedAward = Model.Issuance.FixedIssuance.HasValue ||
+#                  (Model.Issuance.MinIssuance.HasValue && Model.Issuance.MinIssuance.Value == Model.MaxAward);
+
+# using (Html.BeginForm(MVC.Site.Award.Index()))
+# {
+
+<ul class="award">
+
+    <li class="award-step"
+         id="award-text"
+         if="!String.IsNullOrEmpty(Model.Content.Html)">
+        ${Model.Content.Html}
+    </li>
+
+    <li class="award-step"
+         id="award-recipient">
+        <h2>Recipient</h2>  
+        <select id="recipient" name="Recipient" size="10" style="width: 400px; height: 150px;">
+            <option each="var n in Model.Nominees" value="${n.Id}">${n.DisplayName}</option>
+        </select>
+    </li> 
+
+    <li class="award-step"
+         id="award-points"
+         if="Model.Issuance.Type != IssuanceType.None">
+        <h2>Award</h2>     
+        <input type="text" id="award" name="Amount" value="${defaultAward}" disabled="disabled?{fixedAward}" />
+        <p if="Model.Issuance.Type == IssuanceType.NominatorBudget">Points will be withdrawn from your budget.</p>
+        <p id="award-points-min" if="Model.Issuance.MinIssuance.HasValue">Minimum award: ${Model.Issuance.MinIssuance}</p>
+        <p id="award-points-max" if="Model.MaxAward.HasValue">Max award: ${Model.MaxAward}</p>
+    </li>
+
+    <li class="award-step"
+         id="award-message">
+        <h2>Message</h2>
+        <textarea id="message" name="Message" autocomplete="off">${Model.Certificates.First().DefaultMessage.Or("")}</textarea>
+        <div id="award-message-words" if="Model.Certificates.Any(x => x.MessageWordLimit.HasValue)">
+            <span id="word-count">0</span> words <span id="word-limit"></span>.
+        </div>
+    </li>
+
+    <li class="award-step"
+         id="award-cert">
+         <ul id="certificate">
+            # var i = -1;
+            <li each="var c in Model.Certificates">
+                <input type="radio"
+                        name="Certificate"
+                        value="${++i}"
+                        id="cert-${i}"
+                        checked="checked?{0 == i}"
+                        max-words="${c.MessageWordLimit.GetValueOrDefault()}"
+                        default-message="${c.DefaultMessage}"
+                />
+                <label for="cert-${i}">
+                ${c.Name}<br/>
+                <img src="${c.BackgroundUrl.ToAbsoluteUrl(Request)}" style="width: 160px; height: 128px;" />
+                </label>
+            </li>
+        </ul>
+    </li>
+
+    <li class="award-step"
+         id="award-preview">
+     
+        <table>
+            <tr>
+                <td>Recipient:</td>
+                <td><span id="preview-recipient"></span></td>
+            </tr>
+            <tr>
+                <td>Message:</td>
+                <td><span id="preview-message"></span></td>
+            </tr>
+            <tr if="Model.Issuance.Type != IssuanceType.None">
+                <td>Award:</td>
+                <td><span id="preview-award"></span></td>
+            </tr>
+            <tr>
+                <td>Certificate:</td>
+                <td><img id="preview-cert" style="width: 160px; height: 128px;"></img></td>
+            </tr>
+        </table>
+
+        <input type="radio" name="Email" value="true" id="email-true" /> <label for="email-true">Email this certificate to my recipient.</label><br />
+        <input type="radio" name="Email" value="false" id="email-false" /> <label for="email-false">I'll print this certificate and deliver it personally.</label>
+
+    </li>
+
+</ul>
+
+# }
+
+<div id="controls">
+    <button id="award-back" style="visibility: hidden;">Back</button>
+    <button id="award-next">Next</button>
+</div>
+
+<script type="text/javascript">
+
+    var hasTyped = false;
+    var wordLimit = ${Model.Certificates.Min(x => x.MessageWordLimit.GetValueOrDefault())};
+    
+    function validateRecipient() {
+        var list = $('#recipient');
+        list.toggleClass('input-validation-error', !list.val());
+        return !!list.val();
+    }
+
+    function validateAward() {
+        var valid = true;
+        var award = $('#award');
+        if (award) {
+            var x = Number(award.val());
+            if (isNaN(x) || x != Math.round(x)) {
+                valid = false;
+                $('#award-points-min, #award-points-max').removeClass('input-validation-error');
+            }
+            else {
+                # if (fixedAward) {
+                valid = x == ${Model.Issuance.FixedIssuance ?? Model.Issuance.MinIssuance ?? 0};
+                # }
+                # if (Model.Issuance.MinIssuance.HasValue) {
+                $('#award-points-min').toggleClass('field-validation-error', x < ${Model.Issuance.MinIssuance.Value});
+                valid = valid && !$('#award-points-min').hasClass('field-validation-error');    
+                # }
+                # if (Model.MaxAward.HasValue) {
+                $('#award-points-max').toggleClass('field-validation-error', x > ${Model.MaxAward.Value});
+                valid = valid && !$('#award-points-max').hasClass('field-validation-error');    
+                # }
+            }
+            award.toggleClass('input-validation-error', !valid);
+        }
+        return valid;
+    }
+
+    function validateMessage() {
+        var valid = true;
+        if ($('#message').val().length == 0) valid = false;
+        else if (wordLimit > 0) {
+            var wordCount = $('#message').val().split(' ').length;
+            var wordCountValid = wordCount <= wordLimit;
+            $('#word-count').text(wordCount);
+            $('#word-count').closest('td').toggleClass('field-validation-error', !wordCountValid);
+            valid = valid && wordCountValid;
+        }
+        $('#message').toggleClass('input-validation-error', !valid);
+        return valid;
+    }
+
+    function validateCertificate() {
+        return $('#certificate :checked').length > 0;
+    }
+
+    function validateDelivery() {
+        var valid = $('#award-preview :checked').length > 0;
+        $('#award-preview label').toggleClass('field-validation-error', !valid);
+        return valid;
+    }
+
+    function renderPreview() {
+        $('#preview-recipient').text($('#recipient option[value="' + $('#recipient').val() + '"]').text());
+        $('#preview-message').text($('#message').val());
+        $('#preview-award').text($('#award').val());
+        $('#preview-cert').attr('src', $('#certificate :checked').closest('li').find('img').attr('src'));
+    }
+
+    function slideComplete() {
+        $('#controls').show();
+        $('#award-back').css('visibility', $('.award-step:visible').attr('id') == $('.award-step:first').attr('id') ? 'hidden' : 'visible');
+        $('#award-next').text($('.award-step:visible').attr('id') == $('.award-step:last').attr('id') ? 'Send' : 'Next');
+
+        // render the preview
+        if ($('.award-step:visible').attr('id') == 'award-preview') renderPreview();
+    }
+
+    $(function () {
+
+        // step navigation
+        $('.award-step:first').show();
+        $('#award-back, #award-next').click(function() {
+
+            // if moving forward, validate the current page
+            if ($(this).attr('id') == 'award-next') {
+                var valid = true;
+                if ($('.award-step:visible').attr('id') == 'award-recipient') valid = validateRecipient();
+                if ($('.award-step:visible').attr('id') == 'award-points')    valid = validateAward();
+                if ($('.award-step:visible').attr('id') == 'award-message')   valid = validateMessage();
+                if ($('.award-step:visible').attr('id') == 'award-cert')      valid = validateCertificate();
+                if ($('.award-step:visible').attr('id') == 'award-preview')   valid = validateDelivery();
+                if (!valid) return false;
+            }
+
+            // submit the form if we're already on the last step
+            if ($(this).attr('id') == 'award-next' && 
+                $('.award-step:visible').attr('id') == $('.award-step:last').attr('id')) {
+                return $('#content form').submit();
+            }
+
+            // otherwise flip the page forward or back and udpate the buttons
+            var old = $('.award-step:visible');
+            $('#controls').hide();
+            if ($(this).attr('id') == 'award-back') {
+                var next = old.prev();
+                old.hide('slide', { duration: 100, direction: 'right' });
+                next.delay(200).show('slide', slideComplete);
+            }
+            else {
+                var next = old.next();
+                old.hide('slide', 100);
+                next.delay(200).show('slide', { direction: 'right' }, slideComplete);
+            }
+
+            return false;
+        });
+
+        // rerun certain validations when user makes input
+        $('#recipient').click(function() {
+            if ($(this).hasClass('input-validation-error')) validateRecipient();
+        });
+        $('#award').blur(function() {
+            validateAward();
+        });
+        $('#message').keyup(function() {
+            validateMessage();
+        });
+
+        $('#certificate input[type="radio"]').click(function() {
+            var i = $(this);
+            wordLimit = Number(i.attr('word-limit'));
+            var msg = i.attr('default-message');
+            if ($('#message').val().length == 0) {
+                $('#message').val(msg);
+            }
+        });
+        
+    });
+</script>

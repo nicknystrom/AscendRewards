@@ -1,0 +1,19 @@
+﻿<viewdata />
+
+<style>
+
+</style>
+
+<use file="Catalog/_Nav" />
+
+<h1>Event Tickets</h1>
+
+<use file="_Search" />
+
+<script type="text/javascript">
+  
+    $(function () {
+        
+    });
+
+</script>

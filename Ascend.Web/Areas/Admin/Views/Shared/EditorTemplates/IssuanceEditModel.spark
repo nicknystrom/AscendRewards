@@ -1,0 +1,74 @@
+﻿<viewdata model="IssuanceEditModel" />
+
+<div class="ledger-panel ui-dialog ui-widget ui-widget-content ui-corner-all">
+    <div class="ui-dialog-titlebar ui-widget-header ui-corner-all">Award Constraints</div>
+    <div class="ui-dialog-content">
+        ${Html.Scaffold(s => {
+            s.Open();
+            s.Field(x => x.FixedIssuance);
+            s.Field(x => x.MinIssuance);
+            s.Field(x => x.MaxIssuance);
+            s.Field(x => x.DefaultIssuance);
+            s.Close();
+        })}
+    </div>
+</div>
+
+<table class="scaffold">
+    <tr>
+        <th width="90px">
+            ${Html.RadioButtonFor(x => x.Type, IssuanceType.None, new { id="Issuance_Type_None" })}
+            <label for="Issuance_Type_None">None</label>
+        </th>
+        <td>No points will be awarded by this program.</td>
+    </tr>
+    <tr>
+        <th>
+            ${Html.RadioButtonFor(x => x.Type, IssuanceType.NominatorBudget, new { id="Issuance_Type_NominatorBudget" })}
+            <label for="Issuance_Type_NominatorBudget">Nominator</label>
+        </th>
+        <td>Points will be awarded from the nominator's budget. Only valid for certificate awards.</td>
+    </tr>
+    <tr>
+        <th>
+            ${Html.RadioButtonFor(x => x.Type, IssuanceType.ProgramBudget, new { id="Issuance_Type_ProgramBudget" })}
+            <label for="Issuance_Type_ProgramBudget">Program</label>
+        </th>
+        <td>
+            Points will be awarded from a specific budget account. This account may be shared by other programs, or 
+            may be specific to just this program.
+        </td>
+    </tr>
+    <tr>
+        <td></td>
+        <td>
+            Budget account (save this record and return to see ledger and budget specifics for this account):<br/>
+            ${Html.EditorFor(x => x.Account)}
+            <div id="blank-program-budget" style="display: none;">
+                If blank, a new budget will be created for this program. Otherwise, use the Account Chooser to 
+                select an existing account to points from when an award is made by this program.
+            </div>
+        </td>
+    </tr>
+</table>
+
+<div if="Model.Budget != null" class="ledger-panel ui-dialog ui-widget ui-widget-content ui-corner-all">
+    <div class="ui-dialog-titlebar ui-widget-header ui-corner-all">Budget</div>
+    <div class="ui-dialog-content">
+    ${Html.EditorFor(x => x.Budget)}
+    </div>
+</div>
+
+<test if="Model.Ledger != null">
+${Html.EditorFor(x => x.Ledger)}
+</test>
+
+<script type="text/javascript">
+$(function() {
+
+    $('#Issuance_Type_ProgramBudget').click(function() {
+        $('#blank-program-budget').show();
+    });
+
+});
+</script>

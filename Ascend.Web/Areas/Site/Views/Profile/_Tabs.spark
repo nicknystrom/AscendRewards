@@ -1,0 +1,10 @@
+﻿<viewdata awardsSent="int" awardsReceived="int" />
+
+# var action = ViewContext.RouteData.GetRequiredString("Action");
+
+<ul class="tabs">
+  <li class="first selected?{action == 'Activity'}">${Html.ActionLink("Activity", MVC.Site.Profile.Activity())}</li>
+  <li if="awardsSent > 0" class="selected?{action == 'RecognitionsSent'}">${Html.ActionLink("Recognitions Sent", MVC.Site.Profile.RecognitionsSent())}</li>
+  <li if="awardsReceived > 0" class="selected?{action == 'RecognitionsReceived'}">${Html.ActionLink("Recognitions Received", MVC.Site.Profile.RecognitionsReceived())}</li>
+  <li class="last selected?{action == 'Orders'}">${Html.ActionLink("Orders", MVC.Site.Profile.Orders())}</li>
+</ul>

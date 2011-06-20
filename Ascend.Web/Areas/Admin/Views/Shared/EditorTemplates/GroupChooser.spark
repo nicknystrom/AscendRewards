@@ -1,0 +1,5 @@
+﻿<viewdata groups="Ascend.Core.Services.Caching.IGroupSummaryCache" model="string" />
+<select autocomplete="off" name="${ViewData.TemplateInfo.GetFullHtmlFieldName(String.Empty)}">
+    <option value="">(none)</option>
+    <option each="var g in groups.All" value="${g.Id}" selected="true?{Model == g.Id}">${g.Name}</option>
+</select>

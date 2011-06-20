@@ -1,0 +1,47 @@
+﻿<viewdata model="IEnumerable<Game>" create="GameCreateModel" />
+
+<style>
+    span.expired { color: #f00; }
+</style>
+
+<div id="create-game" class="create-dialog">
+    # Html.RenderPartial("GameCreateModel", create ?? new GameCreateModel()   );
+</div>
+
+<table class="index-table">
+    <thead>
+        <tr>
+            <th style="width: 100px;">Title</th>
+            <th style="width: 100px;">Type</th>
+            <th style="width: 80px;">Enabled</th>
+            <th style="width: 80px;">Archived</th>
+            <th style="width: 280px;">Availability</th>
+
+        </tr>
+    </thead>
+    <tbody>
+        <tr each="var g in Model">
+            <td>${Html.ActionLink(g.Title, MVC.Admin.Game.Edit(g.Document.Id))}</td>
+            <td><span>${g.Type}</span></td>
+            <td><span class="ui-icon ui-icon-check" if="g.Enabled" /></td>
+            <td><span class="ui-icon ui-icon-check" if="g.Archived" /></td>
+            <td>
+                <span if="g.Availability.Mode == AvailabilityMode.AvailableToPublic">Public</span>
+                <span if="g.Availability.Mode == AvailabilityMode.AvailableToAllUsers">Registered Users</span>
+                <span if="g.Availability.Mode == AvailabilityMode.AvailableOnlyTo">Specific Users</span>
+                <span if="g.Availability.Mode == AvailabilityMode.AvailableToEveryoneBut">Registered Users with Exceptions</span>
+                <span if="g.Availability.From.HasValue"
+                      class="expired?{g.Availability.From.Value > DateTime.UtcNow}">, From ${g.Availability.From.Value.ToShortDateString()}</span>
+                <span if="g.Availability.To.HasValue"
+                      class="expired?{g.Availability.To.Value < DateTime.UtcNow}">, Until ${g.Availability.To.Value.ToShortDateString()}</span>
+            </td>
+
+        </tr>
+    </tbody>
+</table>
+
+<content name="actions">
+    <ul>
+        <li><a href="#create-game" class="create-button">New Game</a></li>
+    </ul>
+</content>

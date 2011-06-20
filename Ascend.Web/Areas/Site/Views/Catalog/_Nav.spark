@@ -1,0 +1,9 @@
+﻿<viewdata />
+
+<ul id="catalog-nav">
+  <li>${Html.ActionLink("Gift Cards", MVC.Site.Catalog.GiftCards())}</li>
+  <li>${Html.ActionLink("Event Tickets", MVC.Site.Ticket.Index())}</li>
+  <li>${Html.ActionLink("Travel", MVC.Site.Catalog.Travel())}</li>
+  <li>${Html.ActionLink("Eco-friendly", MVC.Site.Catalog.Tagged("eco"))}</li>
+  <li>${Html.ActionLink("Concierge", MVC.Site.Catalog.Concierge())}</li>
+</ul>

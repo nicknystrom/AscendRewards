@@ -1,0 +1,174 @@
+﻿<viewdata model="SurveyViewModel" />
+
+<style>
+
+.questions {
+    padding: 0;
+}
+
+.answers {
+    margin: 12px 0 0 0;
+    padding: 0;
+}
+
+ul.questions 
+{
+    height: 264px;
+}
+
+li.question 
+{
+    display: none;
+    height: 240px;
+    background-color: #eee;
+    padding: 12px;
+    margin: 0 0 20px 0;
+}
+
+.questions > li, .answers > li {
+    list-style-type: none;
+}
+.error { color: #f00; }
+
+textarea {
+    width: 400px;
+    height: 60px;
+}
+
+textarea.error {
+    border: 1px solid #f00;
+    background-color: #fee;
+}
+
+div#controls 
+{
+    position: absolute;
+    margin-top: -55px;
+    padding; 0 20px;
+    width: 510px;
+    text-align: right;
+}
+
+div#steps 
+{
+    float: left;
+    padding-left: 12px;
+    line-height: 24px;
+}
+
+</style>
+
+<h1>${Model.Content.Title}</h1>
+
+<div>
+${Model.Content.Html}
+</div>
+
+# using (Html.BeginForm(MVC.Site.Survey.Index()))
+# {
+<div id="error" class="error" style="visibility: hidden;">
+    Please answer all questions before submitting.
+</div>
+<ul class="questions">
+    # var i = -1;
+    <li class="question" id="q-${++i}" each="var q in Model.Questions">
+        ${q.Title}
+        <div if="!String.IsNullOrEmpty(q.Content)">${q.Content}</div>
+        <ul class="answers" if="q.Answers != null && q.Answers.Count() > 0">
+            # var j = 0;
+            <li each="var a in q.Answers">
+                <input type="radio" name="Answers[${i}]" value="${j++}" autocomplete="off" /> ${a}
+            </li>
+        </ul>
+        <textarea name="Answers[${i}]" if="q.Freeform" autocomplete="off" ></textarea>
+    </li>
+</ul>
+# }
+
+<div id="controls">
+    <div id="steps">
+        <span id="step-current">1</span> of <span id="step-total">1</span>
+    </div>
+    <button id="survey-back" style="visibility: hidden;">Back</button>
+    <button id="survey-next">Next</button>
+</div>
+
+<script type="text/javascript">
+
+    function validateQuestion(q) {
+
+        // valid any radio button in this instance
+        var valid = true;
+        var unanswered = $(q).find('ul.answers:not(ul.answers:has(input:checked))');
+        unanswered.addClass('error')
+        if (unanswered.length > 0) valid = false;
+
+        // validate any textarea in this instance
+        var tas = $(q).find('textarea');
+        if (tas.length > 0) {
+            for (var x = 0; x < tas.length; x++) {
+                $(tas[x]).toggleClass('error', false);
+                if (!$(tas[x]).val()) {
+                    $(tas[x]).toggleClass('error', true);
+                    valid = false;
+                }
+            }
+        }
+
+        return valid;
+    }
+
+    function slideComplete() {
+        $('#controls').show();
+        $('#survey-back').css('visibility', $('ul.questions > li:visible').attr('id') == $('ul.questions > li:first').attr('id') ? 'hidden' : 'visible');
+        $('#survey-next').text($('ul.questions > li:visible').attr('id') == $('ul.questions > li:last').attr('id') ? 'Finish' : 'Next');
+    }
+
+    $(function () {
+
+        $('#step-total').text($('ul.questions > li').length);
+        $('ul.questions > li:first').show();
+        $('#survey-back, #survey-next').click(function () {
+
+            // validate the current step
+            if ($(this).attr('id') == 'survey-next' && !validateQuestion('ul.questions > li:visible')) return false;
+
+            // submit the form if we're already on the last step
+            if ($(this).attr('id') == 'survey-next' &&
+                $('ul.questions > li:visible').attr('id') == $('ul.questions > li:last').attr('id')) {
+                return $('#content form').submit();
+            }
+
+            // otherwise flip the page forward or back and udpate the buttons
+            var old = $('ul.questions > li:visible');
+            $('#controls').hide();
+            if ($(this).attr('id') == 'survey-back') {
+                var next = old.prev();
+                old.hide('slide', { duration: 100, direction: 'right' });
+                next.delay(200).show('slide', slideComplete);
+                $('#step-current').text(Number($('#step-current').text()) - 1);
+            }
+            else {
+                var next = old.next();
+                old.hide('slide', 100);
+                next.delay(200).show('slide', { direction: 'right' }, slideComplete);
+                $('#step-current').text(Number($('#step-current').text()) + 1);
+            }
+
+            return false;
+        });
+
+        $('input:radio').click(function () {
+            $(this).closest('ul').removeClass('error');
+        });
+
+        $('ul.questions textarea').keyup(function () {
+            validate($(this).closest('li.question'));
+        });
+
+        $('form').submit(function () {
+            return validate(true);
+        });
+    });
+    
+</script>

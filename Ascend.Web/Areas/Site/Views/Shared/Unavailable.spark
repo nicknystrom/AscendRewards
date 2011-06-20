@@ -1,0 +1,13 @@
+﻿<viewdata model="AvailabilityResult" />
+
+<style>
+</style>
+
+<h2>${Model.Reason}</h2>
+
+<p>${Model.Details}</p>
+
+<script type="text/javascript">
+    $(function () {
+    });
+</script>

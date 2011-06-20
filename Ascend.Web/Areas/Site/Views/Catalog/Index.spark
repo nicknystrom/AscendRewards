@@ -1,0 +1,165 @@
+﻿<viewdata model="CategoryViewModel" />
+
+<style>
+  
+  input#q { 
+    width: 150px;
+  }
+  
+  div#products 
+  {
+    height: 465px;
+  }
+  
+</style>
+
+<use file="Catalog/_Nav" />
+
+<use file="Catalog/Categories" category="Model.Category" tag="Model.Tag" />
+
+<div id="filtering">
+
+  <div id="result-sort">
+      Sort:
+      <select id="sort">
+        <option value="name" selected="true?{Model.Sort == 'name'}">Name</option>
+        <option value="!name" selected="true?{Model.Sort == '!name'}">Name (Desc.)</option>
+        <option value="price" selected="true?{Model.Sort == 'price'}">Price</option>
+        <option value="!price" selected="true?{Model.Sort == '!price'}">Price (Desc.)</option>
+      </select>
+  </div>
+  
+  Search:
+  <input type="text" id="q" value="${H(Model.Query)}" />
+  <a href="#" id="go">[go]</a>
+
+  <br/>
+  <input type="checkbox" id="afford" checked="true?{Model.Affordable.HasValue && Model.Affordable.Value}" />
+  <label for="afford">Show me only products that I can afford.</label>
+
+</div>
+
+<test if="Model.Total > 0">
+
+<div id="products">
+    <div id="products-strip">
+    </div>
+</div>
+
+<div class="pagination">
+
+    <div id="pagination-goto">#<input type="text" id="pagination-goto-page" /> <a href='#' id="pagination-goto-button">[go]</a></div>
+    <div id="pagination-counts">
+        Page <span id="page-index"></span> of <span id="page-count"></span>
+    </div>
+    
+    <a href="#" id="page-prev"><span class="ui-icon ui-icon-circle-arrow-w"></span> Prev</a>
+    <div id="pagination-links"></div>
+    <a href="#" id="page-next"><span class="ui-icon ui-icon-circle-arrow-e"></span>Next</a>
+    
+
+</div>
+
+</test>
+<else>
+  
+  We're sorry, no products match your search criteria.
+  
+</else>
+
+<div id="product-template" style="display: none;">
+    <div class="product">
+        <a>
+            <img />
+            <span class="brand"></span>
+            <span class="name"></span>
+            <span class="points"></span>
+        </a>
+    </div>
+</div>
+
+<script type="text/javascript" src="/Content/products.js"></script>
+<script type="text/javascript">
+  
+    function search() {
+        window.location = '${Url.GetCategoryUrl(Model.Category, Model.Tag, "(query)", Model.Sort, Model.Affordable, null, Model.Size)}'.replace('(query)', $('#q').val());
+    }
+
+    var panel = {
+      products:       ${JsonConvert.SerializeObject(Model.Products)},
+      template:       '#product-template > div',
+      itemSize:       [180, 230],
+      itemSpacing:             5,
+      imageSize:      [170, 170],
+      gridSize:       [  3,   2],
+      urlProduct:    '${Url.Action(MVC.Site.Catalog.Product("(id)"))}',
+      urlThumb:      '${Html.GetProductImageUrl("(id)", 0, 888888, 999999)}',
+      thumbnails:    ${JsonConvert.SerializeObject(Model.Products.Select(x => Html.GetProductImageUrl(x.Id, 0, 170, 170)))},
+      scroll: function(index, total, pageSize, pageIndex, pageCount) {
+        $('#page-index').text(1+pageIndex);  
+        $('#page-count').text(pageCount);
+        
+        var left = 3;
+        var right = 3;
+        if (pageCount < 8) {
+            left = pageIndex;
+            right = pageCount - left - 1;
+        }
+        else if (pageIndex < 3) {   
+            left = pageIndex;
+            right = 6 - left;
+        }
+        else if (pageIndex > pageCount - 3) {
+            right = pageCount - pageIndex - 1;
+            left = 6 - right;    
+        }     
+
+        var links = [];
+        for (var i = pageIndex - left; i < pageIndex; ++i) links.push('<a href="#">' + (i+1) + '</a>');
+        links.push(pageIndex+1);
+        for (var i = pageIndex + 1; i <= pageIndex + right; ++i) links.push('<a href="#">' + (i+1) + '</a>');
+        $('#pagination-links').empty().html(links.join(' | '));
+        
+      }
+    };
+    var pageSize = panel.gridSize[0] * panel.gridSize[1];
+
+    $(function () {
+
+        $('#products a').live('hover', function(event) { 
+            $(this).find('img').toggleClass('hover', event.type == 'mouseover');
+        });
+
+        $('#products').products(panel);
+        $('#page-prev').click(function() { $('#products').products('page', -1); return false; });    
+        $('#page-next').click(function() { $('#products').products('page',  1); return false; });    
+        $('#pagination-goto-button').click(function() {
+            var page = Number($('#pagination-goto-page').val());
+            if (!isNaN(page)) {
+                $('#products').products('scroll', (page - 1) * pageSize);
+            }
+            return false;
+        });
+        $('#pagination-links a').live('click', function() {
+            $('#products').products('scroll', (Number($(this).text()) - 1) * pageSize);
+            return false;
+        });
+
+        $('#afford').click(function() {
+            window.location = '${Url.GetCategoryUrl(Model.Category,
+                                                    Model.Tag,
+                                                    Model.Query,
+                                                    (Model.Affordable.HasValue && Model.Affordable.Value) ? "name" : "!price",
+                                                    (Model.Affordable.HasValue && Model.Affordable.Value) ? (bool?)null : true,
+                                                    null,
+                                                    null)}';
+        });
+        $('#sort').change(function() {
+            window.location = '${Url.GetCategoryUrl(Model.Category, Model.Tag, Model.Query, "(sort)", Model.Affordable, null, Model.Size)}'.replace('(sort)', $(this).val());
+        });
+        $('#go').click(search);
+        $('#q').keypress(function(e) {
+            if (e.which == 13 || e.which == 10) { search(); }
+        });
+    });
+</script>

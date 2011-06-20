@@ -1,0 +1,33 @@
+﻿<viewdata model="IEnumerable<User>" />
+<set entity="'Activation'" />
+
+<style>
+
+</style>
+
+# using (Html.BeginForm(MVC.Admin.Messaging.Activation()))
+# {
+
+<p>The following users require activation, but have not received an 'Activation' email:</p>
+
+<ul>
+    <li each="var x in Model">
+        <input type="checkbox" name="id" value="${x.Document.Id}" checked="true" />
+        ${x.DisplayName} &lt;${x.Email}&gt;, registered ${x.DateRegistered}
+    </li>
+</ul>
+
+<p>${Html.CheckBox("send")} I wish to send these messages. ${Html.ValidationMessage("send")}</p>
+
+
+<input type="submit" value="Update Template" />
+
+# }
+
+<script type="text/javascript">
+
+$(function() {
+    
+});
+        
+</script>

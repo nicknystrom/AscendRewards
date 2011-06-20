@@ -1,0 +1,10 @@
+﻿<viewdata model="IEnumerable<Account>" />
+
+<ul>
+    <li each="var a in Model">
+        ${a.Name}
+        <span if="null != a.Budget">
+        (Budget of ${a.Budget.RefreshLimit ?? 0} points, refreshed ${a.Budget.RefreshInterval.ToString().ToLower()})
+        </span>
+    </li>
+</ul>

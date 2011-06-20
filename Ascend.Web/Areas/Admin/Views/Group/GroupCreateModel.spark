@@ -1,0 +1,12 @@
+﻿<viewdata model="GroupCreateModel" />
+
+# using (Html.BeginForm(MVC.Admin.Group.Index()))
+# {
+    ${Html.Scaffold(s => {
+            s.Open();
+            s.Field(g => g.Name);
+            s.Field(g => g.Catalog);
+            s.Submit("Create Group");
+            s.Close();
+    })}
+# }

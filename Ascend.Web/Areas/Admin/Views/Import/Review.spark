@@ -1,0 +1,51 @@
+﻿<viewdata model="Ascend.Core.Services.Import.ImportResult" />
+
+<div if="null == Model">
+    No import to review.
+</div>
+<div if="null != Model">   
+
+
+${Html.Scaffold(s => {
+    s.Open();
+    s.Display(x => x.Date);
+    s.Display(x => x.File);
+    s.Display(x => x.Type);
+    s.Display(x => x.Success);
+    s.Display(x => x.Step);
+    s.Close();
+})}
+
+<ul if="null != Model.Problems">
+    <li each="var x in Model.Problems">${x}</li>
+</ul>
+
+
+<table if="null != Model.Rows && Model.Rows.Count < 1000">
+    <tr if="null != Model.Layout">
+        <th>Status</th>
+        <th>Valid</th>
+        <th each="var x in Model.Layout">${x}</th>
+    </tr>
+    <tr each="var row in Model.Rows">
+        <td>${row.IsNew ? "New" : "Updated" }</td>
+        <td>
+            <span if="!row.IsValid">Errors</span>
+            <ul if="null != row.Problems">
+                <li each="var x in row.Problems">${x}</li>
+            </ul>
+        </td>
+        <td each="var x in row.Data">${H(x.Or("-").ToString().ShortenTo(100))}</td>
+    </tr>
+</table>
+
+</div>
+
+<script type="text/javascript">
+
+$(function() {
+    
+    
+});
+        
+</script>

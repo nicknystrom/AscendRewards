@@ -1,0 +1,58 @@
+﻿<viewdata id="string" model="GameEditModel" />
+<set entity="Model.Title" />
+
+<style>
+  
+  textarea#Content {
+    width: 600px;
+    height: 200px;
+  }
+  
+</style>
+
+# using (Html.BeginForm(MVC.Admin.Game.Edit(id)))
+# {
+
+<div id="admin-edit-tabs">
+    <ul>
+        <li><a href="#admin-game-program">Program</a></li>
+        <li><a href="#admin-game-availability">Availability (${Model.Availability})</a></li>
+        <li><a href="#admin-game-budget">Budget</a></li>
+        <li><a href="#admin-game-general">General</a></li>
+    </ul>
+    <div id="admin-game-program">
+        ${Html.EditorFor(x => x.Content)}
+    </div>
+    <div id="admin-game-availability">
+        <legend>Availability</legend>
+        ${Html.EditorFor(x => x.Availability)}
+    </div>
+    <div id="admin-game-budget">
+        ${Html.EditorFor(x => x.Issuance)}
+    </div>
+    <div id="admin-game-general">
+        ${Html.Scaffold(s => {
+            s.Open();
+            s.Field(x => x.Type);
+            s.Field(x => x.Award);
+            s.Field(x => x.TimeLimit);
+            s.Close();
+        })}
+    </div>
+    
+</div>
+
+# }
+
+<content name="actions">
+    <input type="submit" value="Update Game" />
+    <ul>
+    </ul>
+</content>
+
+<script type="text/javascript">
+ 
+$(function() {
+});
+        
+</script>

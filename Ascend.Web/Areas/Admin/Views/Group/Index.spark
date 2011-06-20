@@ -1,0 +1,26 @@
+﻿<viewdata model="IEnumerable<Group>" create="GroupCreateModel" />
+
+<div id="create-group" class="create-dialog">
+    # Html.RenderPartial("GroupCreateModel", create ?? new GroupCreateModel()   );
+</div>
+
+<table class="index-table">
+    <thead>
+        <tr>
+            <th>Group</th>
+            <th>Catalog</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr each="var g in Model">
+            <td>${Html.ActionLink(g.Name.Or("(Group)"), MVC.Admin.Group.Edit(g.Document.Id))}</td>
+            <td>${g.Catalog}</td>
+        </tr>
+    </tbody>
+</table>
+
+<content name="actions">
+    <ul>
+        <li><a href="#create-group" class="create-button">New Group</a></li>
+    </ul>
+</content>

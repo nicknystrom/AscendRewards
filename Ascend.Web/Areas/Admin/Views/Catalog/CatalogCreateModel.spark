@@ -1,0 +1,13 @@
+﻿<viewdata model="CatalogCreateModel" />
+
+# using (Html.BeginForm(MVC.Admin.Catalog.Index()))
+# {
+
+    ${Html.Scaffold(s => {
+            s.Open();
+            s.Field(c => c.Name);
+            s.Submit("Create Catalog");
+            s.Close();
+    })}
+    
+# }

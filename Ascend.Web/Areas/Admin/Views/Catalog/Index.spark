@@ -1,0 +1,28 @@
+﻿<viewdata model="IEnumerable<Catalog>" create="CatalogCreateModel" />
+
+<div id="create-catalog" class="create-dialog">
+    # Html.RenderPartial("CatalogCreateModel", create ?? new CatalogCreateModel()   );
+</div>
+
+<table class="index-table">
+    <thead>
+        <tr>
+            <th>Catalog</th>
+            <th>Markup %</th>
+            <th>Markup $</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr each="var c in Model">
+            <td>${Html.ActionLink(c.Name.Or("(Catalog)"), MVC.Admin.Catalog.Edit(c.Document.Id))}</td>
+            <td>$!{c.DefaultMark.MinMarkupPercent.ToString("P")}</td>
+            <td>$!{c.DefaultMark.MinMarkupDollars.ToString("C")}</td>
+        </tr>
+    </tbody>
+</table>
+
+<content name="actions">
+    <ul>
+        <li><a href="#create-catalog" class="create-button">New Catalog</a></li>
+    </ul>
+</content>

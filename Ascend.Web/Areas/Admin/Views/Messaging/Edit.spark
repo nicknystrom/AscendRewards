@@ -1,0 +1,69 @@
+﻿<viewdata id="string" model="TemplateEditModel" />
+<set entity="Model.Name" />
+
+<style>
+
+</style>
+
+# using (Html.BeginForm(MVC.Admin.Messaging.Edit(id)))
+# {
+
+${Html.Scaffold(s => {
+    s.Open();
+
+    s.Field(x => x.Name);
+    s.Field(x => x.Subject);
+    s.Field(x => x.Content);
+        
+    s.Close();
+})}
+
+# }
+
+<br/>
+<p>
+The Subject and Content fields can contain replaceable 'dynamic strings'. The available
+replacements vary by template type:
+</p>
+<table>
+    <tr>
+        <td>{program}</td>
+        <td>The program name (all templates).</td>
+    </tr>
+    <tr>
+        <td>{login}</td>
+        <td>The current users's Login (all templates, except award).</td>
+    </tr>
+    <tr>
+        <td>{url}</td>
+        <td>The url that the user should follow to complete the process (all templates).</td>
+    </tr>
+    <tr>
+        <td>{password}</td>
+        <td>The user's new password (password reset only).</td>
+    </tr>
+    <tr>
+        <td>{nominator}</td>
+        <td>The name of the user that sent an award (award only).</td>
+    </tr>
+    <tr>
+        <td>{recipient}</td>
+        <td>The name of the user that receives an award (award only).</td>
+    </tr>
+</table>
+<p>You may also reference files in your template, in this format:</p>
+<code>&lt;img src="~/f/folder-images/banner.jpg" /&gt;</code>
+
+<content name="actions">
+    <input type="submit" value="Update Template" />
+    <ul>
+    </ul>
+</content>
+
+<script type="text/javascript">
+
+$(function() {
+    
+});
+        
+</script>

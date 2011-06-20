@@ -1,0 +1,62 @@
+﻿<viewdata />
+
+<!--
+
+Control Account:
+<div id="control" class="viz-timeline"></div>
+
+Expense Account:
+<div id="expense" class="viz-timeline"></div>
+
+-->
+
+Program Liability:
+<div id="liability" class="viz-timeline"></div>
+
+<div id="logins" class="viz-pie"></div>
+<div id="budget-spend" class="viz-bar"></div>
+
+<script type="text/javascript">
+
+    $(function () {
+
+        var q = new google.visualization.Query("${Url.Action(MVC.Dash.Widget.PercentLoginsThisWeek())}");
+        q.send(function(response) {
+            var d = response.getDataTable();
+            var chart = new google.visualization.PieChart(document.getElementById('logins'));
+            chart.draw(d, {is3D: true, legend: 'label', title: 'User Activity, Week-to-Date'});
+        });
+
+        /* 
+        var r = new google.visualization.Query("${Url.Action(MVC.Dash.Widget.TimelineControlAccount())}");
+        r.send(function(response) {
+            var d = response.getDataTable();
+            var chart = new google.visualization.AnnotatedTimeLine(document.getElementById('control'));
+            chart.draw(d, {displayRangeSelector:false});
+        });
+
+        var s = new google.visualization.Query("${Url.Action(MVC.Dash.Widget.TimelineExpenseAccount())}");
+        s.send(function(response) {
+            var d = response.getDataTable();
+            var chart = new google.visualization.AnnotatedTimeLine(document.getElementById('expense'));
+            chart.draw(d);
+        });
+        */
+
+        var t = new google.visualization.Query("${Url.Action(MVC.Dash.Widget.TimelineLiability())}");
+        t.send(function(response) {
+            var d = response.getDataTable();
+            var chart = new google.visualization.AnnotatedTimeLine(document.getElementById('liability'));
+            chart.draw(d, {displayRangeSelector:false});
+        });
+
+        var u = new google.visualization.Query("${Url.Action(MVC.Dash.Widget.BudgetSpend())}");
+        u.send(function(response) {
+            var d = response.getDataTable();
+            var chart = new google.visualization.ColumnChart(document.getElementById('budget-spend'));
+            chart.draw(d, {is3D:true, title:'Budget Spend Month-to-Date', isStacked:true, reverseAxis:true });
+        });
+
+    });
+
+</script>

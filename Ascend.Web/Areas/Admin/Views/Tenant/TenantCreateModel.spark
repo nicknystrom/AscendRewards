@@ -1,0 +1,11 @@
+﻿<viewdata model="TenantCreateModel" />
+
+# using (Html.BeginForm(MVC.Admin.Tenant.Index()))
+# {
+    ${Html.Scaffold(s => {
+            s.Open();
+            s.Field(t => t.Name);
+            s.Submit("Create Tenant");
+            s.Close();
+    })}    
+# }

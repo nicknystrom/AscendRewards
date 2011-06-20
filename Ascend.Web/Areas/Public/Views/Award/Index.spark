@@ -1,0 +1,36 @@
+﻿<viewdata model="UserAwardViewModel" />
+
+<macro name="certificatePanel" box="CertificateArea" text="string">
+    <div if="null != box && box.Enabled"
+         class="certificate-canvas-panel"
+         style="position: absolute;
+                top:    ${box.Top}px;
+                left:   ${box.Left}px;
+                width:  ${box.Width}px;
+                height: ${box.Height}px;
+                text-align: ${box.Alignment};
+                font-family: ${box.FontFace};
+                font-size: ${box.FontSize}px;
+                color: ${box.FontColor};">
+      ${text}
+    </div>
+</macro>
+
+# var c = Model.Certificate;
+<div class="certificate">
+  <div class="certificate-canvas"
+       style="position: absolute;
+              width: ${c.BackgroundSize.Width}px;
+              height: ${c.BackgroundSize.Height}px;">
+  <img class="certificate-canvas-placeholder"
+       src="${c.BackgroundUrl.ToAbsoluteUrl(Request)}"
+       style="width: ${c.BackgroundSize.Width}px;
+              height: ${c.BackgroundSize.Height}px;" />
+    ${certificatePanel(c.FromBox, Model.NominatorName)}
+    ${certificatePanel(c.ToBox, Model.RecipientName)}
+    ${certificatePanel(c.AwardBox, Model.Amount.HasValue ? String.Format("You have received {0:n0} points!", Model.Amount.Value) : "")}
+    ${certificatePanel(c.MessageBox, Model.Message)}
+    ${certificatePanel(c.DateBox, Model.Date.ToShortDateString())}
+  </div>
+
+</div>

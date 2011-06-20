@@ -1,0 +1,11 @@
+﻿<viewdata model="IEnumerable<IValidationMetadata>" />
+
+<table>
+    <tbody>
+        <tr each="var i in Model">
+            <td>${i.Category}</td>
+            <td>${i.Title}</td>
+            <td>${i.Description}</td>
+        </tr>
+    </tbody>
+</table>

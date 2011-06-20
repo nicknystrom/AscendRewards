@@ -1,0 +1,3 @@
+﻿<viewdata model="Availability" />
+From: ${Html.EditorFor(x => x.From)}
+To: ${Html.EditorFor(x => x.To)}

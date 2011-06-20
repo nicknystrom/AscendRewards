@@ -1,0 +1,28 @@
+﻿<viewdata model="IEnumerable<Theme>" create="ThemeCreateModel" />
+
+<div id="create-theme" class="create-dialog">
+    # Html.RenderPartial("ThemeCreateModel", create ?? new ThemeCreateModel()   );
+</div>
+
+<table class="index-table">
+    <thead>
+        <tr>
+            <th>Theme</th>
+            <th>Stylesheet</th>
+            <th>Banner</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr each="var t in Model">
+            <td>${Html.ActionLink(t.Name.Or("(Theme)"), MVC.Admin.Theme.Edit(t.Document.Id))}</td>
+            <td>${t.Stylesheet}</td>
+            <td>${t.Banner}</td>
+        </tr>
+    </tbody>
+</table>
+
+<content name="actions">
+    <ul>
+        <li><a href="#create-theme" class="create-button">New Theme</a></li>
+    </ul>
+</content>

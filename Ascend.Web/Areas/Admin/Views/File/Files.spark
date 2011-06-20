@@ -1,0 +1,61 @@
+﻿<viewdata model="IDictionary<string, string>" />
+
+<div id="files">
+    <ul>
+        <li each="var f in Model">
+            <span class="filetype-icon ${AttachmentExtensions.GetFileTypeFromName(f.Key).ToString().ToLower()}"></span>
+            <span class="filelink"><a href="${f.Value}">${f.Key}</a></span>
+            <span class="filedelete"><button>Delete</button></span>
+        </li>
+    </ul>
+    <div id="file-upload">
+        <form id="file-upload-form" method="post" enctype="multipart/form-data" action="${Url.Action(MVC.Admin.File.Index())}">
+        <input name="file" id="file" type="file" />
+        <input type="submit" name="action" value="Upload" />
+        <iframe id="file-upload-target" name="file-upload-target" src="" style="display: none;"></iframe>
+        </form>
+    </div>
+
+    <script type="text/javascript">
+
+        function loadFolder(url) {
+            $.ajax({
+                url: url,
+                success: function (data) { $('#files').replaceWith(data); },
+                cache: false
+            });
+        }
+
+        $(function () {
+
+            $('#file-upload-form').submit(function () {
+                this.target = 'file-upload-target';
+            });
+
+            // replace image-placeholder with actual thumbnails
+            //$('#files .image').each(function () {
+            //    $(this).css('background-image', 'url("' + $(this).next().find('a').attr('href') + '?w=48&h=48")');
+            //});
+
+            $('#files ul button:contains("Delete")').click(function () {
+                var file = $(this).parent().siblings('.filelink').find('a').text();
+                if (confirm('Are you want to delete the file "' + file + '". If this file is used as a banner image, in a content page, or anywhere else, certains aspects of the site may stop functioning.')) {
+                    $.ajax({
+                        url: '${Url.Action(MVC.Admin.File.Delete("(file)"))}'.replace('(file)', file),
+                        type: 'delete',
+                        dataType: 'html',
+                        error: function () {
+                            alert('There was a problem deleting the file.');
+                        },
+                        success: function (data) {
+                            $('#files').replaceWith(data);
+                        }
+                    });
+                }
+            });
+
+        });
+
+    </script>
+
+</div>

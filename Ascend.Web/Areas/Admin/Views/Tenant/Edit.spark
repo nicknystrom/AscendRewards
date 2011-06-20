@@ -1,0 +1,45 @@
+﻿<viewdata id="string" model="TenantEditModel" />
+<set entity="Model.Name" />
+
+# using (Html.BeginForm(MVC.Admin.Tenant.Edit(id)))
+# {
+
+<div id="admin-edit-tabs">
+    <ul>
+        <li><a href="#admin-tenant-general">General</a></li>
+    </ul>
+    <div id="admin-tenant-general">
+        ${Html.Scaffold(s => {
+            s.Open();
+
+            s.Field(x => x.Enabled);
+            s.Field(x => x.Name);
+            s.Field(x => x.Database);
+            s.Field(x => x.EmailDomain);
+
+            s.Close();
+        })}
+    
+        Urls:
+        <ul id="urls">
+          <li each="var x in Model.Match"><input type="text" name="Match" value="${x}" /></li>
+          <li><input type="text" name="Match" /></li>
+        </ul>
+    </div>
+</div>
+<input type="submit" value="Update Tenant" />
+
+# }
+
+<script type="text/javascript">
+
+$(function() {
+    $('#uls input[type="text"]').live('keyup', function() {
+      if ($('#uls input:last').val().length > 0) {
+        $('#uls').append('<li><input type="text" name="Match" /></li>');
+      }
+    }); 
+    
+});
+        
+</script>

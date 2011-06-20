@@ -1,0 +1,86 @@
+﻿<viewdata model="Ledger" application="IApplicationConfiguration" />
+
+# var pre = Model.Account.Document.Id;
+
+<div class="ledger" id="${pre}">
+
+<div class="ledger-panel ui-dialog ui-widget ui-widget-content ui-corner-all">
+  <div class="ui-dialog-titlebar ui-widget-header ui-corner-all">Transfer Points</div>
+  <div class="ui-dialog-content">
+      <table class="scaffold">
+        <tbody>
+            <tr>
+              <th>Debit</th>
+              <td><input autocomplete="off" type="text" id="${pre}-tx-debit" value="${H(application.GeneralControlAccount)}" /></td>
+            </tr>    
+            <tr>
+              <th>Credit</th>
+              <td><input disabled="true" autocomplete="off" type="text" id="${pre}-tx-credit" value="${H(Model.Account.Document.Id)}" /></td>
+            </tr>    
+            <tr>
+              <th>Amount</th>
+              <td><input autocomplete="off" type="text" id="${pre}-tx-amount" value="" /></td>
+            </tr>    
+            <tr>
+              <th>Notes</th>
+              <td><input autocomplete="off" type="text" id="${pre}-tx-description" value="" /></td>
+            </tr>
+            <tr>
+              <th></th>
+              <td><input type="button" id="${pre}-tx-submit" value="Submit" /></td>
+            </tr>
+        </tbody>
+      </table>
+  </div>
+</div>
+
+<table if="Model.Transactions.Count > 0">
+  <thead>
+    <tr>
+      <td>Date</td>
+      <td>From</td>
+      <td>To</td>
+      <td>Amount</td>
+      <td>Description</td>
+    </tr>
+  </thead>
+  <tbody>
+    <tr each="var tx in Model.Transactions.OrderBy(x => x.Date)">
+      <td>${tx.Date}</td>
+      <td>${tx.Debit}</td>
+      <td>${tx.Credit}</td>
+      <td class="number debit" if="Model.IsDebit(tx)">(${tx.Amount.ToString("n0")})</td>
+      <td class="number credit" if="Model.IsCredit(tx)">${tx.Amount.ToString("n0")}</td>
+      <td>${tx.Description}</td>
+    </tr>
+  </tbody>
+  <tfoot>
+    <tr>
+      <td></td>
+      <td></td>  
+      <td>Balance:</td>  
+      <td class="number balance">${Model.Balance.ToString("n0")}</td>  
+      <td></td>  
+    </tr>
+  </tfoot>
+</table>
+
+<div style="clear: right;"></div>
+
+<script type="text/javascript">
+  $(function() {
+    $('#${pre}-tx-submit').click(function() {
+        $('#${pre}').load(
+            '${Url.Action(MVC.Admin.Ledger.Post(null))}',
+            {
+                DebitAccount: $('#${pre}-tx-debit').val(),
+                CreditAccount: $('#${pre}-tx-credit').val(),
+                Amount: $('#${pre}-tx-amount').val(),
+                Description: $('#${pre}-tx-description').val(),
+            }
+        );
+    });
+  });
+</script>
+
+</div>

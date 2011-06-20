@@ -1,0 +1,137 @@
+﻿<viewdata id="string" model="CatalogEditModel" />
+<set entity="Model.Name" />
+
+<style>
+
+  ul#marks {
+    padding: 0;
+    margin: 0;
+  }
+
+  ul#marks > li {
+    list-style: none;
+    background-color: #f8f8f8;
+    border: 1px solid #ccc;
+    padding: 0;
+    margin-bottom: 6px;
+    -moz-border-radius: 6px;    
+    -webkit-border-radius: 6px;
+  }
+  
+  ul#marks > li > table {
+    vertical-align: top;
+    margin: 8px 12px;
+  }
+
+  ul#marks > li > .mark-header {
+    margin-bottom: 8px;
+    padding: 8px 12px;
+    background-color: #ccc;
+  }  
+
+</style>
+
+<macro name="EditorForMark" m="MarkEditModel" prefix="string" category="bool">
+    <div class="mark-header" if="category">
+        Category:
+        <input type="text" name="${prefix}Category" value="${H(m.Category)}" />
+        <input type="button" class="mark-delete" value="X" />
+    </div>
+    <table class="scaffold">
+        <tr>
+            <th><label for="${prefix}-MaxPriceBelowMsrp">Max. Price Below Msrp</label></th>
+            <td><input type="text" id="${prefix}-MaxPriceBelowMsrp" name="${prefix}MaxPriceBelowMsrp" value="${m.MaxPriceBelowMsrp}" /></td>
+        </tr>
+        <tr>
+            <th><label for="${prefix}-MinMarkupPercent">Min. Markup in Percent</label></th>
+            <td><input type="text" id="${prefix}-MinMarkupPercent" name="${prefix}MinMarkupPercent" value="${m.MinMarkupPercent}" /></td>
+        </tr>
+        <tr>
+            <th><label for="${prefix}-MinMarkupDollars">Min. Markup in Dollars</label></th>
+            <td><input type="text" id="${prefix}-MinMarkupDollars" name="${prefix}MinMarkupDollars" value="${m.MinMarkupDollars}" /></td>
+        </tr>
+    </table>        
+</macro>
+
+<div style="display: none" id="mark-template">
+    <li>
+        ${EditorForMark(
+            new MarkEditModel {
+               Category = "Catalog/Books",
+               MaxPriceBelowMsrp = Model.Default.MaxPriceBelowMsrp,
+               MinMarkupPercent = Model.Default.MinMarkupPercent,
+               MinMarkupDollars = Model.Default.MinMarkupDollars,
+            },
+            "",
+            true
+        )}
+    </li>
+</div>
+
+# using (Html.BeginForm(MVC.Admin.Catalog.Edit(id)))
+# {
+
+<div id="admin-edit-tabs">
+    <ul>
+        <li><a href="#admin-catalog-default-mark">Default Mark</a></li>
+        <li><a href="#admin-catalog-category-mark">Category Marks</a></li>
+    </ul>
+    <div id="admin-catalog-default-mark">
+        ${Html.Scaffold(s => {
+            s.Open();
+            s.Field(x => x.Name);
+            s.Field(x => x.Default.MaxPriceBelowMsrp);
+            s.Field(x => x.Default.MinMarkupPercent);
+            s.Field(x => x.Default.MinMarkupDollars);
+            s.Close();
+        })}
+    </div>
+    <div id="admin-catalog-category-mark">
+        <ul id="marks">
+            <li each="var m in Model.Marks ?? new MarkEditModel[0]">
+                ${EditorForMark(m, "", true)}
+            </li>
+        </ul>
+
+        <div class="fieldset-footer">
+            <input type="button" id="mark-new" value="New Mark" />
+        </div>
+    
+    </div>
+    
+</div>
+
+# }
+
+<content name="actions">
+    <input type="submit" value="Update Catalog" />
+    <ul>
+    </ul>
+</content>
+
+<script type="text/javascript">
+
+    $(function () {
+
+        $('form').submit(function () {
+            $('#marks > li').each(function (i, x) {
+                var pre = 'Marks[' + i + '].';
+                $(this).find('input[type="text"]').each(function (j, y) {
+                    $(y).attr('name', pre + $(y).attr('name'));
+                });
+            });
+        });
+
+        // --------------------------------------------------- Marks 
+
+        $('#marks').sortable();
+        $('#mark-new').click(function () {
+            $('#mark-template > li').clone().appendTo('#marks');
+        });
+        $('.mark-delete').live('click', function () {
+            $(this).closest('li').remove();
+        });
+
+    });
+        
+</script>
