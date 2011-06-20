@@ -1,0 +1,7 @@
+Ascend.Core/bin
+*.pidb
+Ascend.Infrastructure/bin
+Ascend.Test/bin
+Ascend.Web/bin
+*.userprefs
+ExceptionMessage.resources
