@@ -110,6 +110,22 @@ namespace Ascend.Web.Areas.Admin.Controllers
         public Ledger BudgetLedger { get; set; }
         public BudgetEditModel Budget { get; set; }
 
+        public void AddBudgets(User u, IAccountingService accounting)
+        {
+            PointsLedger = accounting.GetPointsLedger(u);
+            BudgetLedger = accounting.GetBudgetLedger(u);
+            Budget = (null != BudgetLedger &&
+            null != BudgetLedger.Account)
+                ? BudgetEditModel.FromDomain(BudgetLedger.Account.Budget)
+                : new BudgetEditModel();
+        }
+
+        public void AddActivity(UserActivitySummary logins)
+        {
+            FailedLogins = new LoginIncrements { Count = logins.FailedLogins, Last = logins.LastFailedLogin };
+            SuccessfulLogins = new LoginIncrements { Count = logins.SuccessfulLogins, Last = logins.LastSuccesfulLogin };
+        }
+
         public static UserEditModel FromDomain(User u, UserActivitySummary logins, IAccountingService accounting)
         {
             var x = new UserEditModel
@@ -133,23 +149,17 @@ namespace Ascend.Web.Areas.Admin.Controllers
                             Custom = u.Custom,
                             Permissions = (u.Permissions ?? new UserPermissions()),
                             
-                            PointsLedger = accounting.GetPointsLedger(u),
-                            BudgetLedger = accounting.GetBudgetLedger(u),
 
                             // display only fields
                             Login = u.Login,
-                            FailedLogins = new LoginIncrements { Count = logins.FailedLogins, Last = logins.LastFailedLogin },
-                            SuccessfulLogins = new LoginIncrements { Count = logins.SuccessfulLogins, Last = logins.LastSuccesfulLogin },
                             DateAcceptedTermsOfService = u.DateAcceptedTermsOfService,
                             DateRegistered = u.DateRegistered,
                             DateActivated = u.DateActivated,
                             DateSuspended = u.DateSuspended,
                             DateTerminated = u.DateTerminated,
                       };
-            x.Budget = (null != x.BudgetLedger &&
-                        null != x.BudgetLedger.Account)
-                           ? BudgetEditModel.FromDomain(x.BudgetLedger.Account.Budget)
-                           : new BudgetEditModel();
+            x.AddBudgets(u, accounting);
+            x.AddActivity(logins);
             return x;
         }
 
