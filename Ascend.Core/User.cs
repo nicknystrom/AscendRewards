@@ -9,6 +9,7 @@ using System.Web;
 using Newtonsoft.Json;
 using Ascend.Core.Services;
 using Ascend.Core.Repositories;
+using System.Web.Mvc;
 
 namespace Ascend.Core
 {
@@ -206,6 +207,44 @@ namespace Ascend.Core
         public override string ToString()
         {
             return DisplayName;
+        }
+
+        public static void ValidateLogin(
+            User u,
+            string login,
+            IUserRepository users,
+            ModelStateDictionary state)
+        {
+            if (!String.IsNullOrEmpty(login) &&
+                (null == u || u.Login != login))
+            {
+                var same = users.Where(x => x.Login).Eq(login).List();
+                if (same.Rows.Length > 0 &&
+                    (null == u || same.Rows.First().Id != u.Document.Id))
+                {
+                    // there's already a user with this login address (besides the current one)
+                    state.AddModelError("Login", "Login name already in use.");
+                }
+            }
+        }
+
+        public static void ValidateEmail(
+            User u,
+            string email,
+            IUserRepository users,
+            ModelStateDictionary state)
+        {
+            if (!String.IsNullOrEmpty(email) &&
+                (null == u || u.Email != email))
+            {
+                var same = users.Where(x => x.Email).Eq(email).List();
+                if (same.Rows.Length > 0 &&
+                    (null == u || same.Rows.First().Id != u.Document.Id))
+                {
+                    // there's already a user with this email address (besides the current one)
+                    state.AddModelError("Email", "Email address already in use.");
+                }
+            }
         }
     }
 

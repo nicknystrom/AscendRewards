@@ -11,7 +11,7 @@ namespace Ascend.Web.PreCompiler
     {
         public static void Main (string[] args)
         {
-            var location = typeof(MvcApplication).Assembly.Location;
+            var location = typeof(AscendApplication).Assembly.Location;
             string target = Path.ChangeExtension(location, ".Views.dll");
             string root = Path.GetDirectoryName(Path.GetDirectoryName(location));
             //string webBinPath = Path.Combine (directoryName, "bin");
@@ -21,7 +21,7 @@ namespace Ascend.Web.PreCompiler
    
             try
             {            
-                var factory = new SparkViewFactory(MvcApplication.CreateSparkSettings());
+                var factory = new SparkViewFactory(AscendApplication.CreateSparkSettings());
                 factory.ViewFolder = new VirtualPathCompatableViewFolder(root);
                 factory.Engine.ViewFolder = factory.ViewFolder;
                 
@@ -30,7 +30,7 @@ namespace Ascend.Web.PreCompiler
                 factory.DescriptorBuilder = builder;
                 
                 var batch = new SparkBatchDescriptor(target);
-                batch.FromAssembly(typeof(MvcApplication).Assembly);
+                batch.FromAssembly(typeof(AscendApplication).Assembly);
                 
                 var descriptors = new List<SparkViewDescriptor>();
                 foreach (var entry in batch.Entries)

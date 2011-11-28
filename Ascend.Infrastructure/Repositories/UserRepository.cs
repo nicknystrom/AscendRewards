@@ -15,8 +15,6 @@ namespace Ascend.Infrastructure.Repositories
         {
         }
 
-
-
         public IEnumerable<UserSummary> GetSummaries()
         {
             var query = WithView(

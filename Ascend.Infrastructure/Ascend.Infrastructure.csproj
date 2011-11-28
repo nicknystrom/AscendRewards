@@ -64,9 +64,6 @@
     <Reference Include="Ionic.Utils.Zip, Version=1.3.0.0, Culture=neutral, PublicKeyToken=c551e179877da246">
       <HintPath>..\lib\Ionic.Utils.Zip.dll</HintPath>
     </Reference>
-    <Reference Include="Spark, Version=1.5.0.0, Culture=neutral, PublicKeyToken=7f8549eed921a12c">
-      <HintPath>..\lib\Spark.dll</HintPath>
-    </Reference>
     <Reference Include="AWSSDK, Version=1.3.3.1, Culture=neutral, PublicKeyToken=cd2d24cd2bace800">
       <HintPath>..\lib\AWSSDK.dll</HintPath>
     </Reference>
@@ -78,6 +75,12 @@
     </Reference>
     <Reference Include="RedBranch.Hammock">
       <HintPath>..\lib\RedBranch.Hammock.dll</HintPath>
+    </Reference>
+    <Reference Include="Spark, Version=1.6.0.0, Culture=neutral, PublicKeyToken=7f8549eed921a12c">
+      <HintPath>..\lib\Spark.dll</HintPath>
+    </Reference>
+    <Reference Include="log4net">
+      <HintPath>..\lib\log4net.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -275,6 +278,9 @@
     <Compile Include="Services\TicketJonesService.cs" />
     <Compile Include="WebConfigInfrastructureConfiguration.cs" />
     <Compile Include="Repositories\UserActivityRepository.cs" />
+    <Compile Include="Web\BaseController.cs" />
+    <Compile Include="Web\TenantService.cs" />
+    <Compile Include="Log4NetService.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Ascend.Core\Ascend.Core.csproj">
@@ -307,6 +313,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Formats\Excel\Excel2003\" />
+    <Folder Include="Web\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

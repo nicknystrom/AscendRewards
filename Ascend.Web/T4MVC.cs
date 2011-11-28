@@ -21,8 +21,6 @@ using T4MVC;
 
 [CompilerGenerated]
 public static class MVC {
-    static readonly AdminClass s_Admin = new AdminClass();
-    public static AdminClass Admin { get { return s_Admin; } }
     static readonly DashClass s_Dash = new DashClass();
     public static DashClass Dash { get { return s_Dash; } }
     static readonly MobileClass s_Mobile = new MobileClass();
@@ -35,34 +33,7 @@ public static class MVC {
 }
 
 namespace T4MVC {
-    [CompilerGenerated]
-    public class AdminClass {
-        public readonly string Name = "Admin";
-        public Ascend.Web.Areas.Admin.Controllers.AccountController Account = new Ascend.Web.Areas.Admin.Controllers.T4MVC_AccountController();
-        public Ascend.Web.Areas.Admin.Controllers.AwardController Award = new Ascend.Web.Areas.Admin.Controllers.T4MVC_AwardController();
-        public Ascend.Web.Areas.Admin.Controllers.CatalogController Catalog = new Ascend.Web.Areas.Admin.Controllers.T4MVC_CatalogController();
-        public Ascend.Web.Areas.Admin.Controllers.ConciergeController Concierge = new Ascend.Web.Areas.Admin.Controllers.T4MVC_ConciergeController();
-        public Ascend.Web.Areas.Admin.Controllers.ConfigurationController Configuration = new Ascend.Web.Areas.Admin.Controllers.T4MVC_ConfigurationController();
-        public Ascend.Web.Areas.Admin.Controllers.ErrorController Error = new Ascend.Web.Areas.Admin.Controllers.T4MVC_ErrorController();
-        public Ascend.Web.Areas.Admin.Controllers.FileController File = new Ascend.Web.Areas.Admin.Controllers.T4MVC_FileController();
-        public Ascend.Web.Areas.Admin.Controllers.GameController Game = new Ascend.Web.Areas.Admin.Controllers.T4MVC_GameController();
-        public Ascend.Web.Areas.Admin.Controllers.GroupController Group = new Ascend.Web.Areas.Admin.Controllers.T4MVC_GroupController();
-        public Ascend.Web.Areas.Admin.Controllers.HomeController Home = new Ascend.Web.Areas.Admin.Controllers.T4MVC_HomeController();
-        public Ascend.Web.Areas.Admin.Controllers.ImportController Import = new Ascend.Web.Areas.Admin.Controllers.T4MVC_ImportController();
-        public Ascend.Web.Areas.Admin.Controllers.LedgerController Ledger = new Ascend.Web.Areas.Admin.Controllers.T4MVC_LedgerController();
-        public Ascend.Web.Areas.Admin.Controllers.MenuController Menu = new Ascend.Web.Areas.Admin.Controllers.T4MVC_MenuController();
-        public Ascend.Web.Areas.Admin.Controllers.MessagingController Messaging = new Ascend.Web.Areas.Admin.Controllers.T4MVC_MessagingController();
-        public Ascend.Web.Areas.Admin.Controllers.MigrationController Migration = new Ascend.Web.Areas.Admin.Controllers.T4MVC_MigrationController();
-        public Ascend.Web.Areas.Admin.Controllers.PageController Page = new Ascend.Web.Areas.Admin.Controllers.T4MVC_PageController();
-        public Ascend.Web.Areas.Admin.Controllers.ProductController Product = new Ascend.Web.Areas.Admin.Controllers.T4MVC_ProductController();
-        public Ascend.Web.Areas.Admin.Controllers.QuizController Quiz = new Ascend.Web.Areas.Admin.Controllers.T4MVC_QuizController();
-        public Ascend.Web.Areas.Admin.Controllers.SurveyController Survey = new Ascend.Web.Areas.Admin.Controllers.T4MVC_SurveyController();
-        public Ascend.Web.Areas.Admin.Controllers.TenantController Tenant = new Ascend.Web.Areas.Admin.Controllers.T4MVC_TenantController();
-        public Ascend.Web.Areas.Admin.Controllers.ThemeController Theme = new Ascend.Web.Areas.Admin.Controllers.T4MVC_ThemeController();
-        public Ascend.Web.Areas.Admin.Controllers.UserController User = new Ascend.Web.Areas.Admin.Controllers.T4MVC_UserController();
-        public Ascend.Web.Areas.Admin.Controllers.ValidationController Validation = new Ascend.Web.Areas.Admin.Controllers.T4MVC_ValidationController();
-        public T4MVC.Admin.SharedController Shared = new T4MVC.Admin.SharedController();
-    }
+
     [CompilerGenerated]
     public class DashClass {
         public readonly string Name = "Dash";

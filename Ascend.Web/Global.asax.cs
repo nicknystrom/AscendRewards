@@ -35,6 +35,7 @@ using Ascend.Infrastructure.Services;
 using System.Net;
 using System.Security.Cryptography.X509Certificates;
 using System.Net.Security;
+using Ascend.Infrastructure.Web;
 
 
 namespace Ascend.Web
@@ -75,7 +76,7 @@ namespace Ascend.Web
 
     #endregion
 
-    public class MvcApplication : HttpApplication, IServiceLocator
+    public class AscendApplication : HttpApplication, IServiceLocator
     {
         private static Autofac.IContainer _container;
 
@@ -120,7 +121,7 @@ namespace Ascend.Web
                                   // Tagged containers?
 
                                   var h = c.ResolveNamed<ICacheStore>("http-context-cache-store");
-                                  var s = c.Resolve<ITenantService>();
+                                  var s = c.Resolve<ITenantResolverService>();
 
                                   x.Observers.Add(y => new EntityAuditObserver());
                                   x.Observers.Add(y => new EntityCache<User>.SessionObserver(h, s));
@@ -274,8 +275,8 @@ namespace Ascend.Web
             //    .SingleInstance();
 
             // tenant service is singleton
-            builder.RegisterType<TenantService>()
-                .As<ITenantService>()
+            builder.RegisterType<HostBasedTenantResolverService>()
+                .As<ITenantResolverService>()
                 .SingleInstance();
 
             // the http context cache is entirely stateless
@@ -285,7 +286,7 @@ namespace Ascend.Web
 
             // register the current tenant as the 'tenant' service
             builder
-                .Register(c => c.Resolve<ITenantService>().GetTenantForRequest(HttpContext.Current.Request))
+                .Register(c => c.Resolve<ITenantResolverService>().GetTenantForRequest(HttpContext.Current.Request))
                 .As<Tenant>()
                 .InstancePerLifetimeScope();
 

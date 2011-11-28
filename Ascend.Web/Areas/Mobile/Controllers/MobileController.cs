@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+
 using Ascend.Core;
 using Ascend.Core.Services;
 using Ascend.Core.Services.Caching;
-using Ascend.Web.Controllers;
+using Ascend.Infrastructure.Web;
+
 using Spark;
 
 namespace Ascend.Web.Areas.Mobile.Controllers
@@ -18,20 +20,6 @@ namespace Ascend.Web.Areas.Mobile.Controllers
             filterContext.Result = new RedirectToRouteResult(MobileRoutes.Login, null);
         }
     }
-
-    /*
-    public class MobileResponse
-    {
-        public bool Success { get; set; }
-        public string Message { get; set; }
-
-        public string Login { get; set; }
-        public string Name { get; set; }
-        public int Wishlist { get; set; }
-        public int Points { get; set; }
-        public int Budget { get; set; }
-    }
-    */
 
     [Precompile("*")]
     public partial class MobileController : BaseController

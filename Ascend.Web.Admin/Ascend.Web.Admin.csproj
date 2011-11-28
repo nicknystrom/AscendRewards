@@ -10,7 +10,6 @@
     <OutputType>Library</OutputType>
     <RootNamespace>Ascend.Web.Admin</RootNamespace>
     <AssemblyName>Ascend.Web.Admin</AssemblyName>
-    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -32,23 +31,56 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
-    <Reference Include="System.Web" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Web.Services" />
     <Reference Include="System.Web.Routing" />
     <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Web.Abstractions" />
-    <Reference Include="System.Web.Mvc, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="Autofac">
+      <HintPath>..\lib\Autofac.dll</HintPath>
     </Reference>
-    <Reference Include="System.Xml.Linq" />
+    <Reference Include="Autofac.Integration.Mvc">
+      <HintPath>..\lib\Autofac.Integration.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="log4net">
+      <HintPath>..\lib\log4net.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\lib\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Spark">
+      <HintPath>..\lib\Spark.dll</HintPath>
+    </Reference>
+    <Reference Include="Spark.Web.Mvc">
+      <HintPath>..\lib\Spark.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc">
+      <HintPath>..\lib\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages">
+      <HintPath>..\lib\System.Web.WebPages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor">
+      <HintPath>..\lib\System.Web.WebPages.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="RedBranch.Hammock">
+      <HintPath>..\lib\RedBranch.Hammock.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Razor">
+      <HintPath>..\lib\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment">
+      <HintPath>..\lib\System.Web.WebPages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Configuration.Install" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Drawing" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\" />
     <Folder Include="Controllers\" />
-    <Folder Include="Models\" />
-    <Folder Include="Scripts\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Web.config" />
@@ -59,14 +91,131 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\AdminController.cs" />
+    <Compile Include="Controllers\AwardController.cs" />
+    <Compile Include="Controllers\CatalogController.cs" />
+    <Compile Include="Controllers\ConciergeController.cs" />
+    <Compile Include="Controllers\ConfigurationController.cs" />
+    <Compile Include="Controllers\ErrorController.cs" />
+    <Compile Include="Controllers\FileController.cs" />
+    <Compile Include="Controllers\GameController.cs" />
+    <Compile Include="Controllers\GroupController.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\ImportController.cs" />
+    <Compile Include="Controllers\LedgerController.cs" />
+    <Compile Include="Controllers\MenuController.cs" />
+    <Compile Include="Controllers\MessagingController.cs" />
+    <Compile Include="Controllers\MigrationController.cs" />
+    <Compile Include="Controllers\PageController.cs" />
+    <Compile Include="Controllers\ProductController.cs" />
+    <Compile Include="Controllers\QuizController.cs" />
+    <Compile Include="Controllers\SurveyController.cs" />
+    <Compile Include="Controllers\TenantController.cs" />
+    <Compile Include="Controllers\ThemeController.cs" />
+    <Compile Include="Controllers\UserController.cs" />
+    <Compile Include="Controllers\ValidationController.cs" />
+    <Compile Include="Routes.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v9.0\WebApplications\Microsoft.WebApplication.targets" />
   <ProjectExtensions>
     <MonoDevelop>
       <Properties VerifyCodeBehindFields="true" VerifyCodeBehindEvents="true">
-        <XspParameters Port="8080" Address="127.0.0.1" SslMode="None" SslProtocol="Default" KeyType="None" CertFile="" KeyFile="" PasswordOptions="None" Password="" Verbose="true" />
+        <XspParameters Port="8081" Address="127.0.0.1" SslMode="None" SslProtocol="Default" KeyType="None" CertFile="" KeyFile="" PasswordOptions="None" Password="" Verbose="true" />
       </Properties>
     </MonoDevelop>
   </ProjectExtensions>
+  <ItemGroup>
+    <ProjectReference Include="..\Ascend.Infrastructure\Ascend.Infrastructure.csproj">
+      <Project>{58C5B9B1-E094-4E89-B3CD-4C80711B3EB8}</Project>
+      <Name>Ascend.Infrastructure</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Ascend.Core\Ascend.Core.csproj">
+      <Project>{2643FBEF-F02D-48D4-809D-4F93F11CDAA4}</Project>
+      <Name>Ascend.Core</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Views\Account\Index.spark" />
+    <None Include="Views\Award\AwardCreateModel.spark" />
+    <None Include="Views\Award\Certificate.spark" />
+    <None Include="Views\Award\Edit.spark" />
+    <None Include="Views\Award\Index.spark" />
+    <None Include="Views\Catalog\CatalogCreateModel.spark" />
+    <None Include="Views\Catalog\Edit.spark" />
+    <None Include="Views\Catalog\Index.spark" />
+    <None Include="Views\Concierge\Edit.spark" />
+    <None Include="Views\Concierge\Index.spark" />
+    <None Include="Views\Configuration\Index.spark" />
+    <None Include="Views\Error\Display.spark" />
+    <None Include="Views\Error\Index.spark" />
+    <None Include="Views\File\Files.spark" />
+    <None Include="Views\File\Index.spark" />
+    <None Include="Views\File\Upload.spark" />
+    <None Include="Views\Game\Edit.spark" />
+    <None Include="Views\Game\GameCreateModel.spark" />
+    <None Include="Views\Game\Index.spark" />
+    <None Include="Views\Group\Edit.spark" />
+    <None Include="Views\Group\GroupCreateModel.spark" />
+    <None Include="Views\Group\Index.spark" />
+    <None Include="Views\Home\Index.spark" />
+    <None Include="Views\Import\Edit.spark" />
+    <None Include="Views\Import\Events.spark" />
+    <None Include="Views\Import\ImportCreateModel.spark" />
+    <None Include="Views\Import\Index.spark" />
+    <None Include="Views\Import\Randomizer.spark" />
+    <None Include="Views\Import\Reset.spark" />
+    <None Include="Views\Import\Review.spark" />
+    <None Include="Views\Ledger\Index.spark" />
+    <None Include="Views\Menu\Edit.spark" />
+    <None Include="Views\Menu\Index.spark" />
+    <None Include="Views\Menu\MenuCreateModel.spark" />
+    <None Include="Views\Messaging\Activation.spark" />
+    <None Include="Views\Messaging\Display.spark" />
+    <None Include="Views\Messaging\Edit.spark" />
+    <None Include="Views\Messaging\Index.spark" />
+    <None Include="Views\Messaging\Messages.spark" />
+    <None Include="Views\Messaging\TemplateCreateModel.spark" />
+    <None Include="Views\Messaging\Welcome.spark" />
+    <None Include="Views\Migration\Index.spark" />
+    <None Include="Views\Page\Edit.spark" />
+    <None Include="Views\Page\Index.spark" />
+    <None Include="Views\Page\PageCreateModel.spark" />
+    <None Include="Views\Product\_Filter.spark" />
+    <None Include="Views\Product\Edit.spark" />
+    <None Include="Views\Product\Index.spark" />
+    <None Include="Views\Quiz\Edit.spark" />
+    <None Include="Views\Quiz\Index.spark" />
+    <None Include="Views\Quiz\QuizCreateModel.spark" />
+    <None Include="Views\Shared\EditorTemplates\AccountChooser.spark" />
+    <None Include="Views\Shared\EditorTemplates\AvailabilityEditModel.spark" />
+    <None Include="Views\Shared\EditorTemplates\BudgetEditModel.spark" />
+    <None Include="Views\Shared\EditorTemplates\ContentEditModel.spark" />
+    <None Include="Views\Shared\EditorTemplates\FolderEditModel.spark" />
+    <None Include="Views\Shared\EditorTemplates\GroupChooser.spark" />
+    <None Include="Views\Shared\EditorTemplates\GroupMultiChooser.spark" />
+    <None Include="Views\Shared\EditorTemplates\IssuanceEditModel.spark" />
+    <None Include="Views\Shared\EditorTemplates\Ledger.spark" />
+    <None Include="Views\Shared\EditorTemplates\UserChooser.spark" />
+    <None Include="Views\Shared\EditorTemplates\UserMultiChooser.spark" />
+    <None Include="Views\Shared\_Navigation.spark" />
+    <None Include="Views\Shared\Application.spark" />
+    <None Include="Views\Shared\FileChooser.spark" />
+    <None Include="Views\Survey\Edit.spark" />
+    <None Include="Views\Survey\Index.spark" />
+    <None Include="Views\Survey\SurveyCreateModel.spark" />
+    <None Include="Views\Tenant\Edit.spark" />
+    <None Include="Views\Tenant\Index.spark" />
+    <None Include="Views\Tenant\TenantCreateModel.spark" />
+    <None Include="Views\Theme\Edit.spark" />
+    <None Include="Views\Theme\Index.spark" />
+    <None Include="Views\Theme\ThemeCreateModel.spark" />
+    <None Include="Views\User\Edit.spark" />
+    <None Include="Views\User\Index.spark" />
+    <None Include="Views\User\UserCreateModel.spark" />
+    <None Include="Views\Validation\Index.spark" />
+    <None Include="Views\User\DisplayTemplates\LoginIncrements.spark" />
+    <None Include="Views\User\EditorTemplates\UserState.spark" />
+  </ItemGroup>
 </Project>

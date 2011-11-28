@@ -4,9 +4,11 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+
 using Ascend.Core;
 using Ascend.Core.Services.Caching;
-using Ascend.Web.Controllers;
+using Ascend.Infrastructure.Web;
+
 using Spark;
 
 namespace Ascend.Web.Areas.Dash.Controllers

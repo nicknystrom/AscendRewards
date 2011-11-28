@@ -97,7 +97,6 @@
     <Compile Include="Services\Import\ProductImportService.cs" />
     <Compile Include="Services\Import\UserImportService.cs" />
     <Compile Include="Services\IServiceLocator.cs" />
-    <Compile Include="Services\ITenantService.cs" />
     <Compile Include="Services\Migrations\MigrateFrom0000.cs" />
     <Compile Include="Services\Migrations\MigrationService.cs" />
     <Compile Include="Services\TemplateService.cs" />
@@ -150,6 +149,7 @@
     <Compile Include="Repositories\IUserActivityRepository.cs" />
     <Compile Include="Services\ValidationService.cs" />
     <Compile Include="Services\Validations\General\DatabaseIsUpdated.cs" />
+    <Compile Include="Services\ITenantResolverService.cs" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
@@ -167,10 +167,6 @@
       <ProductName>Windows Installer 3.1</ProductName>
       <Install>true</Install>
     </BootstrapperPackage>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Diagrams\Catalog.cd" />
-    <None Include="Diagrams\Products.cd" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

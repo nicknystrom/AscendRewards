@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,9 +19,9 @@ namespace Ascend.Infrastructure.Services.Caching
         public class SessionObserver : BaseObserver<User>
         {
             readonly ICacheStore _cache;
-            readonly ITenantService _tenants;
+            readonly ITenantResolverService _tenants;
 
-            public SessionObserver(ICacheStore cache, ITenantService tenants)
+            public SessionObserver(ICacheStore cache, ITenantResolverService tenants)
             {
                 _cache = cache;
                 _tenants = tenants;

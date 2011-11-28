@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Net;
+using System.Text;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
@@ -11,9 +12,9 @@ using Ascend.Core;
 using Ascend.Core.Repositories;
 using Ascend.Core.Services;
 using Ascend.Core.Services.Caching;
+
 using RedBranch.Hammock;
-using System.Text;
-using Ascend.Web.Controllers;
+using Ascend.Infrastructure.Web;
 
 namespace Ascend.Web.Areas.Site.Controllers
 {

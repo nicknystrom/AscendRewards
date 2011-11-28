@@ -221,7 +221,7 @@ namespace Ascend.Web.Areas.Site.Controllers
             // validate email uniqueness
             if (p.Elements.Email)
             {
-                Admin.Controllers.UserController.ValidateEmail(CurrentUser, p.Email, UserRepository, ModelState);
+                Ascend.Core.User.ValidateEmail(CurrentUser, p.Email, UserRepository, ModelState);
             }
 
             if (!ModelState.IsValid)

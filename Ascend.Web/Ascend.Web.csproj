@@ -39,18 +39,10 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Abstractions" />
-    <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Web.Routing" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Xml" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="Autofac, Version=2.4.4.705, Culture=neutral, PublicKeyToken=17863af14b0044da">
-      <HintPath>..\lib\Autofac.dll</HintPath>
-    </Reference>
-    <Reference Include="Autofac.Integration.Mvc, Version=2.4.4.705, Culture=neutral, PublicKeyToken=17863af14b0044da">
-      <HintPath>..\lib\Autofac.Integration.Mvc.dll</HintPath>
-    </Reference>
     <Reference Include="Ionic.Utils.Zip, Version=1.3.0.0, Culture=neutral, PublicKeyToken=c551e179877da246">
       <HintPath>..\lib\Ionic.Utils.Zip.dll</HintPath>
     </Reference>
@@ -89,105 +81,14 @@
     <Reference Include="RedBranch.Hammock">
       <HintPath>..\lib\RedBranch.Hammock.dll</HintPath>
     </Reference>
+    <Reference Include="Autofac, Version=2.5.2.830, Culture=neutral, PublicKeyToken=17863af14b0044da">
+      <HintPath>..\lib\Autofac.dll</HintPath>
+    </Reference>
+    <Reference Include="Autofac.Integration.Mvc, Version=2.5.2.830, Culture=neutral, PublicKeyToken=17863af14b0044da">
+      <HintPath>..\lib\Autofac.Integration.Mvc.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Admin.AccountController.generated.cs">
-      <DependentUpon>T4MVC.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Admin.AwardController.generated.cs">
-      <DependentUpon>T4MVC.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Admin.CatalogController.generated.cs">
-      <DependentUpon>T4MVC.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Admin.ConciergeController.generated.cs">
-      <DependentUpon>T4MVC.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Admin.ConfigurationController.generated.cs">
-      <DependentUpon>T4MVC.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Admin.ErrorController.generated.cs">
-      <DependentUpon>T4MVC.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Admin.FileController.generated.cs">
-      <DependentUpon>T4MVC.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Admin.GameController.generated.cs">
-      <DependentUpon>T4MVC.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Admin.GroupController.generated.cs">
-      <DependentUpon>T4MVC.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Admin.HomeController.generated.cs">
-      <DependentUpon>T4MVC.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Admin.ImportController.generated.cs">
-      <DependentUpon>T4MVC.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Admin.LedgerController.generated.cs">
-      <DependentUpon>T4MVC.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Admin.MenuController.generated.cs">
-      <DependentUpon>T4MVC.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Admin.MessagingController.generated.cs">
-      <DependentUpon>T4MVC.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Admin.MigrationController.generated.cs">
-      <DependentUpon>T4MVC.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Admin.PageController.generated.cs">
-      <DependentUpon>T4MVC.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Admin.ProductController.generated.cs">
-      <DependentUpon>T4MVC.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Admin.QuizController.generated.cs">
-      <DependentUpon>T4MVC.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Admin.SharedController.generated.cs">
-      <DependentUpon>T4MVC.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Admin.SurveyController.generated.cs">
-      <DependentUpon>T4MVC.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Admin.TenantController.generated.cs">
-      <DependentUpon>T4MVC.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Admin.ThemeController.generated.cs">
-      <DependentUpon>T4MVC.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Admin.UserController.generated.cs">
-      <DependentUpon>T4MVC.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Admin.ValidationController.generated.cs">
-      <DependentUpon>T4MVC.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Areas\Admin\AdminRoutes.cs" />
-    <Compile Include="Areas\Admin\Controllers\AwardController.cs" />
-    <Compile Include="Areas\Admin\Controllers\CatalogController.cs" />
-    <Compile Include="Areas\Admin\Controllers\ConfigurationController.cs" />
-    <Compile Include="Areas\Admin\Controllers\AdminController.cs" />
-    <Compile Include="Areas\Admin\Controllers\AccountController.cs" />
-    <Compile Include="Areas\Admin\Controllers\ConciergeController.cs" />
-    <Compile Include="Areas\Admin\Controllers\FileController.cs" />
-    <Compile Include="Areas\Admin\Controllers\GameController.cs" />
-    <Compile Include="Areas\Admin\Controllers\MigrationController.cs" />
-    <Compile Include="Areas\Admin\Controllers\ErrorController.cs" />
-    <Compile Include="Areas\Admin\Controllers\GroupController.cs" />
-    <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
-    <Compile Include="Areas\Admin\Controllers\ImportController.cs" />
-    <Compile Include="Areas\Admin\Controllers\LedgerController.cs" />
-    <Compile Include="Areas\Admin\Controllers\MenuController.cs" />
-    <Compile Include="Areas\Admin\Controllers\MessagingController.cs" />
-    <Compile Include="Areas\Admin\Controllers\PageController.cs" />
-    <Compile Include="Areas\Admin\Controllers\ProductController.cs" />
-    <Compile Include="Areas\Admin\Controllers\QuizController.cs" />
-    <Compile Include="Areas\Admin\Controllers\SurveyController.cs" />
-    <Compile Include="Areas\Admin\Controllers\TenantController.cs" />
-    <Compile Include="Areas\Admin\Controllers\ThemeController.cs" />
-    <Compile Include="Areas\Admin\Controllers\UserController.cs" />
-    <Compile Include="Areas\Admin\Controllers\ValidationController.cs" />
     <Compile Include="Areas\Dash\Controllers\DashController.cs" />
     <Compile Include="Areas\Dash\Controllers\GoogleVisualization.cs" />
     <Compile Include="Areas\Dash\Controllers\HomeController.cs" />
@@ -247,7 +148,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Areas\Site\SiteRoutes.cs" />
-    <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Dash.HomeController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
@@ -298,8 +198,6 @@
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
     <Compile Include="Scaffolding.cs" />
-    <Compile Include="Services\Log4NetService.cs" />
-    <Compile Include="Services\TenantService.cs" />
     <Compile Include="Services\UserMessaging.cs" />
     <Compile Include="SharedController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
@@ -353,9 +251,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Areas\Admin\Views\File\Files.spark" />
-    <None Include="Areas\Admin\Views\File\Index.spark" />
-    <None Include="Areas\Admin\Views\File\Upload.spark" />
     <None Include="Areas\Mobile\Views\Home\Budget.spark" />
     <None Include="Areas\Mobile\Views\Home\Award.spark" />
     <None Include="Areas\Mobile\Views\Home\Distribute.spark" />
@@ -367,8 +262,6 @@
     <Content Include="Content\Admin.css" />
     <Content Include="Content\Admin.js" />
     <Content Include="Content\Games\Match3\jquery.match3.js" />
-    <None Include="Areas\Admin\Views\Concierge\Edit.spark" />
-    <None Include="Areas\Admin\Views\Concierge\Index.spark" />
     <None Include="Areas\Dash\Views\Report\ProgramLiability.spark" />
     <None Include="Areas\Dash\Views\Report\PointLiability.spark" />
     <None Include="Areas\Dash\Views\Report\UsersReport.spark" />
@@ -519,96 +412,6 @@
     <Content Include="error.html" />
     <Content Include="Global.asax" />
     <Content Include="Areas\Public\Views\Web.config" />
-    <None Include="Areas\Admin\Views\Account\Index.spark">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Areas\Admin\Views\Award\AwardCreateModel.spark" />
-    <None Include="Areas\Admin\Views\Award\Certificate.spark" />
-    <None Include="Areas\Admin\Views\Award\Edit.spark">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Areas\Admin\Views\Award\Index.spark" />
-    <None Include="Areas\Admin\Views\Catalog\CatalogCreateModel.spark" />
-    <None Include="Areas\Admin\Views\Catalog\Edit.spark" />
-    <None Include="Areas\Admin\Views\Catalog\Index.spark" />
-    <None Include="Areas\Admin\Views\Configuration\Index.spark" />
-    <None Include="Areas\Admin\Views\Error\Display.spark" />
-    <None Include="Areas\Admin\Views\Error\Index.spark" />
-    <None Include="Areas\Admin\Views\Game\Edit.spark">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Areas\Admin\Views\Game\Index.spark" />
-    <None Include="Areas\Admin\Views\Game\GameCreateModel.spark" />
-    <None Include="Areas\Admin\Views\Group\Edit.spark" />
-    <None Include="Areas\Admin\Views\Group\GroupCreateModel.spark" />
-    <None Include="Areas\Admin\Views\Group\Index.spark" />
-    <None Include="Areas\Admin\Views\Home\Index.spark" />
-    <None Include="Areas\Admin\Views\Import\Review.spark" />
-    <None Include="Areas\Admin\Views\Import\Edit.spark" />
-    <None Include="Areas\Admin\Views\Import\Events.spark" />
-    <None Include="Areas\Admin\Views\Import\ImportCreateModel.spark" />
-    <None Include="Areas\Admin\Views\Import\Index.spark" />
-    <None Include="Areas\Admin\Views\Import\Randomizer.spark" />
-    <None Include="Areas\Admin\Views\Import\Reset.spark" />
-    <None Include="Areas\Admin\Views\Ledger\Index.spark" />
-    <None Include="Areas\Admin\Views\Menu\Edit.spark" />
-    <None Include="Areas\Admin\Views\Menu\Index.spark" />
-    <None Include="Areas\Admin\Views\Menu\MenuCreateModel.spark" />
-    <None Include="Areas\Admin\Views\Messaging\Activation.spark" />
-    <None Include="Areas\Admin\Views\Messaging\Welcome.spark" />
-    <None Include="Areas\Admin\Views\Messaging\Display.spark" />
-    <None Include="Areas\Admin\Views\Messaging\Messages.spark" />
-    <None Include="Areas\Admin\Views\Messaging\Edit.spark" />
-    <None Include="Areas\Admin\Views\Messaging\Index.spark" />
-    <None Include="Areas\Admin\Views\Messaging\TemplateCreateModel.spark" />
-    <None Include="Areas\Admin\Views\Migration\Index.spark" />
-    <None Include="Areas\Admin\Views\Page\Edit.spark" />
-    <None Include="Areas\Admin\Views\Page\Index.spark" />
-    <None Include="Areas\Admin\Views\Page\PageCreateModel.spark" />
-    <None Include="Areas\Admin\Views\Product\_Filter.spark" />
-    <None Include="Areas\Admin\Views\Product\Index.spark" />
-    <None Include="Areas\Admin\Views\Product\Edit.spark">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Areas\Admin\Views\Quiz\Edit.spark">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Areas\Admin\Views\Quiz\Index.spark" />
-    <None Include="Areas\Admin\Views\Quiz\QuizCreateModel.spark" />
-    <None Include="Areas\Admin\Views\Shared\Application.spark" />
-    <None Include="Areas\Admin\Views\Shared\EditorTemplates\AccountChooser.spark">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Areas\Admin\Views\Shared\EditorTemplates\IssuanceEditModel.spark" />
-    <None Include="Areas\Admin\Views\Shared\_Navigation.spark" />
-    <None Include="Areas\Admin\Views\Shared\EditorTemplates\AvailabilityEditModel.spark" />
-    <None Include="Areas\Admin\Views\Shared\EditorTemplates\BudgetEditModel.spark" />
-    <None Include="Areas\Admin\Views\Shared\EditorTemplates\ContentEditModel.spark" />
-    <None Include="Areas\Admin\Views\Shared\EditorTemplates\FolderEditModel.spark" />
-    <None Include="Areas\Admin\Views\Shared\EditorTemplates\GroupChooser.spark" />
-    <None Include="Areas\Admin\Views\Shared\EditorTemplates\GroupMultiChooser.spark" />
-    <None Include="Areas\Admin\Views\Shared\EditorTemplates\Ledger.spark">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Areas\Admin\Views\Shared\EditorTemplates\UserChooser.spark" />
-    <None Include="Areas\Admin\Views\Shared\EditorTemplates\UserMultiChooser.spark" />
-    <None Include="Areas\Admin\Views\Shared\FileChooser.spark" />
-    <None Include="Areas\Admin\Views\Survey\Edit.spark" />
-    <None Include="Areas\Admin\Views\Survey\Index.spark" />
-    <None Include="Areas\Admin\Views\Survey\SurveyCreateModel.spark" />
-    <None Include="Areas\Admin\Views\Tenant\Edit.spark" />
-    <None Include="Areas\Admin\Views\Tenant\Index.spark" />
-    <None Include="Areas\Admin\Views\Tenant\TenantCreateModel.spark" />
-    <None Include="Areas\Admin\Views\Theme\Edit.spark" />
-    <None Include="Areas\Admin\Views\Theme\Index.spark" />
-    <None Include="Areas\Admin\Views\Theme\ThemeCreateModel.spark" />
-    <None Include="Areas\Admin\Views\User\DisplayTemplates\LoginIncrements.spark" />
-    <None Include="Areas\Admin\Views\User\Edit.spark" />
-    <None Include="Areas\Admin\Views\User\EditorTemplates\UserState.spark" />
-    <None Include="Areas\Admin\Views\User\Index.spark" />
-    <None Include="Areas\Admin\Views\User\UserCreateModel.spark" />
-    <Content Include="Areas\Admin\Views\Web.config" />
-    <None Include="Areas\Admin\Views\Validation\Index.spark" />
     <None Include="Areas\Dash\Views\Home\Org.spark" />
     <None Include="Areas\Dash\Views\Home\Index.spark" />
     <None Include="Areas\Dash\Views\Report\Index.spark" />

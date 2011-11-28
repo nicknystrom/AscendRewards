@@ -7,11 +7,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ascend.Core", "Ascend.Core\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ascend.Infrastructure", "Ascend.Infrastructure\Ascend.Infrastructure.csproj", "{58C5B9B1-E094-4E89-B3CD-4C80711B3EB8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ascend.Test", "Ascend.Test\Ascend.Test.csproj", "{347E36DA-9670-4651-BB76-5DB45C6B0CF7}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ascend.Web.PreCompiler", "Ascend.Web.PreCompiler\Ascend.Web.PreCompiler.csproj", "{4CB0461A-F912-4DD9-9DED-853408649B33}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ascend.Web.Admin", "Ascend.Web.Admin\Ascend.Web.Admin.csproj", "{2BF9A9E0-947A-4708-AD29-ED9BEAC87694}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{EC0F06A7-50FA-498C-B67D-C6EAFE0B859D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ascend.Test", "Ascend.Test\Ascend.Test.csproj", "{347E36DA-9670-4651-BB76-5DB45C6B0CF7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -43,6 +45,9 @@ Global
 		{EA92C3E7-259E-435F-B876-EB2747A85A2B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EA92C3E7-259E-435F-B876-EB2747A85A2B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EA92C3E7-259E-435F-B876-EB2747A85A2B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{347E36DA-9670-4651-BB76-5DB45C6B0CF7} = {EC0F06A7-50FA-498C-B67D-C6EAFE0B859D}
 	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
 		StartupItem = Ascend.Web\Ascend.Web.csproj

@@ -8,7 +8,7 @@ using Ascend.Core.Repositories;
 using Ascend.Core.Services;
 using Ascend.Core.Services.Caching;
 using Ascend.Infrastructure;
-using Ascend.Web.Controllers;
+using Ascend.Infrastructure.Web;
 using Spark;
 
 namespace Ascend.Web.Areas.Site.Controllers
