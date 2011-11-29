@@ -106,5 +106,38 @@ namespace Ascend.Core
                 return new Uri(request.GetSafeUrl(), a);
             }
         }
+
+        private static Tuple<TResult, TResult> __HighLow(this IEnumerable<TResult> items, Func<TResult, decimal> func)
+        {
+            TResult outputHigh = null;
+            TResult outputLow = null;
+            var high = Decimal.MaxValue;
+            var low = Decimal.MinValue;
+            foreach (var item in items)
+            {
+                var x = func(item);
+                if (x < low)
+                {
+                    low = x;
+                    outputLow = item;
+                }
+                if (x > high)
+                {
+                    high = x;
+                    outputHigh = item;
+                }
+            }
+            return new Tuple<TResult, TResult>(outputLow, outputHigh);
+        }
+
+        private static TResult High(this IEnumerable<TResult> items, Func<TResult, decimal> func)
+        {
+            return items.__HighLow(func).Item2;
+        }
+
+        private static TResult Low(this IEnumerable<TResult> items, Func<TResult, decimal> func)
+        {
+            return items.__HighLow(func).Item1;
+        }
     }
 }

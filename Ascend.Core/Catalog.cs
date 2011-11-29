@@ -73,7 +73,7 @@ namespace Ascend.Core
         public decimal GetFinalPriceForProduct(Product p, string option)
         {
             var o = p.Options.First(x => x.Name == option);
-            return GetFinalPriceForProduct(p, (o.Price ?? p.Pricing).Price);
+            return GetFinalPriceForProduct(p, (.Price);
         }
 
         public decimal GetFinalPriceForProduct(Product p)

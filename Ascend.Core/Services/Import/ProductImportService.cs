@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -227,7 +227,7 @@ namespace Ascend.Core.Services.Import
                     case ProductColumnMappingTargets.ProductH:          (p.ProductDimensions ?? (p.ProductDimensions = new ProductDimensions())).Height = (decimal?)value; break;
                     case ProductColumnMappingTargets.ProductWeight:     (p.ProductDimensions ?? (p.ProductDimensions = new ProductDimensions())).Weight = (decimal?)value; break;
                     case ProductColumnMappingTargets.Image:             images.Add((string)value); break;
-                    case ProductColumnMappingTargets.Supplier:          p.Supplier = new ProductSupplier { Name = (string)value }; break;
+                    case ProductColumnMappingTargets.Supplier:          p.Supplier = new Supplier { Name = (string)value }; break;
                     case ProductColumnMappingTargets.Source:            source.Name = (string)value; break;
                     case ProductColumnMappingTargets.SourceCategory:    source.Category = (string)value; break;
                     case ProductColumnMappingTargets.SourceAdded:       source.Added = (DateTime?)value; break;

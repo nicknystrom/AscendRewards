@@ -9,7 +9,7 @@ using RedBranch.Hammock;
 
 namespace Ascend.Core
 {
-    public class Product : Entity
+    public class Product : ImportableEntity
     {
         // identification
         public bool? Enabled { get; set; }      // products are disabled by default
@@ -36,28 +36,19 @@ namespace Ascend.Core
         public string Description { get; set; }
         public string Details { get; set; }
         public string[] Features { get; set; }
+        public IDictionary<string, string> Attributes { get; set; }
 
         // options
         public IList<ProductOption> Options { get; set; }
 
-        // fulfillment
-        public ProductSource Source { get; set; }
-        public ProductSupplier Supplier {get; set; }
-        public ProductStock Stock { get; set; }
-        public ProductPricing Pricing { get; set; }
-        public ProductShipping Shipping { get; set; }
-
-        public ProductLockedFields Locks { get; set; }
-
-        public decimal CalculateTotalCost()
+        public ProductPricing GetReferencePricing()
         {
-            var x = null == Pricing ? 0 : Pricing.Price;
-            if (null != Shipping)
+            if (null == Options || Options.Count == 0) return null;
+            ProductPricing min = null;
+            foreach (var p in Options.SelectMany(x => x.Sources.Select(y => y.Pricing))
             {
-                x += Shipping.DropShipFee ?? 0;
-                x += Shipping.Cost ?? 0;
+                if (null == min || p)
             }
-            return x;
         }
 
         public override string ToString()
@@ -80,101 +71,6 @@ namespace Ascend.Core
         }
     }
 
-    #region ProductLockedFields
-
-    /// <summary>
-    /// Locked fields are simply not updated during a product import.
-    /// </summary>
-    public class ProductLockedFields
-    {
-        public bool? EnabledLocked { get; set; }
-        public bool? CategoryLocked { get; set; }
-        public bool? NameLocked { get; set; }
-        public bool? FeaturesLocked { get; set; }
-        public bool? ImagesLocked { get; set; }
-        public bool? SkuLocked { get; set; }
-        public bool? ManufacturerLocked { get; set; }
-        public bool? BrandLocked { get; set; }
-        public bool? DescriptionLocked { get; set; }
-        public bool? DetailsLocked { get; set; }
-        public bool? WarrantyLocked { get; set; }
-        public bool? CountryOfOriginLocked { get; set; }
-
-        public void SetEnabled(Product p, bool value)
-        {
-            if (!EnabledLocked.GetValueOrDefault())
-               p.Enabled = value;
-        }
-
-        public void SetCategory(Product p, string[] value)
-        {
-            if (!CategoryLocked.GetValueOrDefault())
-                p.Category = value;
-        }
-
-        public void SetName(Product p, string value)
-        {
-            if (!NameLocked.GetValueOrDefault())
-                p.Name = value;
-        }
-
-        public void SetSku(Product p, string value)
-        {
-            if (!SkuLocked.GetValueOrDefault())
-                p.Sku = value;
-        }
-
-        public void SetManufacturer(Product p, string value)
-        {
-            if (!ManufacturerLocked.GetValueOrDefault())
-                p.Manufacturer = value;
-        }
-
-        public void SetBrand(Product p, string value)
-        {
-            if (!BrandLocked.GetValueOrDefault())
-                p.Brand = value;
-        }
-
-        public void SetDescription(Product p, string value)
-        {
-            if (!DescriptionLocked.GetValueOrDefault())
-                p.Description = value;
-        }
-
-        public void SetDetails(Product p, string value)
-        {
-            if (!DetailsLocked.GetValueOrDefault())
-                p.Details = value;
-        }
-
-        public void SetWarranty(Product p, string value)
-        {
-            if (!WarrantyLocked.GetValueOrDefault())
-                p.Warranty = value;
-        }
-
-        public void SetCountryOfOrigin(Product p, string value)
-        {
-            if (!CountryOfOriginLocked.GetValueOrDefault())
-                p.CountryOfOrigin = value;
-        }
-
-        public void SetFeatures(Product p, string[] value)
-        {
-            if (!FeaturesLocked.GetValueOrDefault())
-                p.Features = value;
-        }
-
-        public void SetImages(Product p, string[] value)
-        {
-            if (!ImagesLocked.GetValueOrDefault())
-                p.Images = value;
-        }
-    }
-
-    #endregion
-
     public class ProductDimensions
     {
         public decimal? Length { get; set; }
@@ -194,27 +90,55 @@ namespace Ascend.Core
         public string Id { get; set; }
         public string Name { get; set; }
         public string Category { get; set; }
+
         public DateTime? Added { get; set; }
         public DateTime? Updated { get; set; }
+
+        public Reference<Supplier> Supplier {get; set; }
+        public ProductStock Stock { get; set; }
+        public ProductPricing Pricing { get; set; }
+
     }
 
-    public class ProductSupplier
+    public class Supplier : Entity
     {
-        public string Id { get; set; }
         public string Name { get; set; }
     }
 
     public class ProductPricing
     {
+        /// <summary>
+        /// Suggest Retail Price
+        /// </summary
         public decimal? Msrp { get; set; }
-        public decimal Price { get; set; }
-    }
 
-    public class ProductShipping
-    {
-        public decimal? DropShipFee { get; set; }
-        public decimal? Cost { get; set; }
-        public decimal? Weight { get; set; }
+        /// <summary>
+        /// Actual Cost from Vendor.
+        /// </summary>
+        public decimal Cost { get; set; }
+
+        /// <summary>
+        /// Flat shipping fee charged by vendor, typically for white-label drop shipping.
+        /// </summary>
+        public decimal? ShippingFee { get; set; }
+
+        /// <summary>
+        /// Variable shipping cost, based on product size. If vendor charges variable shipping
+        /// based on destination, this field should be the hightest estimated shipping cost in the
+        /// lower United States.
+        /// </summary>
+        public decimal? ShippingCost { get; set; }
+
+        /// <summary>
+        /// Total estimated cost to acquire the product from vendor.
+        /// </summary>
+        public decimal Total
+        {
+            get
+            {
+                return Cost + (ShippingCost ?? 0) + (ShippingFee ?? 0);
+            }
+        }
     }
 
     public class ProductStock
@@ -238,10 +162,15 @@ namespace Ascend.Core
         /// </summary>
         public string Name { get; set; }
 
-        /// <summary>
-        /// Only set if different from product price (e.g. gift cards)
-        /// </summary>
-        public ProductPricing Price { get; set; }
+        public IList<ProductSource> Sources { get; set; }
+
+        public ProductSource BestSource
+        {
+            get
+            {
+                return Sources.Low()
+            }
+        }
     }
 
     public enum ProductCondition
@@ -256,5 +185,4 @@ namespace Ascend.Core
         OutOfStock,
         Discontinued,
     }
-
 }
