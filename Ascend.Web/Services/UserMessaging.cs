@@ -1,14 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.IO;
-using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
+
 using Ascend.Core;
 using Ascend.Core.Repositories;
 using Ascend.Core.Services;
 using Ascend.Core.Services.Caching;
+
 using RedBranch.Hammock;
 
 namespace Ascend.Web.Services
@@ -50,15 +49,14 @@ namespace Ascend.Web.Services
                 "template-user-activation",
                 request.HttpContext.Server.MapPath("~/Messages/UserActivation.template")
             );
-            var url = new UrlHelper(request);
+            var url = new UrlHelper(request).Action(MVC.Public.Login.Activate(u.ActivationCode));
             var e = Builder.Transform(
                 template,
                 new TemplateData
                     {
                         {"login", u.Login},
                         {"program", Application.ProgramName},
-                        {"url", request.HttpContext.Request.Url.GetLeftPart(UriPartial.Authority) +
-                                url.Action(MVC.Public.Login.Activate(u.ActivationCode))}
+                        {"url", url.ToAbsoluteUrl(request.HttpContext.Request).ToString() },
                     },
                 request.HttpContext.Request
             );
@@ -79,15 +77,14 @@ namespace Ascend.Web.Services
                 "template-user-welcome",
                 request.HttpContext.Server.MapPath("~/Messages/UserWelcome.template")
             );
-            var url = new UrlHelper(request);
+            var url = new UrlHelper(request).Action(MVC.Public.Login.Index());
             var e = Builder.Transform(
                 template,
                 new TemplateData
                     {
                         {"login", u.Login},
                         {"program", Application.ProgramName},
-                        {"url", request.HttpContext.Request.Url.GetLeftPart(UriPartial.Authority) +
-                                url.Action(MVC.Public.Login.Index())}
+                        {"url", url.ToAbsoluteUrl(request.HttpContext.Request).ToString() },
                     },
                 request.HttpContext.Request
             );
@@ -108,7 +105,7 @@ namespace Ascend.Web.Services
                 "template-user-reset",
                 request.HttpContext.Server.MapPath("~/Messages/UserReset.template")
             );
-            var url = new UrlHelper(request);
+            var url = new UrlHelper(request).Action(MVC.Public.Login.Index());
             var e = Builder.Transform(
                 template,
                 new TemplateData
@@ -116,8 +113,7 @@ namespace Ascend.Web.Services
                         {"login", u.Login},
                         {"program", Application.ProgramName},
                         {"password", password},
-                        {"url", request.HttpContext.Request.Url.GetLeftPart(UriPartial.Authority) +
-                                url.Action(MVC.Public.Login.Index())}
+                        {"url", url.ToAbsoluteUrl(request.HttpContext.Request).ToString() },
                     },
                 request.HttpContext.Request
             );
@@ -133,14 +129,13 @@ namespace Ascend.Web.Services
             );
             var recipient = Users[award.Recipient];
             var nominator = Users[award.Nominator];
-            var url = new UrlHelper(request);
+            var url = new UrlHelper(request).Action(MVC.Public.Award.Index(award.Document.Id));
             var e = Builder.Transform(
                 template,
                 new TemplateData
                     {
                         {"program", Application.ProgramName},
-                        {"url", request.HttpContext.Request.Url.GetLeftPart(UriPartial.Authority) +
-                                url.Action(MVC.Public.Award.Index(award.Document.Id))},
+                        {"url", url.ToAbsoluteUrl(request.HttpContext.Request).ToString() },
                         {"recipient", recipient.DisplayName},
                         {"nominator", nominator.DisplayName}
                     },
