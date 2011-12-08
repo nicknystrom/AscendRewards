@@ -26,6 +26,7 @@ namespace Ascend.Web.Admin
             context.MapRoute(null, "error/clear",             new { Controller = "Error",     Action = "Clear"});
             context.MapRoute(null, "error/{id}",              new { Controller = "Error",     Action = "Display"});
 
+            /*
             context.MapRoute(null, "products",                new { Controller = "Product",   Action = "Index"});
             context.MapRoute(null, "products/renamecategory", new { Controller = "Product",   Action = "RenameCategory"});
             context.MapRoute(null, "products/enable",         new { Controller = "Product",   Action = "Enable"});
@@ -34,6 +35,7 @@ namespace Ascend.Web.Admin
             context.MapRoute(null, "products/clear-images",   new { Controller = "Product",   Action = "ClearImages" });
             context.MapRoute(null, "products/refresh-images", new { Controller = "Product",   Action = "RefreshImages"});
             context.MapRoute(null, "products/{id}",           new { Controller = "Product",   Action = "Edit"});
+            */
 
             // tenant admin routes
 

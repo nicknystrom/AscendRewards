@@ -49,7 +49,6 @@
                 <li class="selected?{controller == 'Concierge'}">        ${Html.ActionLink("Concierge",  MVC.Admin.Concierge.Index())}</li>
                 <li class="selected?{controller == 'Messaging'}">        ${Html.ActionLink("Messaging",  MVC.Admin.Messaging.Index())}</li>
                 <li class="selected?{controller == 'Catalog'} top">      ${Html.ActionLink("Catalogs",   MVC.Admin.Catalog.Index())}</li>
-                <li class="selected?{controller == 'Product'} bottom">   ${Html.ActionLink("Products",   MVC.Admin.Product.Index())}</li>
                 <li class="selected?{controller == 'Import'} bottom">    ${Html.ActionLink("Imports",    MVC.Admin.Import.Index())}</li>
             </ul>
         </div>
@@ -87,16 +86,4 @@
 
 <div id="who" class="ui-widget">
 <button id="collapse">Collapse</button>
-<!-- 
-    <a id="recurve" href="http://recurvesoftware.com"></a>
-    <ul>
-        <li>${adminUser}</li>
-        <li>[</li>
-        <li><a href="http://sugar.recurvesoftware.com/">CRM</a></li>
-        <li><a href="http://mail.recurvesoftware.com/">Mail</a></li>
-        <li><a href="http://docs.recurvesoftware.com/">Docs</a></li>
-        <li><a href="http://freshbooks.com/">Invoicing</a></li>
-        <li>]</li>
-    </ul>
--->
 </div>

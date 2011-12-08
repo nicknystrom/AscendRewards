@@ -34,25 +34,24 @@ namespace Ascend.Core.Services.Import
         ProductH,
         ProductWeight,
         Image,
-        Source,
-        SourceCategory,
-        SourceAdded,
-        SourceUpdated,
-        Supplier,
         Msrp,
         Cost,
-        DropShipFee,
-        Shipping,
-        ShippingWeight,
+        ShippingFee,
+        ShippingCost,
         Custom,
         OptionName,
-        OptionPrice,
         OptionSku,
+        SourceAdded,
+        SourceUpdated,
+        Vendor,
+        VendorProductId,
+        VendorPrice,
     }
 
     public class ProductImportService : BaseImportService<Product, ProductColumnMappingTargets>
     {
         public IProductRepository Products { get; set; }
+        public IVendorRepository Vendors { get; set; }
         public IGroupRepository Groups { get; set; }
 
         public override ImportResult ValidateLayout(ProductColumnMappingTargets[] layout)
@@ -90,7 +89,7 @@ namespace Ascend.Core.Services.Import
                     }
                     optionSkuOk = false;
                 }
-                else if (layout[i] == ProductColumnMappingTargets.OptionPrice)
+                else if (layout[i] == ProductColumnMappingTargets.VendorPrice)
                 {
                     if (!optionPriceOk)
                     {
@@ -166,10 +165,9 @@ namespace Ascend.Core.Services.Import
                 case ProductColumnMappingTargets.ProductWeight:
                 case ProductColumnMappingTargets.Msrp:
                 case ProductColumnMappingTargets.Cost:
-                case ProductColumnMappingTargets.DropShipFee:
-                case ProductColumnMappingTargets.Shipping:
-                case ProductColumnMappingTargets.ShippingWeight:
-                case ProductColumnMappingTargets.OptionPrice:
+                case ProductColumnMappingTargets.ShippingFee:
+                case ProductColumnMappingTargets.ShippingCost:
+                case ProductColumnMappingTargets.VendorPrice:
                     return ImportDataType.Number;
 
                 case ProductColumnMappingTargets.Enabled:
@@ -186,13 +184,62 @@ namespace Ascend.Core.Services.Import
 
         public override void Apply(Product p, ImportRow r)
         {
-            var pricing = p.Pricing ?? (p.Pricing = new ProductPricing());
-            var shipping = p.Shipping ?? (p.Shipping = new ProductShipping());
-            var locks = p.Locks ?? new ProductLockedFields();
             var features = new List<string>();
             var images = new List<string>();
-            var source = p.Source ?? new ProductSource();
-            var options = new List<ProductOption>();
+
+            // select the option that this row refers, or use the default option
+            // creates the named option if it does not exist.
+            var optionName = (string)r[ProductColumnMappingTargets.OptionName] ?? "";
+            if (null == p.Options)
+            {
+                p.Options = new List<ProductOption>();
+            }
+            var option = p.Options.FirstOrDefault(x => x.Name == optionName);
+            if (null == option)
+            {
+                option = new ProductOption
+                {
+                    Name = optionName,
+                };
+                p.Options.Add(option);
+            }
+
+            // select the product source or use a default source
+            var vendorName = (string)r[ProductColumnMappingTargets.Vendor] ?? "";
+            if (null == option.Sources)
+            {
+                option.Sources = new List<ProductSource>();
+            }
+            var source = String.IsNullOrEmpty(vendorName)
+                ? option.Sources.FirstOrDefault(x => x.Vendor == null)
+                : option.Sources.FirstOrDefault(x => null != x.Vendor && x.Vendor.Value.Name == vendorName);
+            if (null == source)
+            {
+                source = new ProductSource
+                {
+                    Pricing = new ProductPricing(),
+                    Stock = new ProductStock(),
+                    Vendor = null,
+                };
+                if (!String.IsNullOrEmpty(vendorName))
+                {
+                    var vendor = Vendors.FindVendorByName(vendorName);
+                    if (null == vendor)
+                    {
+                        vendor = new Vendor
+                        {
+                            Document = new Document() { Id = Document.For<Vendor>(vendorName.ToSlug()) },
+                            Name = vendorName,
+                        };
+                        Vendors.Save(vendor);
+                        source.Vendor = Reference.To(vendor);
+                    }
+                }
+                option.Sources.Add(source);
+            }
+            var pricing = source.Pricing ?? (source.Pricing = new ProductPricing());
+            var stock = source.Stock ?? (source.Stock = new ProductStock());
+
 
             for (var i=0; i<r.Layout.Length; i++)
             {
@@ -201,68 +248,48 @@ namespace Ascend.Core.Services.Import
     
                 switch (target)
                 {
-                    case ProductColumnMappingTargets.Enabled:           locks.SetEnabled(p, (bool)value); break;
-                    case ProductColumnMappingTargets.Category:          locks.SetCategory(p, (Product.ParseCategory((string)value))); break;
-                    case ProductColumnMappingTargets.Name:              locks.SetName(p, (string)value); break;
-                    case ProductColumnMappingTargets.Manufacturer:      locks.SetManufacturer(p, (string)value); break;
-                    case ProductColumnMappingTargets.Brand:             locks.SetBrand(p, (string)value); break;
-                    case ProductColumnMappingTargets.Description:       locks.SetDescription(p, (string)value); break;
-                    case ProductColumnMappingTargets.Details:           locks.SetDetails(p, (string)value); break;
-                    case ProductColumnMappingTargets.Warranty:          locks.SetWarranty(p, (string)value); break;
-                    case ProductColumnMappingTargets.CountryOfOrigin:   locks.SetCountryOfOrigin(p, (string)value); break;
+                    case ProductColumnMappingTargets.Enabled:           p.Set(x => x.Enabled, (bool)value); break;
+                    case ProductColumnMappingTargets.Category:          p.Set(x => x.Category, (Product.ParseCategory((string)value))); break;
+                    case ProductColumnMappingTargets.Name:              p.Set(x => x.Name, (string)value); break;
+                    case ProductColumnMappingTargets.Manufacturer:      p.Set(x => x.Manufacturer, (string)value); break;
+                    case ProductColumnMappingTargets.Brand:             p.Set(x => x.Brand, (string)value); break;
+                    case ProductColumnMappingTargets.Description:       p.Set(x => x.Description, (string)value); break;
+                    case ProductColumnMappingTargets.Details:           p.Set(x => x.Details, (string)value); break;
+                    case ProductColumnMappingTargets.Warranty:          p.Set(x => x.Warranty, (string)value); break;
+                    case ProductColumnMappingTargets.CountryOfOrigin:   p.Set(x => x.CountryOfOrigin, (string)value); break;
                     case ProductColumnMappingTargets.Model:             p.Model = ((string)value); break;
-                    case ProductColumnMappingTargets.LeadTime:          (p.Stock ?? (p.Stock = new ProductStock())).Leadtime = ((string)value); break;
+                    case ProductColumnMappingTargets.LeadTime:          stock.Leadtime = (string)value; break;
                     case ProductColumnMappingTargets.Feature:           features.Add((string)value); break;
-                    case ProductColumnMappingTargets.Sku: 
-                        p.Sku = (string)value;
-                        locks.SetSku(p, (string)value);
-                        break;
-                    case ProductColumnMappingTargets.Upc:               p.Upc = (string)value; break;
+                    case ProductColumnMappingTargets.Sku:               p.Set(x => x.Sku, (string)value); break;
+                    case ProductColumnMappingTargets.Upc:               p.Set(x => x.Upc, (string)value); break;
                     case ProductColumnMappingTargets.PackageL:          (p.PackageDimensions ?? (p.PackageDimensions = new ProductDimensions())).Length = (decimal?)value; break;
                     case ProductColumnMappingTargets.PackageW:          (p.PackageDimensions ?? (p.PackageDimensions = new ProductDimensions())).Width = (decimal?)value; break;
                     case ProductColumnMappingTargets.PackageH:          (p.PackageDimensions ?? (p.PackageDimensions = new ProductDimensions())).Height = (decimal?)value; break;
                     case ProductColumnMappingTargets.PackageWeight:     (p.PackageDimensions ?? (p.PackageDimensions = new ProductDimensions())).Weight = (decimal?)value; break;
-                    case ProductColumnMappingTargets.ProductL:          (p.ProductDimensions ?? (p.ProductDimensions= new ProductDimensions())).Length = (decimal?)value; break;
+                    case ProductColumnMappingTargets.ProductL:          (p.ProductDimensions ?? (p.ProductDimensions = new ProductDimensions())).Length = (decimal?)value; break;
                     case ProductColumnMappingTargets.ProductW:          (p.ProductDimensions ?? (p.ProductDimensions = new ProductDimensions())).Width = (decimal?)value; break;
                     case ProductColumnMappingTargets.ProductH:          (p.ProductDimensions ?? (p.ProductDimensions = new ProductDimensions())).Height = (decimal?)value; break;
                     case ProductColumnMappingTargets.ProductWeight:     (p.ProductDimensions ?? (p.ProductDimensions = new ProductDimensions())).Weight = (decimal?)value; break;
                     case ProductColumnMappingTargets.Image:             images.Add((string)value); break;
-                    case ProductColumnMappingTargets.Supplier:          p.Supplier = new Supplier { Name = (string)value }; break;
-                    case ProductColumnMappingTargets.Source:            source.Name = (string)value; break;
-                    case ProductColumnMappingTargets.SourceCategory:    source.Category = (string)value; break;
                     case ProductColumnMappingTargets.SourceAdded:       source.Added = (DateTime?)value; break;
                     case ProductColumnMappingTargets.SourceUpdated:     source.Updated = (DateTime?)value; break;
                     case ProductColumnMappingTargets.Msrp:              pricing.Msrp = (decimal?)value; break;
-                    case ProductColumnMappingTargets.Cost:              pricing.Price = ((decimal?)value).Value; break;
-                    case ProductColumnMappingTargets.DropShipFee:       shipping.DropShipFee = (decimal?)value; break;
-                    case ProductColumnMappingTargets.Shipping:          shipping.Cost = (decimal?)value; break;
-                    case ProductColumnMappingTargets.ShippingWeight:    shipping.Weight = (decimal?)value; break;
-                    
-                    case ProductColumnMappingTargets.OptionName:        if (null != value && !String.IsNullOrWhiteSpace((string)value)) options.Add(new ProductOption { Name = (string)value }); break;
-                    case ProductColumnMappingTargets.OptionSku:         if (null != value && !String.IsNullOrWhiteSpace((string)value)) options.Last().Sku = (string) value; break;
-                    case ProductColumnMappingTargets.OptionPrice:       if (null != value && null != (decimal?)value) options.Last().Price = new ProductPricing { Price =  (decimal)value }; break;
-                }
-            }
+                    case ProductColumnMappingTargets.Cost:              pricing.Cost = ((decimal?)value).Value; break;
+                    case ProductColumnMappingTargets.ShippingFee:       pricing.ShippingFee = (decimal?)value; break;
+                    case ProductColumnMappingTargets.ShippingCost:      pricing.ShippingCost = (decimal?)value; break;
 
-            if (source.Name != null ||
-                source.Category != null ||
-                source.Added.HasValue ||
-                source.Updated.HasValue)
-            {
-                p.Source = source;
+                    case ProductColumnMappingTargets.OptionSku:         option.Sku = (string) value; break;
+                    case ProductColumnMappingTargets.VendorPrice:       pricing.Cost = ((decimal?)value) ?? 0; break;
+                }
             }
 
             if (features.Count > 0)
             {
-                locks.SetFeatures(p, features.Where(x => !String.IsNullOrWhiteSpace(x)).ToArray());
+                p.Set(x => x.Features, features.Where(x => !String.IsNullOrWhiteSpace(x)).ToArray());
             }
             if (images.Count > 0)
             {
-                locks.SetImages(p, images.Where(x => !String.IsNullOrWhiteSpace(x)).ToArray());
-            }
-            if (options.Count > 0)
-            {
-                p.Options = options;
+                p.Set(x => x.Images, images.Where(x => !String.IsNullOrWhiteSpace(x)).ToArray());
             }
         }
     }

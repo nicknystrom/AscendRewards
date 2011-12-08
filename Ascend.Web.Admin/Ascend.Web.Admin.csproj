@@ -108,7 +108,6 @@
     <Compile Include="Controllers\MessagingController.cs" />
     <Compile Include="Controllers\MigrationController.cs" />
     <Compile Include="Controllers\PageController.cs" />
-    <Compile Include="Controllers\ProductController.cs" />
     <Compile Include="Controllers\QuizController.cs" />
     <Compile Include="Controllers\SurveyController.cs" />
     <Compile Include="Controllers\TenantController.cs" />
@@ -182,9 +181,6 @@
     <None Include="Views\Page\Edit.spark" />
     <None Include="Views\Page\Index.spark" />
     <None Include="Views\Page\PageCreateModel.spark" />
-    <None Include="Views\Product\_Filter.spark" />
-    <None Include="Views\Product\Edit.spark" />
-    <None Include="Views\Product\Index.spark" />
     <None Include="Views\Quiz\Edit.spark" />
     <None Include="Views\Quiz\Index.spark" />
     <None Include="Views\Quiz\QuizCreateModel.spark" />

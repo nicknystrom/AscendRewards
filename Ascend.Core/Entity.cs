@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using Newtonsoft.Json;
 using RedBranch.Hammock;
+using System.Linq.Expressions;
+using System.Reflection;
 
 namespace Ascend.Core
 {
@@ -27,7 +29,7 @@ namespace Ascend.Core
     /// Importable entity that can track locked field states, allowing users to edit
     /// fields in the entity and have those values not be overwritten during the next import.
     /// </summary>
-    public class ImportableEntity : Entity
+    public class ImportableEntity<TEntity> : Entity where TEntity : Entity
     {
         /// <summary>
         /// Gets or sets the locked fields which will not be overwritten when newly imported
@@ -48,7 +50,7 @@ namespace Ascend.Core
         /// <param name='value'>
         /// The value to set the field to.
         /// </param>
-        public void SetImportedField(string field, object value)
+        public void Set(string field, object value)
         {
             if (null == field)
             {
@@ -63,12 +65,15 @@ namespace Ascend.Core
             {
                 throw new InvalidOperationException(String.Format("Attempted to set property that did not exist: '{0}'.", field));
             }
-            var method = property.GetSetMethod();
-            if (null == method)
-            {
-                throw new InvalidOperationException(String.Format("Attempted to set read-only property: '{0}'.", field));
-            }
-            method.Invoke(this, new object[] { value });
+            property.SetValue(this, value, null);
+        }
+
+        public void Set<TProperty>(Expression<Func<TEntity, TProperty>> field, TProperty value)
+        {
+            var me = field.Body as MemberExpression;
+            if (null == me) throw new ArgumentException("", "field");
+            var pi = me.Member as PropertyInfo;
+            pi.SetValue(this, value, null);
         }
     }
 }

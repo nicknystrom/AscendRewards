@@ -1,11 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
+
+using Newtonsoft.Json.Linq;
+
 using Ascend.Core;
 using Ascend.Core.Repositories;
-using Newtonsoft.Json.Linq;
+
 using RedBranch.Hammock;
 
 namespace Ascend.Infrastructure.Repositories
@@ -58,7 +59,7 @@ namespace Ascend.Infrastructure.Repositories
             return categories.Rows.Select(x => 
                 new KeyValuePair<string[], int>(
                     x.Key.Values<string>().ToArray(),
-                    x.Value.Value<int>())
+                    (int)((JValue)x.Value).Value)
             );
         }
 
@@ -90,8 +91,8 @@ namespace Ascend.Infrastructure.Repositories
                 .Group()
                 .Execute();
             return tags.Rows.ToDictionary(
-                x => x.Key.Value<string>(),
-                x => x.Value.Value<int>());
+                x => (string)((JValue)x.Key).Value,
+                x => (int)((JValue)x.Value).Value);
         }
 
         public IList<Product> GetProductsInCategory(string[] category)
@@ -130,85 +131,5 @@ namespace Ascend.Infrastructure.Repositories
                 .WithDocuments()
                 .ToArray();
         }
-
-        public ProductSummary[] GetProductSummaries(bool? enabled = null)
-        {
-            var query = WithView(
-                "_summaries",
-                @"
-                function (doc) {
-                  if (doc._id.indexOf('product-') === 0) {
-                    emit(
-                        doc.Enabled == undefined ? 0 : doc.Enabled ? 1 : 0,
-                        [doc.Enabled == undefined ? null : doc.Enabled,
-                         doc.Category == undefined ? null : doc.Category,
-                         doc.Name == undefined ? null : doc.Name,
-                         doc.Model == undefined ? null : doc.Model,
-                         doc.Brand == undefined ? null : doc.Brand,
-                         doc.Upc == undefined ? null : doc.Upc,
-                         doc.Pricing == undefined ? null : doc.Pricing.Msrp,
-                         doc.Pricing == undefined ? null : doc.Pricing.Price,
-                         doc.Shipping == undefined ? null : doc.Shipping.Cost,
-                         doc.Shipping == undefined ? null : doc.Shipping.DropShipFee,
-                         doc.Supplier == undefined ? null : doc.Supplier.Name,
-                         doc.Source == undefined ? null : doc.Source.Category,
-                         doc.Source == undefined ? null : doc.Source.Added,
-                         doc.Source == undefined ? null : doc.Source.Added,
-                         doc.Created == undefined ? null : doc.Created.Date,
-                         doc.Updated == undefined ? null : doc.Updated.Added,
-                         doc.Tags == undefined ? null : doc.Tags]
-                    );
-                  }
-                }");
-
-            var q = query.All();
-            if (null != enabled)
-            {
-                q = query.From((enabled ?? false) ? 1 : 0)
-                         .To((enabled ?? true) ? 2 : 1);
-            }
-            return q.Execute().Rows.Select(
-                x =>
-                    {
-                        string[] categories = null;
-                        var category = x.Value[1];
-                        if (null != category && category.Type != JTokenType.Null)
-                        {
-                            categories = category.Select(y => y.Value<string>()).ToArray();
-                        }
-                        
-                        List<string> tags = null;
-                        var tag = x.Value[16];
-                        if (null != tag && tag.Type != JTokenType.Null)
-                        {
-                            tags = tag.Select(y => y.Value<string>()).ToList();
-                        }
-
-                        return new ProductSummary
-                                   {
-                                       Id = x.Id,
-                                       Enabled = x.Value.Value<bool>(0),
-                                       Category = categories,
-                                       Name = x.Value.Value<string>(2),
-                                       Model = x.Value.Value<string>(3),
-                                       Brand = x.Value.Value<string>(4),
-                                       Upc = x.Value.Value<string>(5),
-                                       Msrp = x.Value.Value<decimal?>(6),
-                                       Price = x.Value.Value<decimal?>(7) ?? 0,
-                                       Shipping = x.Value.Value<decimal?>(8),
-                                       Handling = x.Value.Value<decimal?>(9) ?? 0,
-                                       Supplier = x.Value.Value<string>(10),
-                                       SourceCategory = x.Value.Value<string>(11),
-                                       SourceAdded = x.Value.Value<DateTime?>(12),
-                                       SourceUpdated = x.Value.Value<DateTime?>(13),
-                                       AscendAdded = x.Value.Value<DateTime?>(14),
-                                       AscendUpdated = x.Value.Value<DateTime?>(15),
-                                       Tags = tags
-                                   };
-                    }
-                ).ToArray();
-        }
     }
-
-
 }

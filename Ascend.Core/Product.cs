@@ -9,7 +9,7 @@ using RedBranch.Hammock;
 
 namespace Ascend.Core
 {
-    public class Product : ImportableEntity
+    public class Product : ImportableEntity<Product>
     {
         // identification
         public bool? Enabled { get; set; }      // products are disabled by default
@@ -41,16 +41,6 @@ namespace Ascend.Core
         // options
         public IList<ProductOption> Options { get; set; }
 
-        public ProductPricing GetReferencePricing()
-        {
-            if (null == Options || Options.Count == 0) return null;
-            ProductPricing min = null;
-            foreach (var p in Options.SelectMany(x => x.Sources.Select(y => y.Pricing))
-            {
-                if (null == min || p)
-            }
-        }
-
         public override string ToString()
         {
             return (Upc ?? Sku) + ": " + Name;
@@ -68,6 +58,13 @@ namespace Ascend.Core
         public static string FormatCategory(string[] category)
         {
             return String.Join("/", category);
+        }
+
+        public ProductPricing GetReferencePricing()
+        {
+            if (null == Options || Options.Count == 0) return null;
+            if (Options.Count == 1) return Options[0].GetBestSource().Pricing;
+            return Options.Select(x => x.GetBestSource()).Where(x => null != x).Low(x => x.Pricing.Total).Pricing;
         }
     }
 
@@ -87,20 +84,16 @@ namespace Ascend.Core
 
     public class ProductSource
     {
-        public string Id { get; set; }
-        public string Name { get; set; }
-        public string Category { get; set; }
-
-        public DateTime? Added { get; set; }
-        public DateTime? Updated { get; set; }
-
-        public Reference<Supplier> Supplier {get; set; }
+        public Reference<Vendor> Vendor {get; set; }
+        public string VendorProductId { get; set; }
         public ProductStock Stock { get; set; }
         public ProductPricing Pricing { get; set; }
 
+        public DateTime? Added { get; set; }
+        public DateTime? Updated { get; set; }
     }
 
-    public class Supplier : Entity
+    public class Vendor : Entity
     {
         public string Name { get; set; }
     }
@@ -164,12 +157,11 @@ namespace Ascend.Core
 
         public IList<ProductSource> Sources { get; set; }
 
-        public ProductSource BestSource
+        public ProductSource GetBestSource()
         {
-            get
-            {
-                return Sources.Low()
-            }
+            if (Sources == null || Sources.Count == 0) return null;
+            if (Sources.Count == 1) return Sources[0];
+            return Sources.Where(x => x.Stock == null || x.Stock.Status != StockStatus.Discontinued).Low(x => x.Pricing.Total);
         }
     }
 

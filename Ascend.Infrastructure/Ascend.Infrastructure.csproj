@@ -281,6 +281,7 @@
     <Compile Include="Web\BaseController.cs" />
     <Compile Include="Web\TenantService.cs" />
     <Compile Include="Log4NetService.cs" />
+    <Compile Include="Repositories\VendorRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Ascend.Core\Ascend.Core.csproj">

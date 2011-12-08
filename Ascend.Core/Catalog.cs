@@ -72,36 +72,34 @@ namespace Ascend.Core
 
         public decimal GetFinalPriceForProduct(Product p, string option)
         {
-            var o = p.Options.First(x => x.Name == option);
-            return GetFinalPriceForProduct(p, (.Price);
+            return GetFinalPriceForProduct(p.Options.First(x => x.Name == option));
+        }
+
+        public decimal GetFinalPriceForProduct(ProductOption o)
+        {
+            return GetFinalPriceForProduct(o.GetBestSource().Pricing);
         }
 
         public decimal GetFinalPriceForProduct(Product p)
         {
-            return GetFinalPriceForProduct(p, p.Pricing.Price);
+            return GetFinalPriceForProduct(p.GetReferencePricing());
         }
 
-        private decimal GetFinalPriceForProduct(Product p, decimal basePrice)
+        private decimal GetFinalPriceForProduct(ProductPricing pricing)
         {
-            // get the price of the first item
-            var x = basePrice;
-
             // use the lower of the two prices: either % markup, or % below msrp, but
             // ensure that we make a certain flat $ value.
-            x = Math.Max(
+            var x = Math.Max(
                     Math.Min(
-                        x * (1+MinMarkupPercent),
-                        (p.Pricing.Msrp ?? decimal.MaxValue) * (1-MaxPriceBelowMsrp)
+                        pricing.Cost * (1+MinMarkupPercent),
+                        (pricing.Msrp ?? decimal.MaxValue) * (1-MaxPriceBelowMsrp)
                     ),
-                    x + MinMarkupDollars
+                    pricing.Cost + MinMarkupDollars
                 );
 
             // now add in flat costs like shipping
-            if (null != p.Shipping)
-            {
-                x += p.Shipping.DropShipFee ?? 0;
-                x += p.Shipping.Cost ?? 0;
-            }
+            x += pricing.ShippingFee ?? 0;
+            x += pricing.ShippingCost ?? 0;
 
             return x;
         }

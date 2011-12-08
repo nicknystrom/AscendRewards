@@ -80,12 +80,16 @@ namespace Ascend.Core.Services
                     Price = (int)Math.Ceiling(catalog.GetPrice(p) * configuration.PointsPerDollar),
                     Options = null == p.Options
                         ? new List<CatalogProductOption>()
-                        : p.Options.Select(i => new CatalogProductOption
+                        : p.Options.Select(i => {
+                            var source = i.GetBestSource();
+                            var price = null == source ? null : source.Pricing;
+                            return new CatalogProductOption
                             {
                                 Sku = i.Sku,
                                 Name = i.Name,
-                                Price = i.Price == null ? null : (int?)Math.Ceiling(configuration.PointsPerDollar * catalog.GetPrice(p, i.Name)),
-                            }).ToList(),
+                                Price = price == null ? null : (int?)Math.Ceiling(configuration.PointsPerDollar * catalog.GetPrice(p, i.Name)),
+                            };
+                        }).ToList(),
                 };
                 Products[x.Id] = x;
 

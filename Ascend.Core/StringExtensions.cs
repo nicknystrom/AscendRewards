@@ -107,7 +107,8 @@ namespace Ascend.Core
             }
         }
 
-        private static Tuple<TResult, TResult> __HighLow(this IEnumerable<TResult> items, Func<TResult, decimal> func)
+        private static Tuple<TResult, TResult> __HighLow<TResult>(this IEnumerable<TResult> items, Func<TResult, decimal> func)
+            where TResult : class
         {
             TResult outputHigh = null;
             TResult outputLow = null;
@@ -130,12 +131,14 @@ namespace Ascend.Core
             return new Tuple<TResult, TResult>(outputLow, outputHigh);
         }
 
-        private static TResult High(this IEnumerable<TResult> items, Func<TResult, decimal> func)
+        public static TResult High<TResult>(this IEnumerable<TResult> items, Func<TResult, decimal> func)
+            where TResult : class
         {
             return items.__HighLow(func).Item2;
         }
 
-        private static TResult Low(this IEnumerable<TResult> items, Func<TResult, decimal> func)
+        public static TResult Low<TResult>(this IEnumerable<TResult> items, Func<TResult, decimal> func)
+            where TResult : class
         {
             return items.__HighLow(func).Item1;
         }
