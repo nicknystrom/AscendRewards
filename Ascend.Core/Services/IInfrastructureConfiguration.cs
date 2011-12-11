@@ -11,6 +11,7 @@ namespace Ascend.Core.Services
         string CouchDatabase { get; }
         string CouchCatalogDatabase { get; }
         string CouchTenantsDatabase { get; }
+        string CouchErrorsDatabase { get; }
         string CouchTicketJonesDatabase { get; }
 
         string EmailServer { get; }

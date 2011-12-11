@@ -284,6 +284,7 @@
     <Compile Include="Web\ITenantResolverService.Host.cs" />
     <Compile Include="Web\ITenantResolverService.Route.cs" />
     <Compile Include="Web\Scaffolding.cs" />
+    <Compile Include="Repositories\ErrorRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Ascend.Core\Ascend.Core.csproj">

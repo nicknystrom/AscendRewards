@@ -90,7 +90,7 @@ namespace Ascend.Web.Admin.Controllers
 
         public IImportRepository Imports { get; set; }
         public IEventTicketingService TicketingService { get; set; }
-        public IRepository<Error> Errors { get; set; }
+        public IErrorRepository Errors { get; set; }
 
         public IImportService<User> UserImportService { get; set; }
         public IImportService<Award> PointsImportService { get; set; }

@@ -22,9 +22,9 @@ namespace Ascend.Web.Admin
             context.MapRoute(null, "messages/{id}/resend",    new { Controller = "Messaging", Action = "Resend"});
             context.MapRoute(null, "messages/{id}",           new { Controller = "Messaging", Action = "Display"});
 
-            context.MapRoute(null, "error",                   new { Controller = "Error",     Action = "Index"});
-            context.MapRoute(null, "error/clear",             new { Controller = "Error",     Action = "Clear"});
-            context.MapRoute(null, "error/{id}",              new { Controller = "Error",     Action = "Display"});
+            context.MapRoute(null, "errors",                   new { Controller = "Error",     Action = "Index"});
+            context.MapRoute(null, "errors/clear",             new { Controller = "Error",     Action = "Clear"});
+            context.MapRoute(null, "errors/{id}",              new { Controller = "Error",     Action = "Display"});
 
             /*
             context.MapRoute(null, "products",                new { Controller = "Product",   Action = "Index"});

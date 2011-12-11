@@ -7,6 +7,7 @@ using System.Web.Mvc;
 using RedBranch.Hammock;
 
 using Ascend.Core;
+using Ascend.Core.Repositories;
 using Ascend.Core.Services;
 using Ascend.Infrastructure.Web;
 
@@ -14,7 +15,7 @@ namespace Ascend.Web.Admin.Controllers
 {
     public partial class ErrorController : AdminController
     {
-        public IRepository<Error> Errors { get; set; }
+        public IErrorRepository Errors { get; set; }
 
         [HttpGet]
         public virtual ActionResult Index()

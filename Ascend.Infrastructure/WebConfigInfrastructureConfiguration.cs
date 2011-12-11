@@ -63,6 +63,11 @@ namespace Ascend.Infrastructure
             get { return ConfigurationManager.AppSettings["couch-ticketjones-database"]; }
         }
 
+        public string CouchErrorsDatabase
+        {
+            get { return ConfigurationManager.AppSettings["couch-errors-database"]; }
+        }
+
         public string AmazonAccessKey
         {
             get { return ConfigurationManager.AppSettings["amazon-access-key"]; }
