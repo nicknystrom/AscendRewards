@@ -22,7 +22,7 @@ namespace Ascend.Web.Areas.Mobile.Controllers
     }
 
     [Precompile("*")]
-    public partial class MobileController : BaseController
+    public partial class MobileController : AscendController
     {
         public IEntityCache<User> Users { get; set; }
         public IAccountingService Accounting { get; set; }

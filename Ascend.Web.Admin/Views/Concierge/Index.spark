@@ -13,7 +13,7 @@
     <tbody>
         <tr each="var x in Model">
             <td>${users[x.User]}</td>
-            <td>${Html.ActionLink(x.Stage.ToString(), MVC.Admin.Concierge.Edit(x.Document.Id))}</td>    
+            <td>${Html.RouteLink(x.Stage.ToString(), Url.For<ConciergeController>(c => c.Edit(x.Document.Id)))}</td>    
             <td>${x.Created.Date.ToString("d")}</td>    
             <td>$!{x.Updated.Date.ToString("d")}</td>    
             <td>${(int)Math.Ceiling((DateTime.Now - (x.Updated ?? x.Created).Date).TotalDays)}</td>    

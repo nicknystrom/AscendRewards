@@ -1,6 +1,6 @@
 ﻿<viewdata model="ThemeCreateModel" />
 
-# using (Html.BeginForm(MVC.Admin.Theme.Index()))
+# using (Html.BeginForm(Url.For<ThemeController>(c => c.Index())))
 # {
 
     ${Html.Scaffold(s => {

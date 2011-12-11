@@ -21,7 +21,7 @@
     </thead>
     <tbody>
         <tr each="var p in Model">
-            <td>${Html.ActionLink(p.Title, MVC.Admin.Page.Edit(p.Document.Id))}</td>
+            <td>${Html.RouteLink(p.Title, Url.For<PageController>(c => c.Edit(p.Document.Id)))}</td>
             <td>${H(p.Content.Body.ShortenTo(60))}</td>
 
             <td><span class="ui-icon ui-icon-check" if="p.Enabled" /></td>

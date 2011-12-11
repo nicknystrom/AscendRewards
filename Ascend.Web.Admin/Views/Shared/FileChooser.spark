@@ -17,7 +17,7 @@
     chooser.data('callback', callback);
     if (chooser.find('#folders').size() == 0) {
       chooser.load(
-        '${Url.Action(MVC.Admin.File.Index())}',
+        '${Url.Action(Url.For<FileController>(c => c.Index()))}',
         null,
         function() {
              $('#file-chooser').dialog({

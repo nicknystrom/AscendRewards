@@ -38,7 +38,7 @@ namespace Ascend.Web.Admin.Controllers
 
             // provide a list of tenants
             ViewData["activeTenants"] = TenantService.GetActiveTenants();
-            ViewData["currentTenant"] = TenantService.GetTenantForRequest(Request);
+            ViewData["currentTenant"] = TenantService.GetTenantForRequest(HttpContext);
         }
 
         protected override void OnAuthorization(AuthorizationContext filterContext)

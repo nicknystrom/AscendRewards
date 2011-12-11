@@ -6,8 +6,8 @@ namespace Ascend.Core.Services
 {
     public interface ITenantResolverService
     {
-        Tenant GetTenantForRequest(HttpRequest request);
-        Tenant GetTenantForRequest(HttpRequestBase request);
+        Tenant GetTenantForRequest(HttpContext context);
+        Tenant GetTenantForRequest(HttpContextBase context);
         IEnumerable<Tenant> GetActiveTenants();
     }
 }

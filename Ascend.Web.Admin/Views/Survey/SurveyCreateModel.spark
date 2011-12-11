@@ -1,6 +1,6 @@
 ﻿<viewdata model="SurveyCreateModel" />
 
-# using (Html.BeginForm(MVC.Admin.Survey.Index()))
+# using (Html.BeginForm(Url.For<SurveyController>(c => c.Index())))
 # {
 
     ${Html.Scaffold(s => {

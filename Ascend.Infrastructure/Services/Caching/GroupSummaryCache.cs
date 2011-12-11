@@ -31,7 +31,7 @@ namespace Ascend.Infrastructure.Services.Caching
             {
                 var s = new TenantCacheStore(
                     _cache,
-                    _tenants.GetTenantForRequest(HttpContext.Current.Request)
+                    _tenants.GetTenantForRequest(HttpContext.Current)
                 );
                 s.Invalidate(Key);
             }

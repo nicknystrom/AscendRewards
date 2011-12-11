@@ -31,7 +31,7 @@ ${Html.Scaffold(s => {
     </tr>
 </table>
 
-<form id="resend" action="${Url.Action(MVC.Admin.Messaging.Resend(Model.Document.Id))}" method="post">
+<form id="resend" action="${Url.Action(Url.For<MessagingController>(c => c.Resend(Model.Document.Id)))}" method="post">
     <input id="resend" type="submit" value="Resend this Message" />
 </form>
 

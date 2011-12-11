@@ -1,7 +1,7 @@
 ﻿<html>
 <body>
 	<script type="text/javascript">
-	    parent.loadFolder('${Url.Action(MVC.Admin.File.Index())}');
+	    parent.loadFolder('${Url.Action(Url.For<FileController>(c => c.Index()))}');
 	</script>
 </body>
 </html>

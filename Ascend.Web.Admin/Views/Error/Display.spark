@@ -8,7 +8,7 @@
     </tr>
     <tr>
         <td>User</td>
-        <td>${Html.ActionLink(Model.Created.User.Or("-"), MVC.Admin.User.Edit(Model.Created.User))}</td>
+        <td>${Html.RouteLink(Model.Created.User.Or("-"), Url.For<UserController>(c => c.Edit(Model.Created.User)))}</td>
     </tr>
     <tr>
         <td>Url</td>

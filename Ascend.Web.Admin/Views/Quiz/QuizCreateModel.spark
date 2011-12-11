@@ -1,6 +1,6 @@
 ﻿<viewdata model="QuizCreateModel" />
 
-# using (Html.BeginForm(MVC.Admin.Quiz.Index()))
+# using (Html.BeginForm(Url.For<QuizController>(c => c.Index())))
 # {
 
     ${Html.Scaffold(s => {

@@ -4,7 +4,7 @@
 
 </style>
 
-# using (Html.BeginForm(MVC.Admin.Messaging.Welcome()))
+# using (Html.BeginForm(Url.For<MessagingController>(c => c.Welcome())))
 # {
 
 <p>The following users are active, but have not received a 'Welcome' email:</p>

@@ -14,13 +14,9 @@ namespace Ascend.Infrastructure.Web
 {
     #region RedirectToRouteResult<T>
 
-    // from MVCContrib and Microsoft.Web.Mvc, aka "MVC futures"
-
-    public delegate RouteValueDictionary ExpressionToRouteValueConverter<TController>(Expression<Action<TController>> expression) where TController : Controller;
-
-    public class RedirectToRouteResult<T> : RedirectToRouteResult, IControllerExpressionContainer where T : Controller
+    static class __ExpressionRouteValueHelpers
     {
-        static RouteValueDictionary GetRouteValuesFromExpression<TController>(Expression<Action<TController>> action) where TController : Controller
+        public static RouteValueDictionary GetRouteValuesFromExpression<TController>(Expression<Action<TController>> action) where TController : Controller
         {
             if (action == null) {
                 throw new ArgumentNullException("action");
@@ -47,7 +43,7 @@ namespace Ascend.Infrastructure.Web
             return rvd;
         }
 
-        static void AddParameterValuesFromExpressionToDictionary(RouteValueDictionary rvd, MethodCallExpression call)
+        public static void AddParameterValuesFromExpressionToDictionary(RouteValueDictionary rvd, MethodCallExpression call)
         {
             var parameters = call.Method.GetParameters();
             if (parameters.Length > 0)
@@ -76,7 +72,14 @@ namespace Ascend.Infrastructure.Web
                 }
             }
         }
+    }
 
+    // from MVCContrib and Microsoft.Web.Mvc, aka "MVC futures"
+
+    public delegate RouteValueDictionary ExpressionToRouteValueConverter<TController>(Expression<Action<TController>> expression) where TController : Controller;
+
+    public class RedirectToRouteResult<T> : RedirectToRouteResult, IControllerExpressionContainer where T : Controller
+    {
         MethodCallExpression IControllerExpressionContainer.Expression
         {
             get { return Expression.Body as MethodCallExpression; }
@@ -84,9 +87,13 @@ namespace Ascend.Infrastructure.Web
 
         public Expression<Action<T>> Expression { get; private set; }
 
-        public RedirectToRouteResult(Expression<Action<T>> expression) : this(expression, expr => GetRouteValuesFromExpression(expr)) {}
+        public RedirectToRouteResult(Expression<Action<T>> expression) :
+            this(expression, expr => __ExpressionRouteValueHelpers.GetRouteValuesFromExpression(expr))
+        {
+        }
 
-        public RedirectToRouteResult(Expression<Action<T>> expression, ExpressionToRouteValueConverter<T> expressionParser) : base(expressionParser(expression))
+        public RedirectToRouteResult(Expression<Action<T>> expression, ExpressionToRouteValueConverter<T> expressionParser) :
+            base(expressionParser(expression))
         {
             Expression = expression;
         }
@@ -99,27 +106,44 @@ namespace Ascend.Infrastructure.Web
 
     #endregion
 
-    public static class ControllerExtensions
+    public static class __ControllerExtensions
     {
-        public static RedirectToRouteResult RedirectToAction<T>(this T controller, Expression<Action<T>> action)
-            where T : Controller
+        public static RedirectToRouteResult RedirectToAction<TController>(this TController controller, Expression<Action<TController>> action)
+            where TController : Controller
         {
             return ((Controller)controller).RedirectToAction(action);
         }
         
-        public static RedirectToRouteResult RedirectToAction<T>(this Controller controller, Expression<Action<T>> action)
-            where T : Controller
+        public static RedirectToRouteResult RedirectToAction<TController>(this Controller controller, Expression<Action<TController>> action)
+            where TController : Controller
         {
-            return new RedirectToRouteResult<T>(action);
+            return new RedirectToRouteResult<TController>(action);
+        }
+    }
+
+    public static class __UrlHelperExtensions
+    {
+        public static RouteValueDictionary For<TController>(this UrlHelper url, Expression<Action<TController>> func)
+            where TController : Controller
+        {
+            var current = url.RequestContext.RouteData.Values;
+            var values = __ExpressionRouteValueHelpers.GetRouteValuesFromExpression<TController>(func);
+            if (current.ContainsKey("Area") && !values.ContainsKey("Area"))
+            {
+                values["Area"] = current["Area"];
+            }
+            if (current.ContainsKey("Tenant") && !values.ContainsKey("Tenant"))
+            {
+                values["Tenant"] = current["Tenant"];
+            }
+            return values;
         }
     }
 
     public abstract class BaseController : Controller
     {
         public INotificationService Notifier { get; set; }
-        public IApplicationConfiguration Application { get; set; }
-        public IProductImageService Images { get; set; }
-
+        
         protected override FilePathResult File(string fileName, string contentType, string fileDownloadName)
         {
             if (fileName.StartsWith("~/"))
@@ -127,22 +151,6 @@ namespace Ascend.Infrastructure.Web
                 fileName = Server.MapPath(fileName);
             }
             return base.File(fileName, contentType, fileDownloadName);
-        }
-
-        protected override void OnActionExecuting(ActionExecutingContext filterContext)
-        {
-            ViewData["application"] = Application;
-            ViewData["today"] = DateTime.Now;
-   
-            // specifically add an 'id' field to viewdata -- this isnt needed on windows, but
-            // on mono it seems like viewdata won't pull the id automatically from routedata
-            if (!ViewData.ContainsKey("id") &&
-                filterContext.RouteData.Values.ContainsKey("id"))
-            {
-                ViewData["id"] = filterContext.RouteData.Values["id"];
-            }
-            
-            base.OnActionExecuting(filterContext);
         }
         
         protected override void OnActionExecuted(ActionExecutedContext filterContext)

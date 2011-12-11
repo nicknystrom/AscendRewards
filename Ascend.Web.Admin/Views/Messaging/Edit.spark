@@ -5,7 +5,7 @@
 
 </style>
 
-# using (Html.BeginForm(MVC.Admin.Messaging.Edit(id)))
+# using (Html.BeginForm(Url.For<MessagingController>(c => c.Edit(id))))
 # {
 
 ${Html.Scaffold(s => {

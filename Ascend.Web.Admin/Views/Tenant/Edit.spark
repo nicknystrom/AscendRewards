@@ -1,7 +1,7 @@
 ﻿<viewdata id="string" model="TenantEditModel" />
 <set entity="Model.Name" />
 
-# using (Html.BeginForm(MVC.Admin.Tenant.Edit(id)))
+# using (Html.BeginForm(Url.For<TenantController>(c => c.Edit(id))))
 # {
 
 <div id="admin-edit-tabs">

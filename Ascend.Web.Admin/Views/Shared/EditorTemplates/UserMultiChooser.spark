@@ -48,7 +48,7 @@
       this.select();
     })
   	.autocomplete(
-  		'${Url.Action(MVC.Admin.User.Search())}', {
+  		'${Url.Action(Url.For<UserController>(c => c.Search()))}', {
   		minChars: 3,
   		timeOut: 200,
   		validSelection: true,

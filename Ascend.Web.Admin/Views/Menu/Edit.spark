@@ -57,7 +57,7 @@
   </li>
 </div>
 
-# using (Html.BeginForm(MVC.Admin.Menu.Edit(id)))
+# using (Html.BeginForm(Url.For<MenuController>(c => c.Edit(id))))
 # {
 
 ${Html.Scaffold(s => {

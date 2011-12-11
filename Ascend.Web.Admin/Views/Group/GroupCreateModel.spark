@@ -1,6 +1,6 @@
 ﻿<viewdata model="GroupCreateModel" />
 
-# using (Html.BeginForm(MVC.Admin.Group.Index()))
+# using (Html.BeginForm(Url.For<GroupController>(c => c.Index())))
 # {
     ${Html.Scaffold(s => {
             s.Open();

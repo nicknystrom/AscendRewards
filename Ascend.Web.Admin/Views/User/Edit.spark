@@ -1,7 +1,7 @@
 ﻿<viewdata id="string" model="UserEditModel" orders="IEnumerable<Order>" />
 <set entity="Model.Login" />
 
-# using (Html.BeginForm(MVC.Admin.User.Edit(id)))
+# using (Html.BeginForm(Url.For<UserController>(c => c.Edit(id))))
 # {
 
 <div id="admin-edit-tabs">
@@ -116,14 +116,14 @@
 <content name="actions">
     <input type="submit" value="Update User" />
     <ul>
-        <li><a href="${Url.Action(MVC.Admin.Messaging.Messages(null, Model.Email))}" target="_blank">Review Emails</a></li>
-        <li><a href="${Url.Action(MVC.Admin.User.Assume(id))}" target="_blank">Assume User Identity</a></li>
+        <li><a href="${Url.Action(Url.For<MessagingController>(c => c.Messages(null, Model.Email)))}" target="_blank">Review Emails</a></li>
+        <li><a href="${Url.Action(Url.For<UserController>(c => c.Assume(id)))}" target="_blank">Assume User Identity</a></li>
         <li><a href="#reset" id="reset-show">Reset Password</a></li>
     </ul>
 </content>
 
 <div id="reset" style="display: none;">
-    <form action="${Url.Action(MVC.Admin.User.Reset(id, null))}" method="post">
+    <form action="${Url.Action(Url.For<UserController>(c => c.Reset(id, null)))}" method="post">
         <p>The user's password will be reset to a random value.</p>
         <p>${Html.CheckBox("sendEmail", true)} Notifier user by email.</p>
         <input type="submit" value="Reset Password" />

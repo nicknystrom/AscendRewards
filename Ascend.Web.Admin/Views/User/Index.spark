@@ -14,7 +14,7 @@
     </thead>
     <tbody>
         <tr each="var u in Model">
-            <td>${Html.ActionLink(u.Login, MVC.Admin.User.Edit(u.Document.Id))}</td>
+            <td>${Html.RouteLink(u.Login, Url.For<UserController>(c => c.Edit(u.Document.Id)))}</td>
             <td>${u.DisplayName}</td>
             <td><a href="mailto:${u.Email}">${u.Email}</a></td>
         </tr>

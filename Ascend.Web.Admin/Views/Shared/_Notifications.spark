@@ -1,0 +1,52 @@
+﻿
+# var notifications = ((IEnumerable<Notification>)ViewData["__notifications"] ?? Notification.None).Concat(
+#                      (IEnumerable<Notification>)TempData["__notifications"] ?? Notification.None);
+
+<div each="var n in notifications"
+     class="ui-widget ui-corner-all ${(n.Severity == Severity.Warn || n.Severity == Severity.Error) ? "ui-state-error" : "ui-state-highlight"  } notification ${n.Severity.ToString().ToLower()}">
+    <span class="ui-icon ui-icon-info?{n.Severity <= Severity.Info} ui-icon-error?{n.Severity == Severity.Error} ui-icon-notice?{n.Severity == Severity.Warn} ui-icon-check?{n.Severity == Severity.Success}" style="float: left"></span>
+    <strong>${n.Heading}</strong>
+    <span>${n.Message}</span>
+
+    <test if="n.Topic != null && n.Topic is ModelStateDictionary">
+        ${Html.ValidationSummary()}
+    </test>
+
+    <test if="n.Topic != null && n.Topic is Exception">
+    <div class="notification-exception">
+        # var ex = (Exception)n.Topic;
+        <table>
+            <tr>
+                <th>Type</th>
+                <td>${ex.GetType().ToString()}</td>
+            </tr>
+            <tr>
+                <th>Message</th>
+                <td>${ex.Message}</td>
+            </tr>
+            <tr>
+                <th>Stack</th>
+                <td><pre>${ex.StackTrace}</pre></td>
+            </tr>
+        </table>
+        # while (ex.InnerException != null) {
+        #     ex = ex.InnerException;
+        <table>
+            <tr>
+                <th>Type</th>
+                <td>${ex.GetType().ToString()}</td>
+            </tr>
+            <tr>
+                <th>Message</th>
+                <td>${ex.Message}</td>
+            </tr>
+            <tr>
+                <th>Stack</th>
+                <td><pre>${ex.StackTrace}</pre></td>
+            </tr>
+        </table>        
+        # }
+    </div>
+    </test>
+
+</div>

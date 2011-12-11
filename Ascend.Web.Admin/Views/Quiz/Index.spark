@@ -21,7 +21,7 @@
     </thead>
     <tbody>
         <tr each="var q in Model">
-            <td>${Html.ActionLink(q.Title, MVC.Admin.Quiz.Edit(q.Document.Id))}</td>
+            <td>${Html.RouteLink(q.Title, Url.For<QuizController>(c => c.Edit(q.Document.Id)))}</td>
             <td><span if="null != q.Questions">${q.Questions.Count}</span></td>
 
             <td><span class="ui-icon ui-icon-check" if="q.Enabled" /></td>

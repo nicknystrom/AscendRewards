@@ -21,7 +21,7 @@
     </thead>
     <tbody>
         <tr each="var g in Model">
-            <td>${Html.ActionLink(g.Title, MVC.Admin.Game.Edit(g.Document.Id))}</td>
+            <td>${Html.RouteLink(g.Title, Url.For<GameController>(c => c.Edit(g.Document.Id)))}</td>
             <td><span>${g.Type}</span></td>
             <td><span class="ui-icon ui-icon-check" if="g.Enabled" /></td>
             <td><span class="ui-icon ui-icon-check" if="g.Archived" /></td>

@@ -44,12 +44,12 @@
                 
             </ul>
             <ul class="menu-navigation">
-                <li class="selected?{controller == 'Group'}">            ${Html.ActionLink("Groups",     MVC.Admin.Group.Index())}</li>
-                <li class="selected?{controller == 'User'}">             ${Html.ActionLink("Users",      MVC.Admin.User.Index())}</li>
-                <li class="selected?{controller == 'Concierge'}">        ${Html.ActionLink("Concierge",  MVC.Admin.Concierge.Index())}</li>
-                <li class="selected?{controller == 'Messaging'}">        ${Html.ActionLink("Messaging",  MVC.Admin.Messaging.Index())}</li>
-                <li class="selected?{controller == 'Catalog'} top">      ${Html.ActionLink("Catalogs",   MVC.Admin.Catalog.Index())}</li>
-                <li class="selected?{controller == 'Import'} bottom">    ${Html.ActionLink("Imports",    MVC.Admin.Import.Index())}</li>
+                <li class="selected?{controller == 'Group'}">            ${Html.RouteLink("Groups",     Url.For<GroupController>(c => c.Index()))}</li>
+                <li class="selected?{controller == 'User'}">             ${Html.RouteLink("Users",      Url.For<UserController>(c => c.Index()))}</li>
+                <li class="selected?{controller == 'Concierge'}">        ${Html.RouteLink("Concierge",  Url.For<ConciergeController>(c => c.Index()))}</li>
+                <li class="selected?{controller == 'Messaging'}">        ${Html.RouteLink("Messaging",  Url.For<MessagingController>(c => c.Index()))}</li>
+                <li class="selected?{controller == 'Catalog'} top">      ${Html.RouteLink("Catalogs",   Url.For<CatalogController>(c => c.Index()))}</li>
+                <li class="selected?{controller == 'Import'} bottom">    ${Html.RouteLink("Imports",    Url.For<ImportController>(c => c.Index()))}</li>
             </ul>
         </div>
         <div id="menu-tab-build" class="selected?{controller == 'Theme' ||
@@ -60,14 +60,14 @@
                                                   controller == 'Survey' ||
                                                   controller == 'Award'}">
             <ul class="menu-navigation">
-                <li class="selected?{controller == 'Theme'}">            ${Html.ActionLink("Themes",     MVC.Admin.Theme.Index())}</li>
-                <li class="selected?{controller == 'Folder'} top">       ${Html.ActionLink("Files",      MVC.Admin.File.Index())}</li>
-                <li class="selected?{controller == 'Menu'} top">         ${Html.ActionLink("Menu",       MVC.Admin.Menu.Index())}</li>
-                <li class="selected?{controller == 'Page'} ">            ${Html.ActionLink("Pages",      MVC.Admin.Page.Index())}</li>
-                <li class="selected?{controller == 'Game'} ">            ${Html.ActionLink("Games",      MVC.Admin.Game.Index())}</li>
-                <li class="selected?{controller == 'Quiz'} ">            ${Html.ActionLink("Quizzes",    MVC.Admin.Quiz.Index())}</li>
-                <li class="selected?{controller == 'Survey'} ">          ${Html.ActionLink("Surveys",    MVC.Admin.Survey.Index())}</li>
-                <li class="selected?{controller == 'Award'} bottom">     ${Html.ActionLink("Awards",     MVC.Admin.Award.Index())}</li>
+                <li class="selected?{controller == 'Theme'}">            ${Html.RouteLink("Themes",     Url.For<ThemeController>(c => c.Index()))}</li>
+                <li class="selected?{controller == 'Folder'} top">       ${Html.RouteLink("Files",      Url.For<FileController>(c => c.Index()))}</li>
+                <li class="selected?{controller == 'Menu'} top">         ${Html.RouteLink("Menu",       Url.For<MenuController>(c => c.Index()))}</li>
+                <li class="selected?{controller == 'Page'} ">            ${Html.RouteLink("Pages",      Url.For<PageController>(c => c.Index()))}</li>
+                <li class="selected?{controller == 'Game'} ">            ${Html.RouteLink("Games",      Url.For<GameController>(c => c.Index()))}</li>
+                <li class="selected?{controller == 'Quiz'} ">            ${Html.RouteLink("Quizzes",    Url.For<QuizController>(c => c.Index()))}</li>
+                <li class="selected?{controller == 'Survey'} ">          ${Html.RouteLink("Surveys",    Url.For<SurveyController>(c => c.Index()))}</li>
+                <li class="selected?{controller == 'Award'} bottom">     ${Html.RouteLink("Awards",     Url.For<AwardController>(c => c.Index()))}</li>
            
             </ul>
         </div>
@@ -75,10 +75,10 @@
                                                    controller == 'Migration' ||
                                                    controller == 'Error'}">
             <ul class="menu-navigation">
-                <li class="selected?{controller == 'Configuration'} top">${Html.ActionLink("Configuration", MVC.Admin.Configuration.Index())}</li>
-                <li class="selected?{controller == 'Migration'}">        ${Html.ActionLink("Migration",     MVC.Admin.Migration.Index())}</li>
-                <li class="selected?{controller == 'Error'}">            ${Html.ActionLink("Exceptions",    MVC.Admin.Error.Index())}</li>
-                <li class="selected?{controller == 'Tenant'} bottom">    ${Html.ActionLink("Tenants",       MVC.Admin.Tenant.Index())}</li>
+                <li class="selected?{controller == 'Configuration'} top">${Html.RouteLink("Configuration", Url.For<ConfigurationController>(c => c.Index()))}</li>
+                <li class="selected?{controller == 'Migration'}">        ${Html.RouteLink("Migration",     Url.For<MigrationController>(c => c.Index()))}</li>
+                <li class="selected?{controller == 'Error'}">            ${Html.RouteLink("Exceptions",    Url.For<ErrorController>(c => c.Index()))}</li>
+                <li class="selected?{controller == 'Tenant'} bottom">    ${Html.RouteLink("Tenants",       Url.For<TenantController>(c => c.Index()))}</li>
             </ul>
         </div>
     </div>

@@ -1,6 +1,6 @@
 ﻿<viewdata model="CatalogCreateModel" />
 
-# using (Html.BeginForm(MVC.Admin.Catalog.Index()))
+# using (Html.BeginForm(Url.For<CatalogController>(c => c.Index())))
 # {
 
     ${Html.Scaffold(s => {

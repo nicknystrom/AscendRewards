@@ -1,6 +1,6 @@
 ﻿<viewdata model="TenantCreateModel" />
 
-# using (Html.BeginForm(MVC.Admin.Tenant.Index()))
+# using (Html.BeginForm(Url.For<TenantController>(c => c.Index())))
 # {
     ${Html.Scaffold(s => {
             s.Open();

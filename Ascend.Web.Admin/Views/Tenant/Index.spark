@@ -16,7 +16,7 @@
     <tbody>
         <tr each="var t in Model">
             <td>${t.Enabled}</td>
-            <td>${Html.ActionLink(t.Name.Or("(Tenant)"), MVC.Admin.Tenant.Edit(t.Document.Id))}</td>
+            <td>${Html.RouteLink(t.Name.Or("(Tenant)"), Url.For<TenantController>(c => c.Edit(t.Document.Id)))}</td>
             <td>${t.Database}</td>
             <td>${String.Join("; ", t.Match)}</td>
         </tr>

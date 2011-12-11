@@ -91,7 +91,7 @@ namespace Ascend.Web.Areas.Site.Controllers
     }
     
     [Authorize, Precompile("*")]
-    public partial class SiteController : BaseController
+    public partial class SiteController : AscendController
     {
         public IMenuRepository MenusRepository { get; set; }
         public IEntityCache<Menu> Menus { get; set; }

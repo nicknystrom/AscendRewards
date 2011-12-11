@@ -1,7 +1,7 @@
 ﻿<viewdata id="string" model="GroupEditModel" />
 <set entity="Model.Name" />
 
-# using (Html.BeginForm(MVC.Admin.Group.Edit(id)))
+# using (Html.BeginForm(Url.For<GroupController>(c => c.Edit(id))))
 # {
 
 <div id="admin-edit-tabs">

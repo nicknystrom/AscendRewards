@@ -134,6 +134,7 @@ namespace Ascend.Web.Admin
                     }
                     return cx.CreateSession(t.Database);
                 })
+                .As<Session>()
                 .InstancePerLifetimeScope();
                 
             // explicit repositories (i.e. classes in .Infrastructure that inherit from Repository<>) will
@@ -199,7 +200,7 @@ namespace Ascend.Web.Admin
             var services =
                 Assembly.Load("Ascend.Core").GetTypes().Concat(
                 Assembly.Load("Ascend.Infrastructure").GetTypes().Concat(
-                Assembly.Load("Ascend.Web").GetTypes())
+                Assembly.Load("Ascend.Web.Admin").GetTypes())
                     .Where(t => t.IsPublic &&
                                 t.IsVisible &&
                                 !t.IsGenericTypeDefinition &&
@@ -240,7 +241,7 @@ namespace Ascend.Web.Admin
             //    .SingleInstance();
 
             // tenant service is singleton
-            builder.RegisterType<HostBasedTenantResolverService>()
+            builder.RegisterType<RouteBasedTenantResolverService>()
                 .As<ITenantResolverService>()
                 .SingleInstance();
 
@@ -251,7 +252,7 @@ namespace Ascend.Web.Admin
 
             // register the current tenant as the 'tenant' service
             builder
-                .Register(c => c.Resolve<ITenantResolverService>().GetTenantForRequest(HttpContext.Current.Request))
+                .Register(c => c.Resolve<ITenantResolverService>().GetTenantForRequest(HttpContext.Current))
                 .As<Tenant>()
                 .InstancePerLifetimeScope();
 
@@ -291,20 +292,8 @@ namespace Ascend.Web.Admin
             var configLocation = Server.MapPath("~/Config.js");
             builder
                 .Register(c => {
-                    try
-                    {
-                        var cache = c.Resolve<IEntityCache<ApplicationConfiguration>>();
-                        return cache[Document.For<ApplicationConfiguration>("default")];
-                    }
-                    catch
-                    {
-                        var cfg = JsonConvert.DeserializeObject<ApplicationConfiguration>(
-                                File.ReadAllText(configLocation)
-                        );
-                        cfg.Document = new Document {Id = Document.For<ApplicationConfiguration>("default")};
-                        c.Resolve<IApplicationConfigurationRepository>().Save(cfg);
-                        return cfg;
-                    }
+                    var cache = c.Resolve<IEntityCache<ApplicationConfiguration>>();
+                    return cache[Document.For<ApplicationConfiguration>("default")];
                 })
                 .As<IApplicationConfiguration>()
                 .InstancePerLifetimeScope();
@@ -330,11 +319,11 @@ namespace Ascend.Web.Admin
             var settings = new SparkSettings();
             settings.Debug = true;
             
-            settings.AddAssembly("RedBranch.Hammock");
             settings.AddAssembly("Newtonsoft.Json");
+            settings.AddAssembly("RedBranch.Hammock");
             settings.AddAssembly("Ascend.Core");
-            settings.AddAssembly("Ascend.Web");
             settings.AddAssembly("Ascend.Infrastructure");
+            settings.AddAssembly("Ascend.Web.Admin");
 
             settings.AddNamespace("System");
             settings.AddNamespace("System.Collections.Generic");
@@ -343,14 +332,14 @@ namespace Ascend.Web.Admin
             settings.AddNamespace("System.Web.Routing");
             settings.AddNamespace("System.Web.Mvc");
             settings.AddNamespace("System.Web.Mvc.Html");
-            settings.AddNamespace("RedBranch.Hammock");
             settings.AddNamespace("Newtonsoft.Json");
+            settings.AddNamespace("RedBranch.Hammock");
             settings.AddNamespace("Ascend.Core");
             settings.AddNamespace("Ascend.Core.Repositories");
             settings.AddNamespace("Ascend.Core.Services");
             settings.AddNamespace("Ascend.Infrastructure");
-            settings.AddNamespace("Ascend.Web");
-            settings.AddNamespace("Ascend.Infrastructure");
+            settings.AddNamespace("Ascend.Infrastructure.Web");
+            settings.AddNamespace("Ascend.Web.Admin");
             return settings;
         }
         

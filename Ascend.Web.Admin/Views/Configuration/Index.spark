@@ -1,6 +1,6 @@
 ﻿<viewdata model="ConfigurationEditModel" />
 
-# using (Html.BeginForm(MVC.Admin.Configuration.Index()))
+# using (Html.BeginForm(Url.For<ConfigurationController>(c => c.Index())))
 # {
 
 <div id="admin-edit-tabs">

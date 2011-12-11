@@ -68,7 +68,7 @@
     </li>
 </div>
 
-# using (Html.BeginForm(MVC.Admin.Catalog.Edit(id)))
+# using (Html.BeginForm(Url.For<CatalogController>(c => c.Edit(id))))
 # {
 
 <div id="admin-edit-tabs">

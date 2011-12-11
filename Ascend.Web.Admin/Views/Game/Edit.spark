@@ -10,7 +10,7 @@
   
 </style>
 
-# using (Html.BeginForm(MVC.Admin.Game.Edit(id)))
+# using (Html.BeginForm(Url.For<GameController>(c => c.Edit(id))))
 # {
 
 <div id="admin-edit-tabs">

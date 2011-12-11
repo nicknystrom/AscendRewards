@@ -1,6 +1,6 @@
 ﻿<viewdata model="MenuCreateModel" />
 
-# using (Html.BeginForm(MVC.Admin.Menu.Index()))
+# using (Html.BeginForm(Url.For<MenuController>(c => c.Index())))
 # {
 
     ${Html.Scaffold(s => {

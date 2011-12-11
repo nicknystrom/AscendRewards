@@ -1,6 +1,6 @@
 ﻿<viewdata model="GameCreateModel" />
 
-# using (Html.BeginForm(MVC.Admin.Game.Index()))
+# using (Html.BeginForm(Url.For<GameController>(c => c.Index())))
 # {
 
     ${Html.Scaffold(s => {

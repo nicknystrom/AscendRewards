@@ -5,7 +5,7 @@
 
 </style>
 
-# using (Html.BeginForm(MVC.Admin.Messaging.Activation()))
+# using (Html.BeginForm(Url.For<MessagingController>(c => c.Activation())))
 # {
 
 <p>The following users require activation, but have not received an 'Activation' email:</p>

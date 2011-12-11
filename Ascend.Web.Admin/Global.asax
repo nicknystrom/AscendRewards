@@ -1,1 +1,1 @@
-<%@ Application Inherits="Ascend.Web.Admin.MvcApplication" %>
+<%@ Application Inherits="Ascend.Web.Admin.AdminApplication" %>

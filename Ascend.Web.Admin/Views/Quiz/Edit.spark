@@ -66,7 +66,7 @@
   
 </style>
 
-# using (Html.BeginForm(MVC.Admin.Quiz.Edit(id)))
+# using (Html.BeginForm(Url.For<QuizController>(c => c.Edit(id))))
 # {
 
 <div id="admin-edit-tabs">

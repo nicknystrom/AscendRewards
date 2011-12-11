@@ -21,7 +21,7 @@
             var target = $(this).attr('for');
             var dlg = $('<div style="display: none;"></div>')
                 .appendTo('body')
-                .load('${Url.Action(MVC.Admin.Account.Choose(AccountType.Program))}',
+                .load('${Url.Action(Url.For<AccountController>(c => c.Choose(AccountType.Program)))}',
             function() {
                 dlg.dialog({
                     title: 'Select Budget Account for Program',

@@ -13,7 +13,7 @@
     </thead>
     <tbody>
         <tr each="var g in Model">
-            <td>${Html.ActionLink(g.Name.Or("(Group)"), MVC.Admin.Group.Edit(g.Document.Id))}</td>
+            <td>${Html.RouteLink(g.Name.Or("(Group)"), Url.For<GroupController>(c => c.Edit(g.Document.Id)))}</td>
             <td>${g.Catalog}</td>
         </tr>
     </tbody>

@@ -24,14 +24,14 @@ namespace Ascend.Infrastructure.Web
         // HTTP_HOST works on both IIS and Mono's FastCGI server. SERVER_NAME does not (it is
         // set to the virtual server match string *.ascendrewards.com on Mono FastCGI).
 		
-		public Tenant GetTenantForRequest(HttpRequestBase request)
+		public Tenant GetTenantForRequest(HttpContextBase context)
 		{
-			return GetTenantForRequest(request.ServerVariables["HTTP_HOST"]);
+			return GetTenantForRequest(context.Request.ServerVariables["HTTP_HOST"]);
 		}
 		
-		public Tenant GetTenantForRequest(HttpRequest request)
+		public Tenant GetTenantForRequest(HttpContext context)
 		{
-            return GetTenantForRequest(request.ServerVariables["HTTP_HOST"]);
+            return GetTenantForRequest(context.Request.ServerVariables["HTTP_HOST"]);
 		}
 		
         public Tenant GetTenantForRequest(string host)

@@ -18,7 +18,7 @@
             # var a = (null == i.Attempts ? null : i.Attempts.LastOrDefault());
             <td>${i.Created.Date.ToShortDateString()}</td>
             <td>${i.Type}</td>
-            <td>${Html.ActionLink(i.Location, MVC.Admin.Import.Edit(i.Document.Id))}</td>
+            <td>${Html.RouteLink(i.Location, Url.For<ImportController>(c => c.Edit(i.Document.Id)))}</td>
             <td if="null == a">-</td>
             <td if="null != a">
                 ${a.Success ? "Imported" : "Failed"} on ${a.Date.ToShortDateString()}
@@ -29,9 +29,9 @@
  
 <content name="actions">
     <ul>
-        <li>${Html.ActionLink("Refresh Events", MVC.Admin.Import.Events())}</li>
-        <li>${Html.ActionLink("Randomizer", MVC.Admin.Import.Randomizer())}</li>
-        <li>${Html.ActionLink("Eraser", MVC.Admin.Import.Reset())}</li>
+        <li>${Html.RouteLink("Refresh Events", Url.For<ImportController>(c => c.Events()))}</li>
+        <li>${Html.RouteLink("Randomizer", Url.For<ImportController>(c => c.Randomizer()))}</li>
+        <li>${Html.RouteLink("Eraser", Url.For<ImportController>(c => c.Reset()))}</li>
         <li><a href="#create-import" class="create-button">New Import</a></li>
     </ul>
 </content>

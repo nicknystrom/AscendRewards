@@ -1,6 +1,6 @@
 ﻿<viewdata model="UserCreateModel" />
 
-# using (Html.BeginForm(MVC.Admin.User.Index()))
+# using (Html.BeginForm(Url.For<UserController>(c => c.Index())))
 # {
 
     ${Html.Scaffold(s => {

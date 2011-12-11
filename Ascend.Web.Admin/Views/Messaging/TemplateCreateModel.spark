@@ -1,6 +1,6 @@
 ﻿<viewdata model="TemplateCreateModel" />
 
-# using (Html.BeginForm(MVC.Admin.Messaging.Index()))
+# using (Html.BeginForm(Url.For<MessagingController>(c => c.Index())))
 # {
 
     ${Html.Scaffold(s => {

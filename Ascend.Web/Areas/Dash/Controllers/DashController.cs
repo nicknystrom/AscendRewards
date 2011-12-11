@@ -15,7 +15,7 @@ namespace Ascend.Web.Areas.Dash.Controllers
 {
     [Authorize]
     [Precompile("*")]
-    public abstract partial class DashController : BaseController
+    public abstract partial class DashController : AscendController
     {
         public IEntityCache<User> Users { get; set; }
 

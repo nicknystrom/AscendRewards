@@ -89,7 +89,7 @@ namespace Ascend.Web.Areas.Site.Controllers
 
         public static string GetProductImageUrl(this HtmlHelper html, string productId, int imageIndex, int? width, int? height)
         {
-            var controller = html.ViewContext.Controller as BaseController;
+            var controller = html.ViewContext.Controller as AscendController;
             if (null == controller || null == controller.Images)
             {
                 return "<span>No image</span>";

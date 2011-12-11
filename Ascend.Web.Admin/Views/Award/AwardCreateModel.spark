@@ -1,6 +1,6 @@
 ﻿<viewdata model="AwardCreateModel" />
 
-# using (Html.BeginForm(MVC.Admin.Award.Index()))
+# using (Html.BeginForm(Url.For<AwardController>(c => c.Index())))
 # {
 
     ${Html.Scaffold(s => {

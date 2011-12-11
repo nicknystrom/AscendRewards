@@ -23,7 +23,7 @@
             <td>${m.Attempts.Count}</td>
             <td>${m.Recipient.Name}</td>
             <td>${m.Recipient.Address}</td>
-            <td>${Html.ActionLink(m.Subject, MVC.Admin.Messaging.Display(m.Document.Id))}</td>
+            <td>${Html.RouteLink(m.Subject, Url.For<MessagingController>(c => c.Display(m.Document.Id)))}</td>
             <td>${H(m.Body.ShortenTo(40))}</td>
             <td>${m.Queued}</td>
             <td>${m.Sent}</td>

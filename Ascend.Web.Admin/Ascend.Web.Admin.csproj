@@ -81,11 +81,30 @@
   <ItemGroup>
     <Folder Include="Content\" />
     <Folder Include="Controllers\" />
+    <Folder Include="Content\Scripts\" />
+    <Folder Include="Content\Images\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Web.config" />
     <Content Include="Web.config" />
     <Content Include="Global.asax" />
+    <Content Include="Config.js" />
+    <Content Include="Content\Admin.css" />
+    <Content Include="Content\Admin.js" />
+    <Content Include="Content\Themes\Aristo\images\icon_sprite.png" />
+    <Content Include="Content\Themes\Aristo\images\progress_bar.gif" />
+    <Content Include="Content\Themes\Aristo\images\slider_handles.png" />
+    <Content Include="Content\Themes\Aristo\images\ui-icons_222222_256x240.png" />
+    <Content Include="Content\Scripts\jquery-1.7.1.min.js" />
+    <Content Include="Content\Scripts\jquery.dataTables.min.js" />
+    <Content Include="Content\Scripts\jquery.cookie.js" />
+    <Content Include="Content\Scripts\jquery-ui-1.8.16.min.js" />
+    <Content Include="Content\Scripts\jquery.ui.selectmenu.js" />
+    <Content Include="Content\Themes\Aristo\images\bg_fallback.png" />
+    <Content Include="Content\Themes\Aristo\images\ui-icons_454545_256x240.png" />
+    <Content Include="Content\Themes\Aristo\Aristo.css" />
+    <Content Include="Content\Themes\jquery.ui.selectmenu.css" />
+    <Content Include="Content\Images\ascend.png" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Global.asax.cs">
@@ -188,7 +207,6 @@
     <None Include="Views\Shared\EditorTemplates\AvailabilityEditModel.spark" />
     <None Include="Views\Shared\EditorTemplates\BudgetEditModel.spark" />
     <None Include="Views\Shared\EditorTemplates\ContentEditModel.spark" />
-    <None Include="Views\Shared\EditorTemplates\FolderEditModel.spark" />
     <None Include="Views\Shared\EditorTemplates\GroupChooser.spark" />
     <None Include="Views\Shared\EditorTemplates\GroupMultiChooser.spark" />
     <None Include="Views\Shared\EditorTemplates\IssuanceEditModel.spark" />
@@ -213,5 +231,6 @@
     <None Include="Views\Validation\Index.spark" />
     <None Include="Views\User\DisplayTemplates\LoginIncrements.spark" />
     <None Include="Views\User\EditorTemplates\UserState.spark" />
+    <None Include="Views\Shared\_Notifications.spark" />
   </ItemGroup>
 </Project>

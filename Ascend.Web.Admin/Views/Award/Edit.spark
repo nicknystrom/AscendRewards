@@ -92,7 +92,7 @@
 
 <use file="FileChooser" />
 
-# using (Html.BeginForm(MVC.Admin.Award.Edit(id)))
+# using (Html.BeginForm(Url.For<AwardController>(c => c.Edit(id))))
 # {
 
 ${Html.ValidationSummary()}
@@ -196,7 +196,7 @@ ${Html.ValidationSummary()}
     var url = $('#certificate-url').val();
     if (url) {
     $.ajax({
-    url: '${Url.Action(MVC.Admin.Award.Certificate())}',
+    url: '${Url.Action(Url.For<AwardController>(c => c.Certificate()))}',
     type: 'post',
     data: { 'Url': url },
     dataType: 'html',

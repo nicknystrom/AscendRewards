@@ -86,6 +86,8 @@ namespace Ascend.Web.Admin.Controllers
 	
     public partial class ImportController : AdminController
     {
+        public IApplicationConfiguration Application { get; set; }
+
         public IImportRepository Imports { get; set; }
         public IEventTicketingService TicketingService { get; set; }
         public IRepository<Error> Errors { get; set; }

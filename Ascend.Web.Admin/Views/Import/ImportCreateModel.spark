@@ -2,7 +2,7 @@
 
 <use file="FileChooser" />
 
-# using (Html.BeginForm(MVC.Admin.Import.Index()))
+# using (Html.BeginForm(Url.For<ImportController>(c => c.Index())))
 # {
 
     Type: ${Html.EditorFor(x => x.Type)}<br />

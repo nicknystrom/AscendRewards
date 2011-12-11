@@ -14,7 +14,7 @@
     </thead>
     <tbody>
         <tr each="var c in Model">
-            <td>${Html.ActionLink(c.Name.Or("(Catalog)"), MVC.Admin.Catalog.Edit(c.Document.Id))}</td>
+            <td>${Html.RouteLink(c.Name.Or("(Catalog)"), Url.For<CatalogController>(c => c.Edit(c.Document.Id)))}</td>
             <td>$!{c.DefaultMark.MinMarkupPercent.ToString("P")}</td>
             <td>$!{c.DefaultMark.MinMarkupDollars.ToString("C")}</td>
         </tr>

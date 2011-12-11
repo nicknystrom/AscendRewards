@@ -50,7 +50,7 @@ Global
 		{347E36DA-9670-4651-BB76-5DB45C6B0CF7} = {EC0F06A7-50FA-498C-B67D-C6EAFE0B859D}
 	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
-		StartupItem = Ascend.Web\Ascend.Web.csproj
+		StartupItem = Ascend.Web.Admin\Ascend.Web.Admin.csproj
 		Policies = $0
 		$0.TextStylePolicy = $1
 		$1.inheritsSet = null

@@ -11,7 +11,7 @@ using Ascend.Web.Areas.Site.Controllers;
 
 namespace Ascend.Web.Areas.Public.Controllers
 {
-    public abstract partial class PublicController : BaseController
+    public abstract partial class PublicController : AscendController
     {
 
     }

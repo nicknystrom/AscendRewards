@@ -6,7 +6,7 @@ textarea { height: 100px; }
 
 </style>
 
-# using (Html.BeginForm(MVC.Admin.Concierge.Edit(id)))
+# using (Html.BeginForm(Url.For<ConciergeController>(c => c.Edit(id))))
 # {
 
 <div id="admin-edit-tabs">
@@ -18,7 +18,7 @@ textarea { height: 100px; }
         <table class="scaffold">
             <tr>
                 <th>User</th>
-                <td>${Html.ActionLink(user.DisplayName, MVC.Admin.User.Edit(user.Id))}</td>
+                <td>${Html.RouteLink(user.DisplayName, Url.For<UserController>(c => c.Edit(user.Id)))}</td>
             </tr>
             <tr>
                 <th>Created</th>

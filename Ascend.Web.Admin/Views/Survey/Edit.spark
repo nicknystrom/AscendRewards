@@ -61,7 +61,7 @@
   
 </style>
 
-# using (Html.BeginForm(MVC.Admin.Survey.Edit(id)))
+# using (Html.BeginForm(Url.For<SurveyController>(c => c.Edit(id))))
 # {
 
 <div id="admin-edit-tabs">

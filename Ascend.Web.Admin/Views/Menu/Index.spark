@@ -13,7 +13,7 @@
     </thead>
     <tbody>
         <tr each="var m in Model">
-            <td>${Html.ActionLink(m.Name.Or("(Menu)"), MVC.Admin.Menu.Edit(m.Document.Id))}</td>
+            <td>${Html.RouteLink(m.Name.Or("(Menu)"), Url.For<MenuController>(c => c.Edit(m.Document.Id)))}</td>
             <td>
                 <span each="var i in (m.Items ?? new MenuItem[0]).Take(5)">${i.Name}, </span> ...
             </td>

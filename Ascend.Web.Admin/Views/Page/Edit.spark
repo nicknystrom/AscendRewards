@@ -5,7 +5,7 @@
 
 </style>
 
-# using (Html.BeginForm(MVC.Admin.Page.Edit()))
+# using (Html.BeginForm(Url.For<PageController>(c => c.Edit())))
 # {
 
 <div id="admin-edit-tabs">

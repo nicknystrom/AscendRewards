@@ -4,16 +4,16 @@
 	
 	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
     
-    <link href="${Links.Content.Admin_css}" rel="stylesheet" type="text/css" />
-    <link href="${Links.Content.ui_selectmenu_css}" rel="stylesheet" type="text/css" />
-    <link href="~/Content/Themes/Aristo/jquery-ui-1.8rc3.custom.css" rel="stylesheet" type="text/css" />
-        
-    <script type="text/javascript" src="~/Content/Scripts/jquery-1.4.2.js"></script>
+    <link href="~/Content/Admin.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/Themes/jquery.ui.selectmenu.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/Themes/Aristo/Aristo.css" rel="stylesheet" type="text/css" />
+
+    <script type="text/javascript" src="~/Content/Scripts/jquery-1.7.1.min.js"></script>
     <script type="text/javascript" src="~/Content/Scripts/jquery.cookie.js"></script>
-    <script type="text/javascript" src="~/Content/Scripts/jquery-ui-1.8.2.js"></script>
+    <script type="text/javascript" src="~/Content/Scripts/jquery-ui-1.8.16.min.js"></script>
     <script type="text/javascript" src="~/Content/Scripts/jquery.dataTables.min.js"></script>
-    <script type="text/javascript" src="${Links.Content.ui_selectmenu_js}"></script>
-    <script type="text/javascript" src="${Links.Content.Admin_js}"></script>
+    <script type="text/javascript" src="~/Content/Scripts/jquery.ui.selectmenu.js"></script>
+    <script type="text/javascript" src="~/Content/Admin.js"></script>
         
     <use content="head" />
     
@@ -41,7 +41,7 @@
 	<div id="page">
         <Navigation />
 		<div id="content">
-            <use file="Views/Shared/_Notifications" />
+            <use file="Shared/_Notifications" />
 			<use content="view" />	
 		</div>
         <div id="actions">

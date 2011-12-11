@@ -1,7 +1,7 @@
 ﻿<viewdata id="string" model="ImportEditModel" targets="string[][]" />
 <set entity="Model.Location" />
 
-# using (Html.BeginForm(MVC.Admin.Import.Edit(id)))
+# using (Html.BeginForm(Url.For<ImportController>(c => c.Edit(id))))
 # {
 
 ${Html.Scaffold(s => {

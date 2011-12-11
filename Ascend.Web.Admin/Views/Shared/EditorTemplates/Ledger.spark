@@ -71,7 +71,7 @@
   $(function() {
     $('#${pre}-tx-submit').click(function() {
         $('#${pre}').load(
-            '${Url.Action(MVC.Admin.Ledger.Post(null))}',
+            '${Url.Action(Url.For<LedgerController>(c => c.Post(null)))}',
             {
                 DebitAccount: $('#${pre}-tx-debit').val(),
                 CreditAccount: $('#${pre}-tx-credit').val(),

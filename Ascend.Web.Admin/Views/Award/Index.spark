@@ -21,7 +21,7 @@
     </thead>
     <tbody>
         <tr each="var a in Model">
-            <td>${Html.ActionLink(a.Title, MVC.Admin.Award.Edit(a.Document.Id))}</td>
+            <td>${Html.RouteLink(a.Title, Url.For<AwardController>(c => c.Edit(a.Document.Id)))}</td>
             <td><span if="null != a.Issuance">${a.Issuance.Type}</span></td>
 
             <td><span class="ui-icon ui-icon-check" if="a.Enabled" /></td>

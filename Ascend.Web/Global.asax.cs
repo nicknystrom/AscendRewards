@@ -286,7 +286,7 @@ namespace Ascend.Web
 
             // register the current tenant as the 'tenant' service
             builder
-                .Register(c => c.Resolve<ITenantResolverService>().GetTenantForRequest(HttpContext.Current.Request))
+                .Register(c => c.Resolve<ITenantResolverService>().GetTenantForRequest(HttpContext.Current))
                 .As<Tenant>()
                 .InstancePerLifetimeScope();
 
@@ -326,20 +326,8 @@ namespace Ascend.Web
             var configLocation = Server.MapPath("~/Config.js");
             builder
                 .Register(c => {
-                    try
-                    {
-                        var cache = c.Resolve<IEntityCache<ApplicationConfiguration>>();
-                        return cache[Document.For<ApplicationConfiguration>("default")];
-                    }
-                    catch
-                    {
-                        var cfg = JsonConvert.DeserializeObject<ApplicationConfiguration>(
-                                File.ReadAllText(configLocation)
-                        );
-                        cfg.Document = new Document {Id = Document.For<ApplicationConfiguration>("default")};
-                        c.Resolve<IApplicationConfigurationRepository>().Save(cfg);
-                        return cfg;
-                    }
+                    var cache = c.Resolve<IEntityCache<ApplicationConfiguration>>();
+                    return cache[Document.For<ApplicationConfiguration>("default")];
                 })
                 .As<IApplicationConfiguration>()
                 .InstancePerLifetimeScope();

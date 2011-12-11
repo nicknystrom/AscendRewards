@@ -14,7 +14,7 @@
     </thead>
     <tbody>
         <tr each="var t in Model">
-            <td>${Html.ActionLink(t.Name.Or("(Theme)"), MVC.Admin.Theme.Edit(t.Document.Id))}</td>
+            <td>${Html.RouteLink(t.Name.Or("(Theme)"), Url.For<ThemeController>(c => c.Edit(t.Document.Id)))}</td>
             <td>${t.Stylesheet}</td>
             <td>${t.Banner}</td>
         </tr>

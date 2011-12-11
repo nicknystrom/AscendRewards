@@ -279,9 +279,11 @@
     <Compile Include="WebConfigInfrastructureConfiguration.cs" />
     <Compile Include="Repositories\UserActivityRepository.cs" />
     <Compile Include="Web\BaseController.cs" />
-    <Compile Include="Web\TenantService.cs" />
     <Compile Include="Log4NetService.cs" />
     <Compile Include="Repositories\VendorRepository.cs" />
+    <Compile Include="Web\ITenantResolverService.Host.cs" />
+    <Compile Include="Web\ITenantResolverService.Route.cs" />
+    <Compile Include="Web\Scaffolding.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Ascend.Core\Ascend.Core.csproj">

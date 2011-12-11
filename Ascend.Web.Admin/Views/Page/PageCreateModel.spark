@@ -1,6 +1,6 @@
 ﻿<viewdata model="PageCreateModel" />
 
-# using (Html.BeginForm(MVC.Admin.Page.Index()))
+# using (Html.BeginForm(Url.For<PageController>(c => c.Index())))
 # {
 
     ${Html.Scaffold(s => {
