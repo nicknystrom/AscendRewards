@@ -151,6 +151,7 @@
     <Compile Include="Services\Validations\General\DatabaseIsUpdated.cs" />
     <Compile Include="Services\ITenantResolverService.cs" />
     <Compile Include="Repositories\IErrorRepository.cs" />
+    <Compile Include="Repositories\IEmailRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">

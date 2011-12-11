@@ -68,6 +68,11 @@ namespace Ascend.Infrastructure
             get { return ConfigurationManager.AppSettings["couch-errors-database"]; }
         }
 
+        public string CouchMailDatabase
+        {
+            get { return ConfigurationManager.AppSettings["couch-mail-database"]; }
+        }
+
         public string AmazonAccessKey
         {
             get { return ConfigurationManager.AppSettings["amazon-access-key"]; }

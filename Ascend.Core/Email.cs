@@ -8,6 +8,7 @@ namespace Ascend.Core
 {
     public class Email : Entity
     {
+        public string Tenant { get; set; }
         public EmailAddress Sender { get; set; }
         public EmailAddress Recipient { get; set; }
         public string Subject { get; set; }

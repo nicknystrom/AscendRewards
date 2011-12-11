@@ -6,6 +6,7 @@
 
 ${Html.Scaffold(s => {
     s.Open();
+    s.Display(x => x.Tenant);
     s.Display(x => x.Sender);
     s.Display(x => x.Recipient);
     s.Display(x => x.Subject);

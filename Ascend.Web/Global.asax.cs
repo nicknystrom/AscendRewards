@@ -102,6 +102,8 @@ namespace Ascend.Web
                     if (!dbs.Contains(cfg.CouchTenantsDatabase)) { x.CreateDatabase(cfg.CouchTenantsDatabase); }
                     if (!dbs.Contains(cfg.CouchTicketJonesDatabase)) { x.CreateDatabase(cfg.CouchTicketJonesDatabase); }
                     if (!dbs.Contains(cfg.CouchErrorsDatabase)) { x.CreateDatabase(cfg.CouchErrorsDatabase); }
+                    if (!dbs.Contains(cfg.CouchMailDatabase)) { x.CreateDatabase(cfg.CouchMailDatabase); }
+
                     x.Observers.Add(y => new EntityAuditObserver());
                     return x;
                 })
@@ -158,6 +160,10 @@ namespace Ascend.Web
                 .SingleInstance()
                 .Named<Session>("errors-session");
             builder
+                .Register(c => c.ResolveNamed<Connection>("global-connection").CreateSession(c.Resolve<IInfrastructureConfiguration>().CouchMailDatabase))
+                .SingleInstance()
+                .Named<Session>("mail-session");
+            builder
                 .Register(c => 
                 {
                     // default session service must determine the current tenant
@@ -197,6 +203,10 @@ namespace Ascend.Web
             builder
                 .Register(c => new ErrorRepository(c.ResolveNamed<Session>("errors-session")))
                 .As(typeof(ErrorRepository), typeof(IErrorRepository), typeof(IRepository<Error>))
+                .InstancePerLifetimeScope();
+            builder
+                .Register(c => new EmailRepository(c.ResolveNamed<Session>("mail-session")))
+                .As(typeof(EmailRepository), typeof(IEmailRepository), typeof(IRepository<Email>))
                 .InstancePerLifetimeScope();
             builder
                 .Register(c => new TicketJonesCategoryRepository(c.ResolveNamed<Session>("ticketjones-session")))

@@ -119,6 +119,11 @@ namespace Ascend.Web.Admin
                 .SingleInstance()
                 .Named<Session>("errors-session");
             builder
+                .Register(c => c.ResolveNamed<Connection>("global-connection").CreateSession(c.Resolve<IInfrastructureConfiguration>().CouchMailDatabase))
+                .SingleInstance()
+                .Named<Session>("mail-session");
+
+            builder
                 .Register(c => c.ResolveNamed<Connection>("global-connection").CreateSession(c.Resolve<IInfrastructureConfiguration>().CouchTicketJonesDatabase))
                 .InstancePerLifetimeScope()
                 .Named<Session>("ticketjones-session");
@@ -163,6 +168,10 @@ namespace Ascend.Web.Admin
             builder
                 .Register(c => new ErrorRepository(c.ResolveNamed<Session>("errors-session")))
                 .As(typeof(ErrorRepository), typeof(IErrorRepository), typeof(IRepository<Error>))
+                .InstancePerLifetimeScope();
+            builder
+                .Register(c => new EmailRepository(c.ResolveNamed<Session>("mail-session")))
+                .As(typeof(EmailRepository), typeof(IEmailRepository), typeof(IRepository<Email>))
                 .InstancePerLifetimeScope();
             builder
                 .Register(c => new TicketJonesCategoryRepository(c.ResolveNamed<Session>("ticketjones-session")))

@@ -11,6 +11,7 @@ namespace Ascend.Infrastructure
     {
         private SmtpClient _smtp;
 
+        public Tenant Tenant { get; set; }
         public IInfrastructureConfiguration InfrastructureConfiguration { get; set; }
         public IApplicationConfiguration Configuration { get; set; }
         public IRepository<Email> Emails { get; set; }
@@ -59,6 +60,7 @@ namespace Ascend.Infrastructure
                 attempt.Error = ex.Message;
             }
 
+            email.Tenant = Tenant.Document.Id;
             email.AddAttempt(attempt);
             Emails.Save(email);
             return attempt;

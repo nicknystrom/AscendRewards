@@ -285,6 +285,7 @@
     <Compile Include="Web\ITenantResolverService.Route.cs" />
     <Compile Include="Web\Scaffolding.cs" />
     <Compile Include="Repositories\ErrorRepository.cs" />
+    <Compile Include="Repositories\EmailRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Ascend.Core\Ascend.Core.csproj">
