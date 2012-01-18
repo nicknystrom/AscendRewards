@@ -5,3 +5,5 @@ Ascend.Test/bin
 Ascend.Web/bin
 *.userprefs
 ExceptionMessage.resources
+
+.DS_Store
