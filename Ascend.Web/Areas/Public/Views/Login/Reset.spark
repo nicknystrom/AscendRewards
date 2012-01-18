@@ -9,8 +9,8 @@
 # using (Html.BeginForm(MVC.Public.Login.Reset()))
 # {
 <span>Enter your email address and your password will be emailed to you. If you are still
-unable to login, <a href="mailto:${application.SupportEmailAddress}">email us</a> or call at
-${application.SupportPhoneNumber}.</span>
+unable to login, <a href="mailto:${application.SupportEmailAddress}">email us</a> or contact your 
+human resource manager.</span>
 <span>${Html.EditorFor(x => x.Email)}</span>
 <span><input type="submit" value="Submit" /></span>
 <span>${Html.ValidationMessageFor(x => x.Email)}</span>

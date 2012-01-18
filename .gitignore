@@ -6,3 +6,5 @@ Ascend.Web/bin
 *.userprefs
 ExceptionMessage.resources
 logs
+
+.DS_Store
