@@ -150,8 +150,8 @@
         });
 
         $('#product-add-wishlist').click(function () {
-            var optionTemplate =  '${Url.Action(MVC.Site.Cart.Update("wishlist", Model.Id, "optionName", null))}';
-            var simpleTemplate = '${Url.Action(MVC.Site.Cart.Update("wishlist", Model.Id, null, null))}';
+            var optionTemplate =  '${Url.Action(MVC.Site.Cart.Update("Wishlist", Model.Id, "optionName", null))}';
+            var simpleTemplate = '${Url.Action(MVC.Site.Cart.Update("Wishlist", Model.Id, null, null))}';
             $.ajax({
                 url: $('#product-options').val() == undefined
                         ? simpleTemplate

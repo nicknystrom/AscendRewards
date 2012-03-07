@@ -107,7 +107,7 @@
                 <ul>
                     <li><a href="${Url.Action(MVC.Site.Catalog.Product(x.Value.ProductId))}">See Details</a></li>
                     <li><a href="${Url.Action(MVC.Site.Cart.Index(x.Value.ProductId, x.Value.OptionName))}" class="add">Add to Cart</a></li>
-                    <li><a href="${Url.Action(MVC.Site.Cart.Update("wishlist", x.Value.ProductId, x.Value.OptionName, null))}" class="remove">Remove from Wishlist</a></li>
+                    <li><a href="${Url.Action(MVC.Site.Cart.Update('Wishlist', x.Value.ProductId, x.Value.OptionName, null))}" class="remove">Remove from Wishlist</a></li>                    <li><a href="${Url.RouteUrl(new { area="Site", controller="Cart", action="Update", type="Wishlist", productId=x.Value.ProductId, optionName=x.Value.OptionName, quantity=0 })}" class="remove">Remove from Wishlist</a></li>
                 </ul>
             </td>
         </tr>
