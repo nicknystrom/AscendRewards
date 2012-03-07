@@ -143,6 +143,8 @@ namespace Ascend.Infrastructure
         /// </summary>
         public string Transform(string text)
         {
+             text = text ?? "";
+
             // Standardize line endings:
             // DOS to Unix and Mac to Unix
             text = text.Replace("\r\n", "\n").Replace("\r", "\n");
