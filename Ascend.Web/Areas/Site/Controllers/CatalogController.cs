@@ -179,7 +179,7 @@ namespace Ascend.Web.Areas.Site.Controllers
             }
 
             // sort remaining
-            s = String.IsNullOrEmpty(s) ? "name" : s;
+            s = String.IsNullOrEmpty(s) ? "!price" : s;
             switch (s)
             {
                 case "name": p = p.OrderBy(x => x.Name); break;
