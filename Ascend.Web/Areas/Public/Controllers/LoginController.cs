@@ -200,7 +200,7 @@ namespace Ascend.Web.Areas.Public.Controllers
                 model.Email,
                 model.Password
             );
-            return Views("RegisterSuccess");
+            return View("RegisterSuccess");
         }
 
         [HttpGet]
