@@ -5,9 +5,9 @@
     <script type="text/javascript" src="/Content/Scripts/jquery.fancybox-1.3.3.pack.js"></script>
 </content>
 
-<use file="Catalog/_Nav" />
 
 <use file="Catalog/Categories" category="Model.Category" />
+<use file="Catalog/_Nav" />
 
 <style>
 

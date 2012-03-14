@@ -13,9 +13,8 @@
   
 </style>
 
-<use file="Catalog/_Nav" />
-
 <use file="Catalog/Categories" category="Model.Category" tag="Model.Tag" />
+<use file="Catalog/_Nav" />
 
 <div id="filtering">
 
