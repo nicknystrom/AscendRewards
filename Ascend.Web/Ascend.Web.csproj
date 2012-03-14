@@ -13,7 +13,6 @@
     <RootNamespace>Ascend.Web</RootNamespace>
     <AssemblyName>Ascend.Web</AssemblyName>
     <MvcBuildViews>false</MvcBuildViews>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -58,47 +57,38 @@
     <Reference Include="itextsharp, Version=5.0.5.0, Culture=neutral, PublicKeyToken=8354ae6d2174ddca">
       <HintPath>..\lib\itextsharp.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=4.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\lib\Newtonsoft.Json.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Web.Mvc, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\lib\System.Web.Mvc.dll</HintPath>
-    </Reference>
-    <Reference Include="Spark, Version=1.5.0.0, Culture=neutral, PublicKeyToken=7f8549eed921a12c">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\lib\Spark.dll</HintPath>
-    </Reference>
-    <Reference Include="Spark.Web.Mvc, Version=1.5.0.0, Culture=neutral, PublicKeyToken=7f8549eed921a12c">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\lib\Spark.Web.Mvc.dll</HintPath>
-    </Reference>
     <Reference Include="System.Core" />
-    <Reference Include="System.Web.WebPages, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\lib\System.Web.WebPages.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Web.WebPages.Razor, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\lib\System.Web.WebPages.Razor.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Web.Razor, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\lib\System.Web.Razor.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Web.WebPages.Deployment, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\lib\System.Web.WebPages.Deployment.dll</HintPath>
-    </Reference>
     <Reference Include="log4net, Version=1.2.10.0, Culture=neutral, PublicKeyToken=1b44e1d426115821">
       <HintPath>..\lib\log4net.dll</HintPath>
     </Reference>
-    <Reference Include="RedBranch.Hammock, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="System.Configuration.Install" />
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\lib\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc">
+      <HintPath>..\lib\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="Spark">
+      <HintPath>..\lib\Spark.dll</HintPath>
+    </Reference>
+    <Reference Include="Spark.Web.Mvc">
+      <HintPath>..\lib\Spark.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages">
+      <HintPath>..\lib\System.Web.WebPages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor">
+      <HintPath>..\lib\System.Web.WebPages.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Razor">
+      <HintPath>..\lib\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment">
+      <HintPath>..\lib\System.Web.WebPages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="RedBranch.Hammock">
       <HintPath>..\lib\RedBranch.Hammock.dll</HintPath>
     </Reference>
-    <Reference Include="System.Configuration.Install" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Admin.AccountController.generated.cs">
@@ -689,7 +679,6 @@
     <None Include="Messages\UserActivation.template" />
     <None Include="Messages\UserAward.template" />
     <None Include="Messages\UserReset.template" />
-    <None Include="Messages\UserWelcome.template" />
     <None Include="T4MVC.settings.t4" />
     <None Include="T4MVC.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -710,6 +699,9 @@
     <None Include="Views\Shared\EditorTemplates\Phone.spark" />
     <None Include="Views\Shared\EditorTemplates\DateTime.spark" />
     <None Include="Views\Shared\_Notifications.spark" />
+    <None Include="Messages\UserWelcome.template" />
+    <None Include="Messages\RegistrationNotice.template" />
+    <None Include="Areas\Public\Views\Login\RegisterSuccess.spark" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Ascend.Core\Ascend.Core.csproj">

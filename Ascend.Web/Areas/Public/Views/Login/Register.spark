@@ -1,4 +1,4 @@
-﻿<viewdata />
+﻿<viewdata model="RegisterViewModel" />
 
 <div id="form-links">
     <ul>
@@ -6,13 +6,38 @@
     </ul>
 </div>
 
-# using (Html.BeginForm(MVC.Public.Login.Reset()))
+# using (Html.BeginForm(MVC.Public.Login.Register()))
 # {
     <table>
-    <tr><td>First Name:</td><td><input type="text" /></td></tr>
-    <tr><td>Last Name:</td><td><input type="text" /></td></tr>
-    <tr><td>Password:</td><td><input type="text" /></td></tr>
-    <tr><td>Email:</td><td><input type="text" /></td></tr>
-    <tr><td></td><td><input type="button" value="Submit" /></td></tr>
+        <tr>
+            <td>First Name:</td>
+            <td>${Html.EditorFor(x => x.FirstName)}</td>
+            <td>${Html.ValidationMessageFor(x => x.FirstName)}</td>
+        </tr>
+        <tr>
+             <td>Last Name:</td>
+             <td>${Html.EditorFor(x => x.LastName)}</td>
+             <td>${Html.ValidationMessageFor(x => x.LastName)}</td>
+        </tr>
+        <tr>
+             <td>Email:</td>
+             <td>${Html.EditorFor(x => x.Email)}</td>
+             <td>${Html.ValidationMessageFor(x => x.Email)}</td>
+        </tr>
+        <tr>
+             <td>Password:</td>
+             <td>${Html.PasswordFor(x => x.Password)}</td>
+             <td>${Html.ValidationMessageFor(x => x.Password)}</td>
+        </tr>
+        <tr>
+             <td>Confirm Password:</td>
+             <td>${Html.PasswordFor(x => x.Confirm)}</td>
+             <td>${Html.ValidationMessageFor(x => x.Confirm)}</td>
+        </tr>
+        <tr>
+             <td></td>
+             <td><input type="submit" value="Submit" /></td>
+             <td></td>
+        </tr>
     </table>
 # }

@@ -1,0 +1,14 @@
+﻿<viewdata model="RegisterViewModel" />
+
+<div id="form-links">
+    <ul>
+        <li>${Html.ActionLink("Login", MVC.Public.Login.Index())}</li>
+    </ul>
+</div>
+
+<p>
+Your registration information has been sent to our
+customer service department, and should be approved soon.
+You will receive an email with directions to activate your
+account.
+</p>

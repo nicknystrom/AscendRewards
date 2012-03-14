@@ -43,6 +43,33 @@ namespace Ascend.Web.Services
             return Cache.Get<Template>(id);
         }
 
+        public EmailSendAttempt SendRegistrationNotice(
+            RequestContext request,
+            string firstName,
+            string lastName,
+            string email,
+            string password)
+        {
+            var template = LoadTemplate(
+                "template-registration-notice",
+                request.HttpContext.Server.MapPath("~/Messages/RegistrationNotice.template")
+            );
+            var e = Builder.Transform(
+                template,
+                new TemplateData
+                    {
+                        {"firstName", firstName },
+                        {"lastName", lastName },
+                        {"email", email },
+                        {"password", password },
+                    },
+                request.HttpContext.Request
+            );
+            e.Recipient = new EmailAddress { Address = Application.SupportEmailAddress, Name = Application.ProgramName };
+
+            return Sender.Send(e);
+        }
+
         public EmailSendAttempt SendActivation(RequestContext request, User u)
         {
             var template = LoadTemplate(

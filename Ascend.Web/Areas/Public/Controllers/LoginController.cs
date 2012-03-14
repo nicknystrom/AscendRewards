@@ -29,6 +29,15 @@ namespace Ascend.Web.Areas.Public.Controllers
         public string Url { get; set; }
     }
 
+    public class RegisterViewModel
+    {
+        [Required, StringLength(100)] public string FirstName { get; set; }
+        [Required, StringLength(100)] public string LastName { get; set; }
+        [Required, StringLength(100)] public string Email { get; set; }
+        [Required, StringLength(100)] public string Password { get; set; }
+        [Required, StringLength(100)] public string Confirm { get; set; }
+    }
+
     [Precompile("*")]
     public partial class LoginController : PublicController
     {
@@ -176,6 +185,24 @@ namespace Ascend.Web.Areas.Public.Controllers
             return View();
         }
 
+        [HttpPost]
+        public virtual ActionResult Register(RegisterViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            var attempt = Messaging.SendRegistrationNotice(
+                ControllerContext.RequestContext,
+                model.FirstName,
+                model.LastName,
+                model.Email,
+                model.Password
+            );
+            return Views("RegisterSuccess");
+        }
+
         [HttpGet]
         public virtual ActionResult Activate(string code)
         {
@@ -260,16 +287,16 @@ namespace Ascend.Web.Areas.Public.Controllers
             var u = Users.Where(x => x.Email).Eq(email).SingleOrDefault();
             if (null == u)
             {
-//                Notifier.Notify(
-//                    Severity.Warn,
-//                    "No user found.",
-//                    @"We couldn't find a user with the email address, '" + email +
-//                    @"'. Although
-//                    capitalization is not important, you must spell the address exactly as you did
-//                    when you registerd your account, including punctuation (like periods) and the
-//                    domain name (like '@gmail.com'). If you've entered your email address correctly and
-//                    still receive this message, please contact customer supoprt immediatley.",
-//                    null);
+                Notifier.Notify(
+                    Severity.Warn,
+                    "No user found.",
+                    @"We couldn't find a user with the email address, '" + email +
+                    @"'. Although
+                    capitalization is not important, you must spell the address exactly as you did
+                    when you registerd your account, including punctuation (like periods) and the
+                    domain name (like '@gmail.com'). If you've entered your email address correctly and
+                    still receive this message, please contact customer supoprt immediatley.",
+                    null);
                 ModelState.AddModelError("Email", "No user found with that email address.");
                 return View(reset);
             }
