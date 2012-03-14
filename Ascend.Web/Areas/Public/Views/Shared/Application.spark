@@ -53,8 +53,8 @@
 	<div id="page">
 
         <div id="splash" class="splash-1">
-            <div id="next"></div>
-            <div id="prev"></div>
+            <div id="next" if="splashCount > 1"></div>
+            <div id="prev" if="splashCount > 1"></div>
         </div>
 		<div id="content">
             <div id="form">
